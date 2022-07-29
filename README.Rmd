@@ -32,10 +32,19 @@ remotes::install_github("darwin-eu/CodelistGenerator")
 ## Example
 Check whether dependencies in the description file are approved and whether a minimum version has been specified.
 
-```{r example}
+```{r}
 library(DependencyReviewer)
 library(CodelistGenerator)
+```
 
+Without any options set, it will review the package you are currently inside:
+```{r example, eval=FALSE}
+checkDependencies()
+```
+
+You can also check any installed package like so:
+```{r}
 checkDependencies(packageName = "CodelistGenerator")
 ```
+
 

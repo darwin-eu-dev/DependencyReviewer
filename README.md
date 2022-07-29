@@ -25,7 +25,18 @@ whether a minimum version has been specified.
 ``` r
 library(DependencyReviewer)
 library(CodelistGenerator)
+```
 
+Without any options set, it will review the package you are currently
+inside:
+
+``` r
+checkDependencies()
+```
+
+You can also check any installed package like so:
+
+``` r
 checkDependencies(packageName = "CodelistGenerator")
 #> 
 #> -- Checking if packages in Imports and Depends have been approved --
