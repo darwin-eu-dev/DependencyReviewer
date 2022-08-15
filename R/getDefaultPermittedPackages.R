@@ -1,7 +1,10 @@
 getDefaultPermittedPackages<-function(){
 
-return(c("cli", "checkmate",
-  "DBI", "dbplyr", "dplyr", "tidyr",
-  "glue" , "magrittr", "rlang", "stringr"))
+  permittedDependencies <- readr::read_csv(system.file("extdata",
+                      "dependencies.csv", package =
+                        "DependencyReviewer"),
+                      show_col_types = FALSE)
+
+return(permittedDependencies)
 
 }

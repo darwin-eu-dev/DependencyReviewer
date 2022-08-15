@@ -2,17 +2,15 @@
 #'
 #' @param packageName Name of package to profile. If NULL current package
 #' @param dependencyType Imports, depends, and/ or suggests
-#' @param permittedPackages Vector of approved pacakges
 #'
 #' @return
 #' @export
 #'
 #' @examples
 checkDependencies <- function(packageName = NULL,
-                              dependencyType = c("Imports", "Depends"),
-                              permittedPackages=NULL){
+                              dependencyType = c("Imports", "Depends")){
 
-# findDependencies
+# find dependencies
   if(is.null(packageName)){
   description <-  desc::description$new()
   } else {
@@ -24,13 +22,12 @@ checkDependencies <- function(packageName = NULL,
     dplyr::select("package", "version")
 
 # dependencies that are permitted
-if(is.null(permittedPackages)){
-  permittedPackages<-getDefaultPermittedPackages()}
-permitted <- data.frame(package=permittedPackages)
+permittedPackages<-getDefaultPermittedPackages()
 
 # check if dependencies are permitted
 not_permitted<-dependencies %>%
-  dplyr::anti_join(permitted,
+  dplyr::filter(package!="R") %>%
+  dplyr::anti_join(permittedPackages,
                    by="package") %>%
   dplyr::select(.data$package) %>%
   dplyr::arrange(.data$package) %>%
@@ -46,33 +43,36 @@ cli::cli_alert_warning("Found {n_not_permitted} package{?s} in {dependencyType} 
 cli::cli_end()
 
 for(i in 1:n_not_permitted){
-cli::cli_alert("{.pkg {not_permitted[i]}}")
+cli::cli_alert("  {.pkg {i}) {not_permitted[i]}}")
 }
 cli::cli_alert_warning("Please open an issue at https://github.com/darwin-eu/IncidencePrevalence to
               request approval for packages (one issue per package).")
 
 }
 
+# check if different version in current compared to recommended
+diffVersions<-permittedPackages %>%
+  dplyr::filter(!is.na(version)) %>%
+  dplyr::rename("version_rec"="version") %>%
+  dplyr::left_join(dependencies,
+            by=c("package")) %>%
+  dplyr::filter("version_rec"!="version")
 
-# check if missing minimum version
-missing_min_version<-dependencies %>%
-  dplyr::filter(version=="*") %>%
-  dplyr::select("package") %>%
-  dplyr::arrange(.data$package) %>%
-  dplyr::pull()
-n_missing_min_version<-length(missing_min_version)
+n_diffVersions<-length(diffVersions$package)
 #message
-cli::cli_h2("Checking if package{?s} in {dependencyType} have a minimum version specified")
-if(n_missing_min_version == 0){
-cli::cli_alert_success("All package{?s} in {dependencyType} have a minimum version specified")
+cli::cli_h2("Checking if package{?s} in {dependencyType} require recommended version")
+if(n_diffVersions == 0){
+cli::cli_alert_success("Success! No package{?s} in {dependencyType} require a different version")
 } else {
 cli::cli_div(theme = list (.alert = list(color = "red")))
-cli::cli_alert_warning("Found {n_missing_min_version} package{?s} in {dependencyType} without a minimum version specified")
+cli::cli_alert_warning("Found {n_diffVersions} package{?s} in {dependencyType} with a different version required")
 cli::cli_end()
-for(i in 1:n_missing_min_version){
-cli::cli_alert("{.pkg {missing_min_version[i]}}")
+for(i in 1:n_diffVersions){
+cli::cli_alert("  {.pkg {i}) {diffVersions[i]}}")
+cli::cli_alert("    {.pkg currently required: {diffVersions$version[i]}}")
+cli::cli_alert("    {.pkg should be: {diffVersions$version_rec[i]} }")
 }
-cli::cli_alert_warning("Please add a minimum version for all packages to the description file")
+cli::cli_alert_warning("Please require recommended versions")
 }
 
 invisible(NULL)

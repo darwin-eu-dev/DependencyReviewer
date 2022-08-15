@@ -4,18 +4,12 @@
 \alias{checkDependencies}
 \title{Check package dependencies}
 \usage{
-checkDependencies(
-  packageName = NULL,
-  dependencyType = c("Imports", "Depends"),
-  permittedPackages = NULL
-)
+checkDependencies(packageName = NULL, dependencyType = c("Imports", "Depends"))
 }
 \arguments{
 \item{packageName}{Name of package to profile. If NULL current package}
 
 \item{dependencyType}{Imports, depends, and/ or suggests}
-
-\item{permittedPackages}{Vector of approved pacakges}
 }
 \value{
 

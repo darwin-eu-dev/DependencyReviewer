@@ -14,17 +14,27 @@ You can install the development version of DependencyReviewer like so:
 
 ``` r
 install.packages("remotes")
-remotes::install_github("darwin-eu/CodelistGenerator")
+remotes::install_github("darwin-eu/DependencyReviewer")
 ```
 
 ## Example
 
 Check whether dependencies in the description file are approved and
-whether a minimum version has been specified.
+whether the required version matches the current recommendation.
 
 ``` r
 library(DependencyReviewer)
 library(CodelistGenerator)
+library(dplyr)
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
+library(ggplot2)
 ```
 
 Without any options set, it will review the package you are currently
@@ -32,20 +42,35 @@ inside:
 
 ``` r
 checkDependencies()
-```
-
-You can also check any installed package like so:
-
-``` r
-checkDependencies(packageName = "CodelistGenerator")
 #> 
 #> -- Checking if packages in Imports and Depends have been approved --
 #> 
-#> v All packages in Imports and Depends are  already approved
+#> ! Found 1 package in Imports and Depends that are not approved
+#> >   1) desc
+#> ! Please open an issue at https://github.com/darwin-eu/IncidencePrevalence to
+#> request approval for packages (one issue per package).
 #> 
-#> -- Checking if packages in Imports and Depends have a minimum version specified --
+#> -- Checking if packages in Imports and Depends require recommended version --
 #> 
-#> ! Found 1 package in Imports and Depends without a minimum version specified
-#> > glue
-#> ! Please add a minimum version for all packages to the description file
+#> ! Found 1 package in Imports and Depends with a different version required
+#> >   1) dplyr
+#> >     currently required: *
+#> >     should be: >= 1.0.0
+#> ! Please require recommended versions
 ```
+
+``` r
+function_use<-summariseFunctionUse() 
+
+function_use %>% 
+  filter(pkgs!="(unknown)") %>% 
+  filter(pkgs!="base") %>% 
+  filter(pkgs!="methods") %>% 
+  ggplot()+
+  geom_col(aes(funs,n, fill=pkgs)) +
+  facet_wrap(vars(pkgs),scales  = "free_x", ncol=2) +
+  theme(legend.position = "none",
+        axis.text.x = (element_text(angle = -90)))
+```
+
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />

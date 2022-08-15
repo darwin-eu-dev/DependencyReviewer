@@ -25,26 +25,34 @@ knitr::opts_chunk$set(
 You can install the development version of DependencyReviewer like so:
 ``` r
 install.packages("remotes")
-remotes::install_github("darwin-eu/CodelistGenerator")
+remotes::install_github("darwin-eu/DependencyReviewer")
 ```
 
 
 ## Example
-Check whether dependencies in the description file are approved and whether a minimum version has been specified.
-
+Check whether dependencies in the description file are approved and whether the required version matches the current recommendation.
 ```{r}
 library(DependencyReviewer)
 library(CodelistGenerator)
+library(dplyr)
+library(ggplot2)
 ```
 
 Without any options set, it will review the package you are currently inside:
-```{r example, eval=FALSE}
+```{r}
 checkDependencies()
 ```
 
-You can also check any installed package like so:
 ```{r}
-checkDependencies(packageName = "CodelistGenerator")
+function_use<-summariseFunctionUse() 
+
+function_use %>% 
+  filter(pkgs!="(unknown)") %>% 
+  filter(pkgs!="base") %>% 
+  filter(pkgs!="methods") %>% 
+  ggplot()+
+  geom_col(aes(funs,n, fill=pkgs)) +
+  facet_wrap(vars(pkgs),scales  = "free_x", ncol=2) +
+  theme(legend.position = "none",
+        axis.text.x = (element_text(angle = -90)))
 ```
-
-

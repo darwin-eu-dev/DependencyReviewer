@@ -20,3 +20,5 @@ Imports:
     magrittr,
     rlang
 RoxygenNote: 7.1.2
+Depends: 
+    R (>= 4.0)

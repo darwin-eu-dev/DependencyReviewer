@@ -2,6 +2,7 @@
 
 export("%>%")
 export(checkDependencies)
+export(summariseFunctionUse)
 importFrom(magrittr,"%>%")
 importFrom(rlang,.data)
 importFrom(rlang,.env)
