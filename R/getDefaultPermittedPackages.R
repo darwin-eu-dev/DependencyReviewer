@@ -1,10 +1,10 @@
-getDefaultPermittedPackages<-function(){
+getDefaultPermittedPackages <- function() {
+  permittedDependencies <- readr::read_csv(
+    system.file(
+      "extdata",
+      "dependencies.csv",
+      package = "DependencyReviewer"),
+    show_col_types = FALSE)
 
-  permittedDependencies <- readr::read_csv(system.file("extdata",
-                      "dependencies.csv", package =
-                        "DependencyReviewer"),
-                      show_col_types = FALSE)
-
-return(permittedDependencies)
-
+  return(permittedDependencies)
 }
