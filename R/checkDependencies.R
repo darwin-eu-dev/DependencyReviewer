@@ -137,5 +137,3 @@ checkDependencies <- function(packageName = NULL,
 invisible(NULL)
 
 }
-
-checkDependencies()
