@@ -1,3 +1,54 @@
+# === Helper functions
+#' getDiffVersions
+#'
+#' @param dependencies Dependencies
+#' @param permittedPackages permittedPackages
+#'
+#' @return Versions of permitted packages
+getDiffVersions <- function(dependencies, permittedPackages) {
+  permittedPackages %>%
+    dplyr::filter(!is.na(version)) %>%
+    dplyr::rename("version_rec"="version") %>%
+    dplyr::left_join(
+      dependencies,
+      by = c("package")) %>%
+    dplyr::filter("version_rec" != "version")
+}
+
+#' getNotPermitted
+#'
+#' @param permittedPackages Packages that are permitted as character vector
+#'
+#' @return Returns vector of not permitted packages
+getNotPermitted <- function(dependencies, permittedPackages) {
+  # check if dependencies are permitted
+  not_permitted <- dependencies %>%
+    dplyr::filter(package != "R") %>%
+    dplyr::anti_join(
+      permittedPackages,
+      by = "package") %>%
+    dplyr::select(.data$package) %>%
+    dplyr::arrange(.data$package) %>%
+    dplyr::pull()
+}
+
+# --- Message functions
+#' messagePermission
+#'
+#' @param i iterator
+messagePermission <- function(i, not_permitted) {
+  cli::cli_alert("  {.pkg {i}) {not_permitted[i]}}")
+}
+
+#' messagePackageVersion
+#'
+#' @param i iterator
+messagePackageVersion <- function(i, diffVersions) {
+  cli::cli_alert("  {.pkg {i}) {diffVersions[i]}}")
+  cli::cli_alert("    {.pkg currently required: {diffVersions$version[i]}}")
+  cli::cli_alert("    {.pkg should be: {diffVersions$version_rec[i]} }")
+}
+
 #' Check package dependencies
 #'
 #' @param packageName Name of package to profile. If NULL current package
@@ -23,17 +74,9 @@ checkDependencies <- function(packageName = NULL,
     dplyr::select("package", "version")
 
   # dependencies that are permitted
-  permittedPackages<-getDefaultPermittedPackages()
+  permittedPackages <- getDefaultPermittedPackages()
 
-  # check if dependencies are permitted
-  not_permitted<-dependencies %>%
-    dplyr::filter(package != "R") %>%
-    dplyr::anti_join(
-      permittedPackages,
-      by = "package") %>%
-    dplyr::select(.data$package) %>%
-    dplyr::arrange(.data$package) %>%
-    dplyr::pull()
+  not_permitted <- getNotPermitted(dependencies, permittedPackages)
 
   n_not_permitted <- length(not_permitted)
 
@@ -51,9 +94,10 @@ checkDependencies <- function(packageName = NULL,
       approved")
     cli::cli_end()
 
-    for(i in 1:n_not_permitted) {
-      cli::cli_alert("  {.pkg {i}) {not_permitted[i]}}")
-    }
+    sapply(
+      X = 1:n_not_permitted,
+      FUN = messagePermission,
+      not_permitted = not_permitted)
 
     cli::cli_alert_warning(
     "Please open an issue at https://github.com/darwin-eu/IncidencePrevalence
@@ -61,13 +105,9 @@ checkDependencies <- function(packageName = NULL,
     }
 
   # check if different version in current compared to recommended
-  diffVersions <- permittedPackages %>%
-    dplyr::filter(!is.na(version)) %>%
-    dplyr::rename("version_rec"="version") %>%
-    dplyr::left_join(
-      dependencies,
-      by = c("package")) %>%
-    dplyr::filter("version_rec" != "version")
+  diffVersions <- getDiffVersions(
+    dependencies = dependencies,
+    permittedPackages = permittedPackages)
 
   n_diffVersions <- length(diffVersions$package)
 
@@ -86,11 +126,10 @@ checkDependencies <- function(packageName = NULL,
       version required")
     cli::cli_end()
 
-    for(i in 1:n_diffVersions) {
-      cli::cli_alert("  {.pkg {i}) {diffVersions[i]}}")
-      cli::cli_alert("    {.pkg currently required: {diffVersions$version[i]}}")
-      cli::cli_alert("    {.pkg should be: {diffVersions$version_rec[i]} }")
-    }
+    sapply(
+      X = 1:n_diffVersions,
+      FUN = messagePackageVersion,
+      diffVersions = diffVersions)
 
     cli::cli_alert_warning("Please require recommended versions")
   }
@@ -98,3 +137,5 @@ checkDependencies <- function(packageName = NULL,
 invisible(NULL)
 
 }
+
+checkDependencies()
