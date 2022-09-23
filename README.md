@@ -60,17 +60,32 @@ checkDependencies()
 ```
 
 ``` r
-function_use<-summariseFunctionUse() 
+# Get files in package ./R/ directory
+r_files <- list.files(here::here("R"))
 
-function_use %>% 
-  filter(pkgs!="(unknown)") %>% 
-  filter(pkgs!="base") %>% 
-  filter(pkgs!="methods") %>% 
-  ggplot()+
-  geom_col(aes(funs,n, fill=pkgs)) +
-  facet_wrap(vars(pkgs),scales  = "free_x", ncol=2) +
-  theme(legend.position = "none",
-        axis.text.x = (element_text(angle = -90)))
+# Filter files; _playground.R is a script to test functionality and not part 
+# of the package.
+r_files <- r_files[!r_files %in% c("_playground.R")]
+
+# Summarise function use of r_files
+function_use <- summariseFunctionUse(r_files)
+
+# Filter packages on != unknown, base, or methods
+function_use %>%
+  filter(pkg != "unknown") %>%
+  filter(pkg != "base") %>%
+  filter(pkg != "methods")
+
+ggplot(
+  data = function_use, 
+  mapping = aes(fun, n, fill = pkg)) +
+  geom_col() +
+  facet_wrap(
+    vars(pkg), 
+    scales = "free_x", ncol = 2) +
+  theme(
+    legend.position = "none",
+    axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 ```
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
