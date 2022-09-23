@@ -8,6 +8,6 @@ package,version
 "dbplyr",
 "dplyr",">= 1.0.0"
 "tidyr",
-"purr",
+"purrr",
 "stringr",
 "lubridate",
