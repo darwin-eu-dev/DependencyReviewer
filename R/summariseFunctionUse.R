@@ -80,9 +80,18 @@ funsUsedInLine <- function(file_txt, file_name, i, verbose=FALSE) {
           df$pkg[df$fun %in% libFuns] <- lib
         }, error = function(cond) {
           library(lib, character.only = TRUE)
+
           libFuns <- ls(glue::glue("package:", lib))
           df$pkg[df$fun %in% libFuns] <- lib
-          detach(glue::glue("package:", lib), unload = TRUE)
+
+          tryCatch({
+            detach(
+              name = glue::glue("package:", lib),
+              unload = TRUE,
+              character.only = TRUE)
+          }, warning = function(comp) {
+            invisible(NULL)
+            })
           }
         )
       }
