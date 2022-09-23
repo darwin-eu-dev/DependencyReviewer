@@ -44,15 +44,30 @@ checkDependencies()
 ```
 
 ```{r}
-function_use<-summariseFunctionUse() 
+r_files <- list.files(here::here("R"))
 
-function_use %>% 
-  filter(pkgs!="(unknown)") %>% 
-  filter(pkgs!="base") %>% 
-  filter(pkgs!="methods") %>% 
-  ggplot()+
-  geom_col(aes(funs,n, fill=pkgs)) +
-  facet_wrap(vars(pkgs),scales  = "free_x", ncol=2) +
-  theme(legend.position = "none",
-        axis.text.x = (element_text(angle = -90)))
+function_use <- summariseFunctionUse(r_files)
+
+head(function_use)
 ```
+
+```{r}
+function_sub <- function_use %>% 
+  filter(pkg != "unknown") %>% 
+  filter(pkg != "base") %>% 
+  filter(pkg != "methods")
+
+ggplot(
+  data = function_sub, 
+  mapping = aes(x = fun, y = n, fill = pkg)) +
+  geom_col() +
+  facet_wrap(
+    vars(pkg), 
+    scales = "free_x", 
+    ncol=2) +
+  theme_bw() +
+  theme(
+    legend.position = "none",
+    axis.text.x = (element_text(angle = 45, hjust = 1, vjust = 1)))
+```
+
