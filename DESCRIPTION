@@ -18,7 +18,14 @@ Imports:
     desc,
     dplyr,
     magrittr,
-    rlang
-RoxygenNote: 7.1.2
+    rlang,
+    funspotr,
+    glue,
+    here,
+    readr,
+    stringr
+Remotes:
+    brshallo/funspotr
+RoxygenNote: 7.2.1
 Depends: 
     R (>= 4.0)
