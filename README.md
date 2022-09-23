@@ -71,13 +71,13 @@ r_files <- r_files[!r_files %in% c("_playground.R")]
 function_use <- summariseFunctionUse(r_files)
 
 # Filter packages on != unknown, base, or methods
-function_use %>%
+filtered_funs <- function_use %>%
   filter(pkg != "unknown") %>%
   filter(pkg != "base") %>%
   filter(pkg != "methods")
 
 ggplot(
-  data = function_use, 
+  data = filtered_funs, 
   mapping = aes(fun, n, fill = pkg)) +
   geom_col() +
   facet_wrap(
