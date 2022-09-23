@@ -2,9 +2,11 @@
 #'
 #'Deprecated
 #'
-#' @return tibble
+#' @import funspotr
+#' @import here
+#' @import dplyr
 #'
-#' @examples
+#' @return tibble
 DEP_summariseFunctionUse <- function() {
   r_files <- list.files(here::here("R"))
   deps_used <- list()
@@ -28,15 +30,18 @@ DEP_summariseFunctionUse <- function() {
 #'
 #'Support function for funsUsedInFile
 #'
+#' @import stringr
+#' @import dplyr
+#' @import glue
+#'
 #' @param file_txt file to use
+#' @param file_name name of file
 #' @param i line
 #' @param verbose Prints message when no function found
 #'
 #' @return data.frame of 3 colums: Package (pkg); Function (fun); Line in
 #' script (line)
-#'
-#' @examples
-funsUsedInLine <- function(file_txt, i, verbose=FALSE) {
+funsUsedInLine <- function(file_txt, file_name, i, verbose=FALSE) {
   line <- file_txt[i]
 
   fun_vec <- unlist(stringr::str_extract_all(
@@ -65,10 +70,25 @@ funsUsedInLine <- function(file_txt, i, verbose=FALSE) {
     df <- data.frame(t(sapply(fun_vec, unlist)))
     names(df) <- c("pkg", "fun")
 
-    df$pkg[df$fun %in% ls("package:base")] <- "base"
-    df$pkg[df$fun %in% ls("package:methods")] <- "methods"
+    defaultLibs <- rownames(installed.packages(priority="base"))
 
+    lapply(
+      defaultLibs,
+      function(lib) {
+        tryCatch({
+          libFuns <- ls(glue::glue("package:", lib))
+          df$pkg[df$fun %in% libFuns] <- lib
+        }, error = function(cond) {
+          library(lib, character.only = TRUE)
+          libFuns <- ls(glue::glue("package:", lib))
+          df$pkg[df$fun %in% libFuns] <- lib
+          detach(glue::glue("package:", lib), unload = TRUE)
+          }
+        )
+      }
+    )
 
+    df$r_file <- rep(file_name, dim(df)[1])
     df$line <- rep(i, dim(df)[1])
     return(dplyr::tibble(df))
 
@@ -82,33 +102,36 @@ funsUsedInLine <- function(file_txt, i, verbose=FALSE) {
 
 #' funsUsedInFile
 #'
-#' @param files
+#' @import dplyr
+#' @import here
+#'
+#' @param files Files to get functions from
 #'
 #' @return table
-#' @export
-#'
-#' @examples
 funsUsedInFile <- function(files) {
   dplyr::bind_rows(lapply(X = files, FUN = function(file) {
     file_txt <- readLines(here::here("R", file))
-    sapply(1:length(file_txt), funsUsedInLine, file_txt = file_txt)
+    out <- sapply(1:length(file_txt), funsUsedInLine, file_txt = file_txt, file_name = file)
   }))
 }
 
 #' Summarise functions used in R package
 #'
-#'Deperecated
+#' @param r_files r_files
 #'
+#' @import dplyr
+#' @export
 #' @return tibble
-#'
-#' @examples
 summariseFunctionUse <- function(r_files) {
   deps_used <- funsUsedInFile(r_files)
 
   deps_used <- dplyr::bind_rows(deps_used) %>%
-    dplyr::group_by(fun, pkg, line) %>%
+    dplyr::group_by(fun, pkg, line, r_file) %>%
     dplyr::tally() %>%
     dplyr::arrange(desc(n))
 
   return(deps_used)
 }
+
+
+

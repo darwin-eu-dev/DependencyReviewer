@@ -3,10 +3,9 @@
 #' @return tibble of two columns (package, version) with all 'allowed'
 #' packages.
 #'
-#' @export
+#' @import readr
 #'
-#' @examples
-#' getDefaultPermittedPackages()
+#' @export
 getDefaultPermittedPackages <- function() {
   permittedDependencies <- readr::read_csv(
     system.file(

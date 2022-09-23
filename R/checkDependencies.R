@@ -1,6 +1,8 @@
 # === Helper functions
 #' getDiffVersions
 #'
+#' @import dplyr
+#'
 #' @param dependencies Dependencies
 #' @param permittedPackages permittedPackages
 #'
@@ -17,6 +19,9 @@ getDiffVersions <- function(dependencies, permittedPackages) {
 
 #' getNotPermitted
 #'
+#' @import dplyr
+#'
+#' @param dependencies Dependencies
 #' @param permittedPackages Packages that are permitted as character vector
 #'
 #' @return Returns vector of not permitted packages
@@ -35,14 +40,20 @@ getNotPermitted <- function(dependencies, permittedPackages) {
 # --- Message functions
 #' messagePermission
 #'
+#' @import cli
+#'
 #' @param i iterator
+#' @param not_permitted Not permitted
 messagePermission <- function(i, not_permitted) {
   cli::cli_alert("  {.pkg {i}) {not_permitted[i]}}")
 }
 
 #' messagePackageVersion
 #'
+#' @import cli
+#'
 #' @param i iterator
+#' @param diffVersions different versions
 messagePackageVersion <- function(i, diffVersions) {
   cli::cli_alert("  {.pkg {i}) {diffVersions[i]}}")
   cli::cli_alert("    {.pkg currently required: {diffVersions$version[i]}}")
@@ -51,14 +62,13 @@ messagePackageVersion <- function(i, diffVersions) {
 
 #' Check package dependencies
 #'
+#' @import dplyr
+#' @import cli
+#'
 #' @param packageName Name of package to profile. If NULL current package
 #' @param dependencyType Imports, depends, and/ or suggests
 #'
-#' @return
 #' @export
-#'
-#' @examples
-#' checkDependencies()
 checkDependencies <- function(packageName = NULL,
                               dependencyType = c("Imports", "Depends")) {
 
@@ -133,7 +143,5 @@ checkDependencies <- function(packageName = NULL,
 
     cli::cli_alert_warning("Please require recommended versions")
   }
-
 invisible(NULL)
-
 }
