@@ -11,9 +11,6 @@ checkDependencies(packageName = NULL, dependencyType = c("Imports", "Depends"))
 
 \item{dependencyType}{Imports, depends, and/ or suggests}
 }
-\value{
-
-}
 \description{
 Check package dependencies
 }
