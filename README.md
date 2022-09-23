@@ -43,49 +43,34 @@ inside:
 ``` r
 checkDependencies()
 #> 
-#> -- Checking if packages in Imports and Depends have been approved --
+#> ── Checking if packages in Imports and Depends have been approved ──
 #> 
 #> ! Found 1 package in Imports and Depends that are not approved
-#> >   1) desc
+#> →   1) desc
 #> ! Please open an issue at https://github.com/darwin-eu/IncidencePrevalence to
 #> request approval for packages (one issue per package).
 #> 
-#> -- Checking if packages in Imports and Depends require recommended version --
+#> ── Checking if packages in Imports and Depends require recommended version ──
 #> 
 #> ! Found 1 package in Imports and Depends with a different version required
-#> >   1) dplyr
-#> >     currently required: *
-#> >     should be: >= 1.0.0
+#> →   1) dplyr
+#> →     currently required: *
+#> →     should be: >= 1.0.0
 #> ! Please require recommended versions
 ```
 
 ``` r
-# Get files in package ./R/ directory
-r_files <- list.files(here::here("R"))
+function_use<-summariseFunctionUse() 
 
-# Filter files; _playground.R is a script to test functionality and not part 
-# of the package.
-r_files <- r_files[!r_files %in% c("_playground.R")]
-
-# Summarise function use of r_files
-function_use <- summariseFunctionUse(r_files)
-
-# Filter packages on != unknown, base, or methods
-filtered_funs <- function_use %>%
-  filter(pkg != "unknown") %>%
-  filter(pkg != "base") %>%
-  filter(pkg != "methods")
-
-ggplot(
-  data = filtered_funs, 
-  mapping = aes(fun, n, fill = pkg)) +
-  geom_col() +
-  facet_wrap(
-    vars(pkg), 
-    scales = "free_x", ncol = 2) +
-  theme(
-    legend.position = "none",
-    axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+function_use %>% 
+  filter(pkgs!="(unknown)") %>% 
+  filter(pkgs!="base") %>% 
+  filter(pkgs!="methods") %>% 
+  ggplot()+
+  geom_col(aes(funs,n, fill=pkgs)) +
+  facet_wrap(vars(pkgs),scales  = "free_x", ncol=2) +
+  theme(legend.position = "none",
+        axis.text.x = (element_text(angle = -90)))
 ```
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
