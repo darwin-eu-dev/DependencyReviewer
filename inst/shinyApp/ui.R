@@ -1,7 +1,7 @@
 # Shiny UI
 shiny::shinyUI(
   shiny::pageWithSidebar(
-    shiny::headerPanel("ShinyAce with cursor position and selection"),
+    shiny::headerPanel("Dependency Reviewer"),
 
     shiny::sidebarPanel(
       shiny::selectInput(
