@@ -23,7 +23,11 @@ Imports:
     glue,
     here,
     readr,
-    stringr
+    stringr,
+    shiny,
+    shinyAce,
+    DT,
+    ggplot2
 Remotes:
     brshallo/funspotr
 RoxygenNote: 7.2.1

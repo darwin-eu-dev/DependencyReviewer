@@ -72,31 +72,6 @@ funsUsedInLine <- function(file_txt, file_name, i, verbose=FALSE) {
 
     defaultLibs <- rownames(installed.packages(priority="base"))
 
-    lapply(
-      defaultLibs,
-      function(lib) {
-        tryCatch({
-          libFuns <- ls(glue::glue("package:", lib))
-          df$pkg[df$fun %in% libFuns] <- lib
-        }, error = function(cond) {
-          library(lib, character.only = TRUE)
-
-          libFuns <- ls(glue::glue("package:", lib))
-          df$pkg[df$fun %in% libFuns] <- lib
-
-          tryCatch({
-            detach(
-              name = glue::glue("package:", lib),
-              unload = TRUE,
-              character.only = TRUE)
-          }, warning = function(comp) {
-            invisible(NULL)
-            })
-          }
-        )
-      }
-    )
-
     df$r_file <- rep(file_name, dim(df)[1])
     df$line <- rep(i, dim(df)[1])
     return(dplyr::tibble(df))
@@ -115,10 +90,14 @@ funsUsedInLine <- function(file_txt, file_name, i, verbose=FALSE) {
 #' @import here
 #'
 #' @param files Files to get functions from
+#' @param verbose Verbosity
 #'
 #' @return table
-funsUsedInFile <- function(files) {
+funsUsedInFile <- function(files, verbose) {
   dplyr::bind_rows(lapply(X = files, FUN = function(file) {
+    if(verbose) {
+      message(glue::glue("Started on file: ", file))
+    }
     file_txt <- readLines(here::here("R", file))
     out <- sapply(1:length(file_txt), funsUsedInLine, file_txt = file_txt, file_name = file)
   }))
@@ -127,18 +106,20 @@ funsUsedInFile <- function(files) {
 #' Summarise functions used in R package
 #'
 #' @param r_files r_files
+#' @param verbose Default: FALSE; prints message to console which file is
+#' currently being worked on.
 #'
 #' @import dplyr
 #' @export
 #' @return tibble
-summariseFunctionUse <- function(r_files) {
-  deps_used <- funsUsedInFile(r_files)
+summariseFunctionUse <- function(r_files, verbose = FALSE) {
+  deps_used <- funsUsedInFile(r_files, verbose)
 
   deps_used <- dplyr::bind_rows(deps_used) %>%
-    dplyr::group_by(fun, pkg, line, r_file) %>%
-    dplyr::tally() %>%
-    dplyr::arrange(desc(n))
+    dplyr::relocate(r_file, line, pkg, fun) %>%
+    dplyr::arrange(r_file, line, pkg, fun)
 
+  deps_used$pkg[deps_used$fun %in% ls("package:base")] <- "base"
   return(deps_used)
 }
 

@@ -4,10 +4,13 @@
 \alias{summariseFunctionUse}
 \title{Summarise functions used in R package}
 \usage{
-summariseFunctionUse(r_files)
+summariseFunctionUse(r_files, verbose = FALSE)
 }
 \arguments{
 \item{r_files}{r_files}
+
+\item{verbose}{Default: FALSE; prints message to console which file is
+currently being worked on.}
 }
 \value{
 tibble
