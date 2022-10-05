@@ -25,18 +25,33 @@ shiny::shinyServer(function(input, output, session) {
   output$tbl <- DT::renderDataTable({
     DependencyReviewer::summariseFunctionUse(
       r_files = input$file) %>%
-      dplyr::select(-"r_file")
+      dplyr::select(-"r_file") %>%
+      filter(!pkg %in% input$excludes)
+  })
+
+  getData <- shiny::reactive({
+    DependencyReviewer::summariseFunctionUse(
+      r_files = input$file)
+  })
+
+  observe({
+    shiny::updateCheckboxGroupInput(
+      session = session,
+      inputId = "excludes",
+      choices = unique(getData()$pkg))
   })
 
   output$plot <- renderPlot({
-    data <- DependencyReviewer::summariseFunctionUse(
-      r_files = input$file)
+    data <- getData()
+
+    data_sub <- data %>%
+      dplyr::group_by(fun, pkg) %>%
+      dplyr::tally() %>%
+      dplyr::arrange(desc(n)) %>%
+      filter(!pkg %in% input$excludes)
 
     ggplot2::ggplot(
-      data = data %>%
-        dplyr::group_by(fun, pkg) %>%
-        dplyr::tally() %>%
-        dplyr::arrange(desc(n)),
+      data = data_sub,
       mapping = ggplot2::aes(x = fun, y = n, fill = pkg)) +
       ggplot2::geom_col() +
       ggplot2::facet_wrap(

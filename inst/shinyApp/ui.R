@@ -9,9 +9,10 @@ shiny::shinyUI(
         label = "File",
         choices = list.files(here::here("R"))),
 
-      # tags$hr(),
-      # verbatimTextOutput("log"),
-      # width = 6,
+      shiny::checkboxGroupInput(
+        inputId = "excludes",
+        label = "Exclude Packages",
+        choices = c("base", "unknown")),
 
       shiny::hr(),
       DT::dataTableOutput("tbl")

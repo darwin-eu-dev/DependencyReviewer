@@ -70,7 +70,7 @@ funsUsedInLine <- function(file_txt, file_name, i, verbose=FALSE) {
     df <- data.frame(t(sapply(fun_vec, unlist)))
     names(df) <- c("pkg", "fun")
 
-    defaultLibs <- rownames(installed.packages(priority="base"))
+    # defaultLibs <- rownames(installed.packages(priority="base"))
 
     df$r_file <- rep(file_name, dim(df)[1])
     df$line <- rep(i, dim(df)[1])
@@ -114,6 +114,14 @@ funsUsedInFile <- function(files, verbose) {
 #' @return tibble
 summariseFunctionUse <- function(r_files, verbose = FALSE) {
   deps_used <- funsUsedInFile(r_files, verbose)
+
+  if (nrow(deps_used) == 0) {
+    deps_used <- tibble(
+      r_file = character(0),
+      line = numeric(0),
+      pkg = character(0),
+      fun = character(0))
+  }
 
   deps_used <- dplyr::bind_rows(deps_used) %>%
     dplyr::relocate(r_file, line, pkg, fun) %>%
