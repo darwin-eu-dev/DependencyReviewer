@@ -1,5 +1,6 @@
 # Shiny Server
 shiny::shinyServer(function(input, output, session) {
+
   # output$log <- renderText({
   #   req(input$ace_cursor)
   #   paste0(

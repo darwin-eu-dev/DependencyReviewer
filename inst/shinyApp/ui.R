@@ -1,34 +1,47 @@
 # Shiny UI
 shiny::shinyUI(
-  shiny::pageWithSidebar(
-    shiny::headerPanel("Dependency Reviewer"),
+  shiny::fluidPage(
+    title = "Dependency Reviewer",
+    shiny::sidebarLayout(
+      sidebarPanel = shiny::sidebarPanel(
+        width = 2,
+        shiny::selectInput(
+          inputId = "file",
+          label = "File",
+          choices = list.files(here::here("R"))),
 
-    shiny::sidebarPanel(
-      shiny::selectInput(
-        inputId = "file",
-        label = "File",
-        choices = list.files(here::here("R"))),
-
-      shiny::checkboxGroupInput(
-        inputId = "excludes",
-        label = "Exclude Packages",
-        choices = c("base", "unknown")),
-
-      shiny::hr(),
-      DT::dataTableOutput("tbl")
-    ),
-
-    shiny::mainPanel(
-      shinyAce::aceEditor(
-        outputId = "ace",
-        value = "x <- 3\n\nif(x == 3) {\n\ty <- 'a'}",
-        cursorId = "cursor",
-        selectionId = "selection",
-        mode = "r",
-        readOnly = TRUE,
+        shiny::checkboxGroupInput(
+          inputId = "excludes",
+          label = "Exclude Packages",
+          choices = c("base", "unknown"))
       ),
-      width = 6,
-      shiny::plotOutput("plot")
+      mainPanel = shiny::mainPanel(
+        width = 10,
+        shiny::tabsetPanel(
+          type = "tabs",
+          tabPanel(
+            title = "Function Review",
+            fluidRow(
+              splitLayout(
+                cellWidths = c("50%", "50%"),
+                DT::dataTableOutput(
+                  outputId = "tbl"),
+                shinyAce::aceEditor(
+                  outputId = "ace",
+                  value = "x <- 3\n\nif(x == 3) {\n\ty <- 'a'}",
+                  cursorId = "cursor",
+                  selectionId = "selection",
+                  mode = "r",
+                  readOnly = TRUE)
+              )
+            )
+          ),
+        tabPanel(
+          "Plot",
+          shiny::plotOutput("plot")
+          )
+        )
+      )
     )
   )
 )
