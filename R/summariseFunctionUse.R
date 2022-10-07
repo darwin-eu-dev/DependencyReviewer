@@ -93,13 +93,19 @@ funsUsedInLine <- function(file_txt, file_name, i, verbose=FALSE) {
 #' @param verbose Verbosity
 #'
 #' @return table
-funsUsedInFile <- function(files, verbose) {
+funsUsedInFile <- function(files, verbose = FALSE) {
   dplyr::bind_rows(lapply(X = files, FUN = function(file) {
     if(verbose) {
       message(glue::glue("Started on file: ", file))
     }
+
     file_txt <- readLines(here::here("R", file))
-    out <- sapply(1:length(file_txt), funsUsedInLine, file_txt = file_txt, file_name = file)
+
+    out <- sapply(
+      X = 1:length(file_txt),
+      FUN = funsUsedInLine,
+      file_txt = file_txt,
+      file_name = file)
   }))
 }
 
@@ -130,6 +136,3 @@ summariseFunctionUse <- function(r_files, verbose = FALSE) {
   deps_used$pkg[deps_used$fun %in% ls("package:base")] <- "base"
   return(deps_used)
 }
-
-
-
