@@ -1,22 +1,26 @@
 # Shiny UI
 shiny::shinyUI(
   shiny::fluidPage(
-    title = "Dependency Reviewer",
-    shiny::sidebarLayout(
-      sidebarPanel = shiny::sidebarPanel(
-        width = 2,
+    title = shiny::titlePanel(
+      title = "Dependency Reviewer",
+      windowTitle = TRUE),
+    shiny::verticalLayout(
+      fluid = TRUE,
+      shiny::inputPanel(
+        width = 3,
         shiny::selectInput(
           inputId = "file",
           label = "File",
           choices = list.files(here::here("R"))),
 
         shiny::checkboxGroupInput(
+          inline = TRUE,
           inputId = "excludes",
           label = "Exclude Packages",
           choices = c("base", "unknown"))
       ),
       mainPanel = shiny::mainPanel(
-        width = 10,
+        width = 12,
         shiny::tabsetPanel(
           type = "tabs",
           tabPanel(

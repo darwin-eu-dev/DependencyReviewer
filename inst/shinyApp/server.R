@@ -37,6 +37,7 @@ shiny::shinyServer(function(input, output, session) {
 
   observe({
     shiny::updateCheckboxGroupInput(
+      inline = TRUE,
       session = session,
       inputId = "excludes",
       choices = unique(getData()$pkg))
