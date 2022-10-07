@@ -15,6 +15,23 @@
 # limitations under the License.
 
 # Shiny Server
+#' Title
+#'
+#' @param input
+#' @param output
+#' @param session
+#'
+#' @import shiny
+#' @import shinyAce
+#' @import ggplot2
+#' @import here
+#' @import DT
+#' @import ggplot2
+#' @import dplyr
+#'
+#' @return
+#'
+#' @examples
 shiny::shinyServer(function(input, output, session) {
   readFile <- shiny::reactive({
     paste(
