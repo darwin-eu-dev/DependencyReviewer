@@ -12,5 +12,5 @@ messagePackageVersion(i, diffVersions)
 \item{diffVersions}{different versions}
 }
 \description{
-messagePackageVersion
+Helper message function
 }

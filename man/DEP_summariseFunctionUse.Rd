@@ -2,7 +2,7 @@
 % Please edit documentation in R/summariseFunctionUse.R
 \name{DEP_summariseFunctionUse}
 \alias{DEP_summariseFunctionUse}
-\title{Summarise functions used in R package}
+\title{DEP_summariseFunctionUse}
 \usage{
 DEP_summariseFunctionUse()
 }
@@ -10,5 +10,5 @@ DEP_summariseFunctionUse()
 tibble
 }
 \description{
-Deprecated
+DEPRECATED Summarise functions used in R package
 }

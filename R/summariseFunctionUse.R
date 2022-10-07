@@ -1,12 +1,31 @@
-#' Summarise functions used in R package
+# Copyright 2022 DARWIN EU®
+#
+# This file is part of IncidencePrevalence
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+#' DEP_summariseFunctionUse
 #'
-#'Deprecated
+#' DEPRECATED Summarise functions used in R package
 #'
 #' @import funspotr
 #' @import here
 #' @import dplyr
 #'
 #' @return tibble
+#'
+#' @examples
 DEP_summariseFunctionUse <- function() {
   r_files <- list.files(here::here("R"))
   deps_used <- list()
@@ -28,7 +47,7 @@ DEP_summariseFunctionUse <- function() {
 
 #' funsUsedInLine
 #'
-#'Support function for funsUsedInFile
+#' Support function for funsUsedInFile.
 #'
 #' @import stringr
 #' @import dplyr
@@ -41,6 +60,8 @@ DEP_summariseFunctionUse <- function() {
 #'
 #' @return data.frame of 3 colums: Package (pkg); Function (fun); Line in
 #' script (line)
+#'
+#' @examples
 funsUsedInLine <- function(file_txt, file_name, i, verbose=FALSE) {
   line <- file_txt[i]
 
@@ -70,8 +91,6 @@ funsUsedInLine <- function(file_txt, file_name, i, verbose=FALSE) {
     df <- data.frame(t(sapply(fun_vec, unlist)))
     names(df) <- c("pkg", "fun")
 
-    # defaultLibs <- rownames(installed.packages(priority="base"))
-
     df$r_file <- rep(file_name, dim(df)[1])
     df$line <- rep(i, dim(df)[1])
     return(dplyr::tibble(df))
@@ -86,6 +105,8 @@ funsUsedInLine <- function(file_txt, file_name, i, verbose=FALSE) {
 
 #' funsUsedInFile
 #'
+#' Support function
+#'
 #' @import dplyr
 #' @import here
 #'
@@ -93,6 +114,8 @@ funsUsedInLine <- function(file_txt, file_name, i, verbose=FALSE) {
 #' @param verbose Verbosity
 #'
 #' @return table
+#'
+#' @examples
 funsUsedInFile <- function(files, verbose = FALSE) {
   dplyr::bind_rows(lapply(X = files, FUN = function(file) {
     if(verbose) {
@@ -109,6 +132,8 @@ funsUsedInFile <- function(files, verbose = FALSE) {
   }))
 }
 
+#' summariseFunctionUse
+#'
 #' Summarise functions used in R package
 #'
 #' @param r_files r_files
@@ -116,8 +141,12 @@ funsUsedInFile <- function(files, verbose = FALSE) {
 #' currently being worked on.
 #'
 #' @import dplyr
-#' @export
+#'
 #' @return tibble
+#'
+#' @export
+#'
+#' @examples
 summariseFunctionUse <- function(r_files, verbose = FALSE) {
   deps_used <- funsUsedInFile(r_files, verbose)
 

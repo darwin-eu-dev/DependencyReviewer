@@ -20,5 +20,5 @@ data.frame of 3 colums: Package (pkg); Function (fun); Line in
 script (line)
 }
 \description{
-Support function for funsUsedInFile
+Support function for funsUsedInFile.
 }

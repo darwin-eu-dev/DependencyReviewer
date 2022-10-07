@@ -12,5 +12,5 @@ messagePermission(i, not_permitted)
 \item{not_permitted}{Not permitted}
 }
 \description{
-messagePermission
+Helper message function
 }

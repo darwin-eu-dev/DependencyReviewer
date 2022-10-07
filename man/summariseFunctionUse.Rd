@@ -2,7 +2,7 @@
 % Please edit documentation in R/summariseFunctionUse.R
 \name{summariseFunctionUse}
 \alias{summariseFunctionUse}
-\title{Summarise functions used in R package}
+\title{summariseFunctionUse}
 \usage{
 summariseFunctionUse(r_files, verbose = FALSE)
 }

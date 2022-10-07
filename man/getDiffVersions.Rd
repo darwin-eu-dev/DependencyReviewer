@@ -15,5 +15,5 @@ getDiffVersions(dependencies, permittedPackages)
 Versions of permitted packages
 }
 \description{
-getDiffVersions
+Helper function
 }

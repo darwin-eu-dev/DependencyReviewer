@@ -7,7 +7,7 @@
 runShiny()
 }
 \description{
-runShiny
+Runs a Shiny app for dependency investigation.
 }
 \examples{
 runShiny

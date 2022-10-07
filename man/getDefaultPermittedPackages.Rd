@@ -11,5 +11,5 @@ tibble of two columns (package, version) with all 'allowed'
 packages.
 }
 \description{
-getDefaultPermittedpackages
+Gets permitted packages
 }

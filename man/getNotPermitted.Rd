@@ -15,5 +15,5 @@ getNotPermitted(dependencies, permittedPackages)
 Returns vector of not permitted packages
 }
 \description{
-getNotPermitted
+Helper function
 }

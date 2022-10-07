@@ -4,7 +4,7 @@
 \alias{funsUsedInFile}
 \title{funsUsedInFile}
 \usage{
-funsUsedInFile(files, verbose)
+funsUsedInFile(files, verbose = FALSE)
 }
 \arguments{
 \item{files}{Files to get functions from}
@@ -15,5 +15,5 @@ funsUsedInFile(files, verbose)
 table
 }
 \description{
-funsUsedInFile
+Support function
 }

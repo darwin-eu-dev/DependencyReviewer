@@ -1,5 +1,22 @@
-# === Helper functions
+# Copyright 2022 DARWIN EU®
+#
+# This file is part of IncidencePrevalence
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 #' getDiffVersions
+#'
+#' Helper function
 #'
 #' @import dplyr
 #'
@@ -7,6 +24,8 @@
 #' @param permittedPackages permittedPackages
 #'
 #' @return Versions of permitted packages
+#'
+#' @examples
 getDiffVersions <- function(dependencies, permittedPackages) {
   permittedPackages %>%
     dplyr::filter(!is.na(version)) %>%
@@ -19,12 +38,16 @@ getDiffVersions <- function(dependencies, permittedPackages) {
 
 #' getNotPermitted
 #'
+#' Helper function
+#'
 #' @import dplyr
 #'
 #' @param dependencies Dependencies
 #' @param permittedPackages Packages that are permitted as character vector
 #'
 #' @return Returns vector of not permitted packages
+#'
+#' @examples
 getNotPermitted <- function(dependencies, permittedPackages) {
   # check if dependencies are permitted
   not_permitted <- dependencies %>%
@@ -37,8 +60,9 @@ getNotPermitted <- function(dependencies, permittedPackages) {
     dplyr::pull()
 }
 
-# --- Message functions
 #' messagePermission
+#'
+#' Helper message function
 #'
 #' @import cli
 #'
@@ -50,10 +74,14 @@ messagePermission <- function(i, not_permitted) {
 
 #' messagePackageVersion
 #'
+#' Helper message function
+#'
 #' @import cli
 #'
 #' @param i iterator
 #' @param diffVersions different versions
+#'
+#' @examples
 messagePackageVersion <- function(i, diffVersions) {
   cli::cli_alert("  {.pkg {i}) {diffVersions[i]}}")
   cli::cli_alert("    {.pkg currently required: {diffVersions$version[i]}}")
@@ -69,8 +97,13 @@ messagePackageVersion <- function(i, diffVersions) {
 #' @param dependencyType Imports, depends, and/ or suggests
 #'
 #' @export
-checkDependencies <- function(packageName = NULL,
-                              dependencyType = c("Imports", "Depends")) {
+#'
+#' @return
+#'
+#' @examples
+checkDependencies <- function(
+    packageName = NULL,
+    dependencyType = c("Imports", "Depends")) {
 
   # find dependencies
   if(is.null(packageName)) {
