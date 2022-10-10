@@ -24,8 +24,6 @@
 #' @import dplyr
 #'
 #' @return tibble
-#'
-#' @examples
 DEP_summariseFunctionUse <- function() {
   r_files <- list.files(here::here("R"))
   deps_used <- list()
@@ -60,8 +58,6 @@ DEP_summariseFunctionUse <- function() {
 #'
 #' @return data.frame of 3 colums: Package (pkg); Function (fun); Line in
 #' script (line)
-#'
-#' @examples
 funsUsedInLine <- function(file_txt, file_name, i, verbose=FALSE) {
   line <- file_txt[i]
 
@@ -114,15 +110,17 @@ funsUsedInLine <- function(file_txt, file_name, i, verbose=FALSE) {
 #' @param verbose Verbosity
 #'
 #' @return table
-#'
-#' @examples
-funsUsedInFile <- function(files, verbose = FALSE) {
+funsUsedInFile <- function(files, verbose = FALSE, in_package = TRUE) {
   dplyr::bind_rows(lapply(X = files, FUN = function(file) {
     if(verbose) {
       message(glue::glue("Started on file: ", file))
     }
 
-    file_txt <- readLines(here::here("R", file))
+    if(in_package) {
+      file_txt <- readLines(here::here("R", file))
+    } else {
+      file_txt <- readLines(file)
+    }
 
     out <- sapply(
       X = 1:length(file_txt),
@@ -139,18 +137,26 @@ funsUsedInFile <- function(files, verbose = FALSE) {
 #' @param r_files r_files
 #' @param verbose Default: FALSE; prints message to console which file is
 #' currently being worked on.
+#' @param in_package Default: TRUE; Indicate if the function is called within a
+#' package project or not.
+#' TRUE: expects a file name "myFile.R", may be a vector of multiple.
+#' FALSE: expects a file path "./my/file/path/myFile.R", my be a vector of
+#' multiple
 #'
 #' @import dplyr
 #'
 #' @return tibble
 #'
 #' @export
-#'
-#' @examples
-summariseFunctionUse <- function(r_files, verbose = FALSE) {
-  deps_used <- funsUsedInFile(r_files, verbose)
+summariseFunctionUse <- function(r_files, verbose = FALSE, in_package = TRUE) {
+  tryCatch({
+    deps_used <- funsUsedInFile(r_files, verbose, in_package)
+  }, error = function(e) {
+    stop(paste(r_files, "not found"))
+  })
 
   if (nrow(deps_used) == 0) {
+    warning("No functions found, output will be empty")
     deps_used <- tibble(
       r_file = character(0),
       line = numeric(0),
