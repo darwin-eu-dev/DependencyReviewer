@@ -1,6 +1,6 @@
 #' getGraphData
 #'
-#' @return
+#' @return net_data graph data
 #' @export
 #'
 getGraphData <- function() {
