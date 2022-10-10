@@ -4,7 +4,7 @@
 \alias{funsUsedInFile}
 \title{funsUsedInFile}
 \usage{
-funsUsedInFile(files, verbose = FALSE)
+funsUsedInFile(files, verbose = FALSE, in_package = TRUE)
 }
 \arguments{
 \item{files}{Files to get functions from}

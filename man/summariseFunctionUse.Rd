@@ -4,13 +4,19 @@
 \alias{summariseFunctionUse}
 \title{summariseFunctionUse}
 \usage{
-summariseFunctionUse(r_files, verbose = FALSE)
+summariseFunctionUse(r_files, verbose = FALSE, in_package = TRUE)
 }
 \arguments{
 \item{r_files}{r_files}
 
 \item{verbose}{Default: FALSE; prints message to console which file is
 currently being worked on.}
+
+\item{in_package}{Default: TRUE; Indicate if the function is called within a
+package project or not.
+TRUE: expects a file name "myFile.R", may be a vector of multiple.
+FALSE: expects a file path "./my/file/path/myFile.R", my be a vector of
+multiple}
 }
 \value{
 tibble
