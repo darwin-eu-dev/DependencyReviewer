@@ -59,9 +59,8 @@ DEP_summariseFunctionUse <- function() {
 #' @return data.frame of 3 colums: Package (pkg); Function (fun); Line in
 #' script (line)
 funsUsedInLine <- function(file_txt, file_name, i, verbose=FALSE) {
+  line <- file_txt[i]
   if (!startsWith(line, "#")) {
-    line <- file_txt[i]
-
     line <- paste(stringr::str_split(
         string = line,
         pattern = "\\w+\\$",
@@ -157,11 +156,11 @@ funsUsedInFile <- function(files, verbose = FALSE, in_package = TRUE) {
 #'
 #' @export
 summariseFunctionUse <- function(r_files, verbose = FALSE, in_package = TRUE) {
-  tryCatch({
-    deps_used <- funsUsedInFile(r_files, verbose, in_package)
-  }, error = function(e) {
-    stop(paste(r_files, "not found"))
-  })
+  #tryCatch({
+  deps_used <- funsUsedInFile(r_files, verbose, in_package)
+  # }, error = function(e) {
+  #   stop(paste(r_files, "not found"))
+  # })
 
   if (nrow(deps_used) == 0) {
     warning("No functions found, output will be empty")
@@ -179,3 +178,4 @@ summariseFunctionUse <- function(r_files, verbose = FALSE, in_package = TRUE) {
   deps_used$pkg[deps_used$fun %in% ls("package:base")] <- "base"
   return(deps_used)
 }
+
