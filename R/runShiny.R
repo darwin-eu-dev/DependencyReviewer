@@ -19,6 +19,7 @@
 #' Runs a Shiny app for dependency investigation.
 #'
 #' @importFrom shiny shinyAppDir
+#' @importFrom magrittr %>%
 #' @import shinyAce
 #' @import ggplot2
 #' @import here

@@ -22,6 +22,7 @@
 #' @param session
 #'
 #' @importFrom shiny shinyServer, observe, reactive, updateCheckboxGroupInput
+#' @importFrom magrittr %>%
 #' @import shinyAce
 #' @import ggplot2
 #' @import here
