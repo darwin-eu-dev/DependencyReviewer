@@ -21,25 +21,26 @@
 #' @param output
 #' @param session
 #'
-#' @import shiny
+#' @importFrom shiny shinyServer, observe, reactive, updateCheckboxGroupInput
 #' @import shinyAce
 #' @import ggplot2
 #' @import here
 #' @import DT
 #' @import ggplot2
 #' @import dplyr
+
 #'
 #' @return
 #'
 #' @examples
-shiny::shinyServer(function(input, output, session) {
+shinyServer(function(input, output, session) {
   readFile <- shiny::reactive({
     paste(
       readLines(here::here("R", input$file)),
       collapse = "\n")
   })
 
-  shiny::observe({
+  observe({
     shinyAce::updateAceEditor(
       editorId = "ace",
       session = session,
@@ -53,13 +54,13 @@ shiny::shinyServer(function(input, output, session) {
       filter(!pkg %in% input$excludes)
   })
 
-  getData <- shiny::reactive({
+  getData <- reactive({
     DependencyReviewer::summariseFunctionUse(
       r_files = input$file)
   })
 
   observe({
-    shiny::updateCheckboxGroupInput(
+    updateCheckboxGroupInput(
       inline = TRUE,
       session = session,
       inputId = "excludes",
