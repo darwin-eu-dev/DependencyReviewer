@@ -59,41 +59,49 @@ DEP_summariseFunctionUse <- function() {
 #' @return data.frame of 3 colums: Package (pkg); Function (fun); Line in
 #' script (line)
 funsUsedInLine <- function(file_txt, file_name, i, verbose=FALSE) {
-  line <- file_txt[i]
+  if (!startsWith(line, "#")) {
+    line <- file_txt[i]
 
-  fun_vec <- unlist(stringr::str_extract_all(
-    string = line,
-    pattern = "(\\w+::(?:\\w+\\.)?\\w+\\(|(?:\\w+\\.)?\\w+\\()"))
+    line <- paste(stringr::str_split(
+        string = line,
+        pattern = "\\w+\\$",
+        simplify = TRUE),
+      collapse = "")
 
-  fun_vec <- stringr::str_remove_all(
-    string = fun_vec,
-    pattern = "\\(")
+    fun_vec <- unlist(stringr::str_extract_all(
+      string = line,
+      pattern = "(\\w+::(?:\\w+\\.)?\\w+\\(|(?:\\w+\\.)?\\w+\\()"))
 
-  fun_vec <- stringr::str_split(
-    string = fun_vec,
-    pattern = "::")
+    fun_vec <- stringr::str_remove_all(
+      string = fun_vec,
+      pattern = "\\(")
 
-  if(length(fun_vec) > 0) {
-    fun_vec <- lapply(
-      X = fun_vec,
-      FUN = function(x) {
-        if(length(x) == 1) {
-          x <- list("unknown", x)
-        } else {
-          list(x)
-        }
-      })
+    fun_vec <- stringr::str_split(
+      string = fun_vec,
+      pattern = "::")
 
-    df <- data.frame(t(sapply(fun_vec, unlist)))
-    names(df) <- c("pkg", "fun")
+    if(length(fun_vec) > 0) {
+      fun_vec <- lapply(
+        X = fun_vec,
+        FUN = function(x) {
+          if(length(x) == 1) {
+            x <- list("unknown", x)
+          } else {
+            list(x)
+          }
+        })
 
-    df$r_file <- rep(file_name, dim(df)[1])
-    df$line <- rep(i, dim(df)[1])
-    return(dplyr::tibble(df))
+      df <- data.frame(t(sapply(fun_vec, unlist)))
+      names(df) <- c("pkg", "fun")
 
-  } else {
-    if(verbose == TRUE) {
-      message(glue::glue("No functions found for line: ", i))
+      df$r_file <- rep(file_name, dim(df)[1])
+      df$line <- rep(i, dim(df)[1])
+      return(dplyr::tibble(df))
+
+    } else {
+      if(verbose == TRUE) {
+        message(glue::glue("No functions found for line: ", i))
+      }
     }
   }
 }
