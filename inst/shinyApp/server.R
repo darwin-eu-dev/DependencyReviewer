@@ -93,4 +93,21 @@ shinyServer(function(input, output, session) {
           hjust = 1,
           vjust = 1)))
   })
+
+  graphData <- reactive({
+    getGraphData()
+  })
+
+  output$graph <- renderPlot({
+    ggraph(
+      graph = graphData(),
+      layout = 'dendrogram',
+      circular = TRUE) +
+      geom_edge_diagonal() +
+      geom_node_text(aes(
+        label = name),
+        check_overlap = TRUE) +
+      coord_fixed() +
+      theme_void()
+  })
 })

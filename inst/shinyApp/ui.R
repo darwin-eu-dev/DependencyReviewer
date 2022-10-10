@@ -59,7 +59,13 @@ shiny::shinyUI(
         tabPanel(
           "Plot",
           shiny::plotOutput("plot")
-          )
+          ),
+        tabPanel(
+          "Dependency Graph",
+          shiny::plotOutput(
+            outputId = "graph",
+            height = "100em",
+            width = "100em"))
         )
       )
     )
