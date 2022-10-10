@@ -24,8 +24,6 @@
 #' @param permittedPackages permittedPackages
 #'
 #' @return Versions of permitted packages
-#'
-#' @examples
 getDiffVersions <- function(dependencies, permittedPackages) {
   permittedPackages %>%
     dplyr::filter(!is.na(version)) %>%
@@ -46,8 +44,6 @@ getDiffVersions <- function(dependencies, permittedPackages) {
 #' @param permittedPackages Packages that are permitted as character vector
 #'
 #' @return Returns vector of not permitted packages
-#'
-#' @examples
 getNotPermitted <- function(dependencies, permittedPackages) {
   # check if dependencies are permitted
   not_permitted <- dependencies %>%
@@ -80,8 +76,6 @@ messagePermission <- function(i, not_permitted) {
 #'
 #' @param i iterator
 #' @param diffVersions different versions
-#'
-#' @examples
 messagePackageVersion <- function(i, diffVersions) {
   cli::cli_alert("  {.pkg {i}) {diffVersions[i]}}")
   cli::cli_alert("    {.pkg currently required: {diffVersions$version[i]}}")
@@ -97,10 +91,6 @@ messagePackageVersion <- function(i, diffVersions) {
 #' @param dependencyType Imports, depends, and/ or suggests
 #'
 #' @export
-#'
-#' @return
-#'
-#' @examples
 checkDependencies <- function(
     packageName = NULL,
     dependencyType = c("Imports", "Depends")) {

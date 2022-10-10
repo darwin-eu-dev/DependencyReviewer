@@ -24,8 +24,6 @@
 #' @import readr
 #'
 #' @export
-#'
-#' @examples
 getDefaultPermittedPackages <- function() {
   permittedDependencies <- readr::read_csv(
     system.file(

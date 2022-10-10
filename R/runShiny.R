@@ -18,7 +18,7 @@
 #'
 #' Runs a Shiny app for dependency investigation.
 #'
-#' @import shiny
+#' @importFrom shiny shinyAppDir
 #' @import shinyAce
 #' @import ggplot2
 #' @import here
@@ -36,6 +36,6 @@ runShiny <- function() {
   if (appDir == "") {
     stop("Could not find shiny application")
   } else {
-    shiny::shinyAppDir(appDir)
+    shinyAppDir(appDir)
   }
 }
