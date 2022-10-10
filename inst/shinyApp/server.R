@@ -95,7 +95,7 @@ shinyServer(function(input, output, session) {
   })
 
   graphData <- reactive({
-    getGraphData()
+    DependencyReviewer::getGraphData()
   })
 
   output$graph <- renderPlot({

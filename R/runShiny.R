@@ -22,6 +22,7 @@
 #' @importFrom magrittr %>%
 #' @import shinyAce
 #' @import ggplot2
+#' @import ggraph
 #' @import here
 #' @import DT
 #' @import ggplot2
