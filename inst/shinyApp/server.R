@@ -82,7 +82,7 @@ shinyServer(function(input, output, session) {
 
   graphData <- reactive({
     validate(
-      need(DependencyReviewer::getGraphData(), "Not all packages are availible")
+      need(try(DependencyReviewer::getGraphData()), "Not all packages are availible")
     )
   })
 
