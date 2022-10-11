@@ -87,8 +87,9 @@ shinyServer(function(input, output, session) {
   })
 
   output$graph <- renderPlot({
+    graph <- graphData()
     ggraph::ggraph(
-      graph = graphData(),
+      graph = graph,
       layout = 'dendrogram',
       circular = TRUE) +
       ggraph::geom_edge_diagonal() +
