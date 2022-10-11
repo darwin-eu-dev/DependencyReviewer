@@ -27,7 +27,6 @@
 #' @import ggplot2
 #' @import here
 #' @import DT
-#' @import ggplot2
 #' @import dplyr
 
 #'
@@ -35,6 +34,10 @@
 #'
 #' @examples
 shinyServer(function(input, output, session) {
+  library(dplyr)
+  library(ggraph)
+  library(tidygraph)
+
   readFile <- shiny::reactive({
     paste(
       readLines(here::here("R", input$file)),
