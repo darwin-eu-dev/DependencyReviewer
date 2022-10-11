@@ -27,7 +27,9 @@ Imports:
     shiny,
     shinyAce,
     DT,
-    ggplot2
+    ggplot2,
+    ggraph,
+    tidygraph
 Remotes:
     brshallo/funspotr
 RoxygenNote: 7.2.1

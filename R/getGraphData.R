@@ -5,7 +5,7 @@
 #'
 getGraphData <- function() {
   # Get all dependencies using pak
-  data <- pak::local_dev_deps(dependencies = TRUE)
+  data <- pak::local_deps(dependencies = TRUE)
 
   # Reformat dependencies to long format
   pkg_deps <- dplyr::bind_rows(lapply(X = 1:nrow(data), FUN = function(row) {
