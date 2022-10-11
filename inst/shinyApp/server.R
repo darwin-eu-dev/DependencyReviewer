@@ -96,7 +96,7 @@ shinyServer(function(input, output, session) {
       ggraph::geom_node_text(aes(
         label = name),
         check_overlap = TRUE) +
-      ggraph::coord_fixed() +
+      ggplot2::coord_fixed() +
       ggplot2::theme_void()
   })
 })
