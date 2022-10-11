@@ -87,15 +87,15 @@ shinyServer(function(input, output, session) {
   })
 
   output$graph <- renderPlot({
-    ggraph(
+    ggraph::ggraph(
       graph = graphData(),
       layout = 'dendrogram',
       circular = TRUE) +
-      geom_edge_diagonal() +
-      geom_node_text(aes(
+      ggraph::geom_edge_diagonal() +
+      ggraph::geom_node_text(aes(
         label = name),
         check_overlap = TRUE) +
-      coord_fixed() +
-      theme_void()
+      ggraph::coord_fixed() +
+      ggplot2::theme_void()
   })
 })
