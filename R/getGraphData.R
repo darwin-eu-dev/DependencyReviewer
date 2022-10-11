@@ -3,9 +3,9 @@
 #' @return net_data graph data
 #' @export
 #'
-getGraphData <- function() {
+getGraphData <- function(path = here::here()) {
   # Get all dependencies using pak
-  data <- pak::local_deps(dependencies = TRUE)
+  data <- pak::local_deps(path, dependencies = TRUE)
 
   # Reformat dependencies to long format
   pkg_deps <- dplyr::bind_rows(lapply(X = 1:nrow(data), FUN = function(row) {
