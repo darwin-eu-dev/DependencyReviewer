@@ -14,30 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Libraries
+library(dplyr)
+library(ggraph)
+library(tidygraph)
+
 # Shiny Server
-#' Title
-#'
-#' @param input
-#' @param output
-#' @param session
-#'
-#' @importFrom shiny shinyServer, observe, reactive, updateCheckboxGroupInput
-#' @importFrom magrittr %>%
-#' @import shinyAce
-#' @import ggplot2
-#' @import here
-#' @import DT
-#' @import dplyr
-
-#'
-#' @return
-#'
-#' @examples
 shinyServer(function(input, output, session) {
-  library(dplyr)
-  library(ggraph)
-  library(tidygraph)
-
   readFile <- shiny::reactive({
     paste(
       readLines(here::here("R", input$file)),
@@ -98,7 +81,9 @@ shinyServer(function(input, output, session) {
   })
 
   graphData <- reactive({
-    DependencyReviewer::getGraphData()
+    validate(
+      need(DependencyReviewer::getGraphData(), "Not all packages are availible")
+    )
   })
 
   output$graph <- renderPlot({
