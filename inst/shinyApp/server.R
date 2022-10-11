@@ -81,9 +81,10 @@ shinyServer(function(input, output, session) {
   })
 
   graphData <- reactive({
-    validate(
-      need(try(DependencyReviewer::getGraphData()), "Not all packages are availible")
-    )
+    validate(need(
+      try(DependencyReviewer::getGraphData()),
+          "Not all packages are availible,
+          check the console for more information."))
   })
 
   output$graph <- renderPlot({
