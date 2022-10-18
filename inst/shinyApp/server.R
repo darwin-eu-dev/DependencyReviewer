@@ -87,16 +87,31 @@ shinyServer(function(input, output, session) {
   })
 
   output$graph <- renderPlot({
-    graph <- graphData()
-    ggraph::ggraph(
-      graph = graph,
-      layout = 'dendrogram',
-      circular = TRUE) +
-      ggraph::geom_edge_diagonal() +
-      ggraph::geom_node_text(aes(
-        label = name),
-        check_overlap = TRUE) +
-      ggplot2::coord_fixed() +
-      ggplot2::theme_void()
-  })
+    shiny::withProgress(
+      message = "Creating graph",
+      min = 0,
+      max = 2,
+      expr = {
+        shiny::incProgress(
+          amount = 1,
+          message = "Fetching Dependency Data")
+
+        graph <- graphData()
+
+        shiny::incProgress(
+          amount = 1,
+          message = "Plotting Dependencies in Graph")
+
+        ggraph::ggraph(
+          graph = graph,
+          layout = 'dendrogram',
+          circular = TRUE) +
+          ggraph::geom_edge_diagonal() +
+          ggraph::geom_node_text(aes(
+            label = name),
+            check_overlap = TRUE) +
+          ggplot2::coord_fixed() +
+          ggplot2::theme_void()
+      })
+    })
 })
