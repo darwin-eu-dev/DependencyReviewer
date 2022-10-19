@@ -64,22 +64,24 @@ shiny::shinyUI(
         tabPanel(
           "Dependency Graph",
           shiny::sidebarLayout(
-            shiny::checkboxGroupInput(
-              inline = TRUE,
-              inputId = "excludes_all",
-              label = "Exclude Packages",
-              choices = c("base", "unknown")),
+            sidebarPanel = shiny::sidebarPanel(width = 2,
+              # shiny::checkboxGroupInput(
+              #   inline = TRUE,
+              #   inputId = "excludes_all",
+              #   label = "Exclude Packages",
+              #   choices = c("base", "unknown")),
 
-            shiny::numericInput(
-              inputId = "iter",
-              label = "Iterations",
-              value = 1000)
-          ),
-          shiny::mainPanel(
-            shiny::plotOutput(
-              outputId = "graph",
-              height = "60em",
-              width = "60em")
+              shiny::numericInput(
+                inputId = "iter",
+                label = "Iterations",
+                value = 1000)
+            ),
+            mainPanel = shiny::mainPanel(
+              shiny::plotOutput(
+                outputId = "graph",
+                height = "60em",
+                width = "60em")
+            )
           )
           )
         )
