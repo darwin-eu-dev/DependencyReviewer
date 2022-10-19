@@ -8,13 +8,13 @@ getGraphData <- function(path = here::here(), excluded_packages = c("")) {
   data <- pak::local_deps(path, dependencies = TRUE)
 
   # Filter data
-  data <- data %>% dplyr::filter(!package %in% excluded_packages)
+  fData <- data %>% dplyr::filter(!package %in% excluded_packages)
 
   # Reformat dependencies to long format
-  pkg_deps <- dplyr::bind_rows(lapply(X = 1:nrow(data), FUN = function(row) {
-    deps <- unique(unlist(data[row, ]["deps"]))
+  pkg_deps <- dplyr::bind_rows(lapply(X = 1:nrow(fData), FUN = function(row) {
+    deps <- unique(unlist(fData[row, ]["deps"]))
 
-    pkg <- unlist(rep(data[row, ]["package"], length(deps)))
+    pkg <- unlist(rep(fData[row, ]["package"], length(deps)))
     dplyr::tibble(pkg = pkg, deps = deps)
   }))
 
