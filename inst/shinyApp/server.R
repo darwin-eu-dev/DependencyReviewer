@@ -81,10 +81,20 @@ shinyServer(function(input, output, session) {
   })
 
   graphData <- reactive({
-    print(input$excludes)
-    DependencyReviewer::getGraphData(excluded_packages = input$excludes)
+    DependencyReviewer::getGraphData(
+      excluded_packages = input$excludes_all)
     # "Not all packages are availible,
     # check the console for more information."
+  })
+
+  observe({
+    updateCheckboxGroupInput(
+      inline = TRUE,
+      session = session,
+      inputId = "excludes_all",
+      choices = unique(
+        DependencyReviewer::summariseFunctionUse(
+          r_files = list.files(here::here("R")))$pkg))
   })
 
   output$graph <- renderPlot({
@@ -104,7 +114,7 @@ shinyServer(function(input, output, session) {
           message = "Plotting Dependencies in Graph")
 
         ggraph::ggraph(
-          data,
+          graph,
           layout = "kk",
           maxiter = input$iter) +
           ggraph::geom_edge_fan(
