@@ -8,14 +8,14 @@ getGraphData <- function(path = here::here(), excluded_packages = c("")) {
   data <- pak::local_deps(path, dependencies = TRUE)
 
   # Filter data
-  #fData <- data %>% dplyr::filter(!package %in% excluded_packages)
+  fData <- data %>% dplyr::filter(!package %in% excluded_packages)
 
-  # sapply(
-  #   X = 1:nrow(fData),
-  #   FUN = function(row) {
-  #     fData[["deps"]][[row]] <- fData[["deps"]][[row]] %>%
-  #       filter(!package %in% excluded_packages)
-  #   })
+  sapply(
+    X = 1:nrow(fData),
+    FUN = function(row) {
+      fData[["deps"]][[row]] <- fData[["deps"]][[row]] %>%
+        filter(!package %in% excluded_packages)
+    })
 
   # Reformat dependencies to long format
   pkg_deps <- dplyr::bind_rows(lapply(X = 1:nrow(fData), FUN = function(row) {
