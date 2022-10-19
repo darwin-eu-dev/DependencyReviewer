@@ -81,8 +81,7 @@ shinyServer(function(input, output, session) {
   })
 
   graphData <- reactive({
-    DependencyReviewer::getGraphData(
-      excluded_packages = input$excludes)
+    DependencyReviewer::getGraphData()
     # "Not all packages are availible,
     # check the console for more information."
   })

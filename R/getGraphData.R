@@ -3,7 +3,7 @@
 #' @return net_data graph data
 #' @export
 #'
-getGraphData <- function(excluded_packages, path = here::here()) {
+getGraphData <- function(path = here::here(), excluded_packages = c("")) {
   # Get all dependencies using pak
   data <- pak::local_deps(path, dependencies = TRUE)
 
