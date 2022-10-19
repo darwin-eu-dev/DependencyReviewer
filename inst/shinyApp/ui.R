@@ -33,8 +33,14 @@ shiny::shinyUI(
           inline = TRUE,
           inputId = "excludes",
           label = "Exclude Packages",
-          choices = c("base", "unknown"))
+          choices = c("base", "unknown")),
+
+        shiny::numericInput(
+          inputId = "iter",
+          label = "Iterations",
+          value = 1000)
       ),
+
       mainPanel = shiny::mainPanel(
         width = 12,
         shiny::tabsetPanel(
@@ -64,8 +70,8 @@ shiny::shinyUI(
           "Dependency Graph",
           shiny::plotOutput(
             outputId = "graph",
-            height = "100em",
-            width = "100em"))
+            height = "60em",
+            width = "60em"))
         )
       )
     )

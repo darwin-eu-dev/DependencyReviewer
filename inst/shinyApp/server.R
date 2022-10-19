@@ -81,7 +81,8 @@ shinyServer(function(input, output, session) {
   })
 
   graphData <- reactive({
-    DependencyReviewer::getGraphData()
+    DependencyReviewer::getGraphData(
+      excluded_packages = input$excludes)
     # "Not all packages are availible,
     # check the console for more information."
   })
@@ -99,17 +100,19 @@ shinyServer(function(input, output, session) {
         graph <- graphData()
 
         shiny::incProgress(
-          amount = 1,
+          amount = 2,
           message = "Plotting Dependencies in Graph")
 
         ggraph::ggraph(
-          graph = graph,
-          layout = 'dendrogram',
-          circular = TRUE) +
-          ggraph::geom_edge_diagonal() +
-          ggraph::geom_node_text(aes(
-            label = name),
-            check_overlap = TRUE) +
+          data,
+          layout = "kk",
+          maxiter = input$iter) +
+          ggraph::geom_edge_fan(
+            alpha = 10) +
+          ggraph::geom_node_text(
+            mapping = aes(label = name),
+            size = 2,
+            colour = "red") +
           ggplot2::coord_fixed() +
           ggplot2::theme_void()
       })
