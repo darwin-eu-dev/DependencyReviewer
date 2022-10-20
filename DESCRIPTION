@@ -25,11 +25,13 @@ Imports:
     readr,
     stringr,
     shiny,
+    shinyjs,
     shinyAce,
     DT,
     ggplot2,
     ggraph,
-    tidygraph
+    tidygraph,
+    igraph
 Remotes:
     brshallo/funspotr
 RoxygenNote: 7.2.1

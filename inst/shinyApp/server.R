@@ -16,9 +16,9 @@
 
 # Libraries
 library(dplyr)
-library(ggraph)
-library(tidygraph)
-library(igraph)
+#library(ggraph)
+#library(tidygraph)
+#library(igraph)
 
 # Shiny Server
 shinyServer(function(input, output, session) {
@@ -120,8 +120,8 @@ shinyServer(function(input, output, session) {
           amount = 2,
           message = "Plotting Dependencies in Graph")
 
-        fEdge <- graph %>% activate(edges) %>% pull(from)
-        tEdge <- graph %>% activate(edges) %>% pull(to)
+        fEdge <- graph %>% tidygraph::activate(edges) %>% dplyr::pull(from)
+        tEdge <- graph %>% tidygraph::activate(edges) %>% dplyr::pull(to)
 
         pFrom <- fEdge[fEdge <= input$nPkgs]
         pTo <- tEdge[fEdge <= input$nPkgs]
@@ -136,13 +136,13 @@ shinyServer(function(input, output, session) {
             layout = input$model,
             maxiter = input$iter) +
             ggraph::geom_node_text(
-              mapping = aes(
-                filter = name %in% names(V(graph)[unique(c(pFrom, pTo))]),
+              mapping = ggplot2::aes(
+                filter = name %in% names(igraph::V(graph)[unique(c(pFrom, pTo))]),
                 label = name),
               size = 5,
               colour = "red") +
             ggraph::geom_edge_fan(
-              mapping = aes(
+              mapping = ggplot2::aes(
                 filter = from %in% pFrom & to %in% pTo))
         } else if(input$model %in% c("drl", "stress", "graphopt")) {
           shinyjs::enable("nPkgs")
@@ -154,53 +154,36 @@ shinyServer(function(input, output, session) {
             layout = input$model) +
             ggraph::geom_node_text(
               mapping = aes(
-                filter = name %in% names(V(graph)[unique(c(pFrom, pTo))]),
+                filter = name %in% names(igraph::V(graph)[unique(c(pFrom, pTo))]),
                 label = name),
               size = 5,
               colour = "red") +
             ggraph::geom_edge_fan(
-              mapping = aes(
+              mapping = ggplot2::aes(
                 filter = from %in% pFrom & to %in% pTo))
         } else if(input$model == "dendrogram") {
           shinyjs::disable(id = "iter")
           shinyjs::disable(id = "nPkgs")
           shinyjs::disable(id = "nPkgsNum")
 
-          g <- ggraph(
+          g <- ggraph::ggraph(
             graph = graph,
             layout = input$model,
             circular = TRUE) +
-            geom_edge_diagonal() +
-            geom_node_text(
+            ggraph::geom_edge_diagonal() +
+            ggraph::geom_node_text(
               check_overlap = TRUE,
-              mapping = aes(
+              mapping = ggplot2::aes(
                 x = x * 1.005,
                 y = y * 1.005,
                 label = name,
-                angle = -((-node_angle(x, y) + 90) %% 180) + 90),
+                angle = -((-ggraph::node_angle(x, y) + 90) %% 180) + 90),
               size = 5,
               colour = "red",
               hjust = 'outward')
         }
         g + ggplot2::coord_fixed() +
           ggplot2::theme_void()
-
-
-        # ggraph::ggraph(
-        #   graph,
-        #   layout = "kk",
-        #   maxiter = input$iter) +
-        #   ggraph::geom_edge_fan(
-        #     mapping = aes(
-        #       from %in% pFrom & to %in% pTo)) +
-        #   ggraph::geom_node_text(
-        #     mapping = aes(
-        #       filter = name %in% names(V(net_data)[unique(c(pFrom, pTo))]),
-        #       label = name),
-        #     size = 5,
-        #     colour = "red") +
-        #   ggplot2::coord_fixed() +
-        #   ggplot2::theme_void()
       })
     })
 })

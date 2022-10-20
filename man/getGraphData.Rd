@@ -4,7 +4,7 @@
 \alias{getGraphData}
 \title{getGraphData}
 \usage{
-getGraphData()
+getGraphData(path = here::here(), excluded_packages = c(""))
 }
 \value{
 net_data graph data
