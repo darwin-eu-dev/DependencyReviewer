@@ -93,7 +93,7 @@ shinyServer(function(input, output, session) {
       session = session,
       inputId = "nPkgs",
       value = input$nPkgsNum,
-      max = length(V(graphData())))
+      max = length(igraph::V(graphData())))
   })
 
   observe({
@@ -101,7 +101,7 @@ shinyServer(function(input, output, session) {
       session = session,
       inputId = "nPkgsNum",
       value = input$nPkgs,
-      max = length(V(graphData())))
+      max = length(igraph::V(graphData())))
   })
 
   output$graph <- renderPlot({
