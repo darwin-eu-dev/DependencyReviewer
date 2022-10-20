@@ -1,6 +1,10 @@
 #' getGraphData
 #'
 #' @return net_data graph data
+#' @import pak
+#' @import dplyr
+#' @import tidygraph
+#'
 #' @export
 #'
 getGraphData <- function(path = here::here(), excluded_packages = c("")) {
@@ -32,7 +36,7 @@ getGraphData <- function(path = here::here(), excluded_packages = c("")) {
       x = tolower(deps)))
 
   # Convert tibble to graph
-  net_data <- as_tbl_graph(
+  net_data <- tidygraph::as_tbl_graph(
     x = pkg_deps,
     directed = TRUE)
 }
