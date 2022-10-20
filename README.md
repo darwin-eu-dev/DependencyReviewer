@@ -45,12 +45,20 @@ checkDependencies()
 #> 
 #> ── Checking if packages in Imports and Depends have been approved ──
 #> 
-#> ! Found 4 packages in Imports and Depends that are not
+#> ! Found 12 packages in Imports and Depends that are not
 #> approved
 #> →   1) desc
-#> →   2) funspotr
-#> →   3) here
-#> →   4) readr
+#> →   2) DT
+#> →   3) funspotr
+#> →   4) ggplot2
+#> →   5) ggraph
+#> →   6) here
+#> →   7) igraph
+#> →   8) readr
+#> →   9) shiny
+#> →   10) shinyAce
+#> →   11) shinyjs
+#> →   12) tidygraph
 #> ! Please open an issue at https://github.com/darwin-eu/IncidencePrevalence
 #> to request approval for packages (one issue per package).
 #> 
@@ -70,16 +78,15 @@ r_files <- list.files(here::here("R"))
 function_use <- summariseFunctionUse(r_files)
 
 head(function_use)
-#> # A tibble: 6 × 5
-#> # Groups:   fun, pkg, line [6]
-#>   fun       pkg      line r_file                     n
-#>   <chr>     <chr>   <int> <chr>                  <int>
-#> 1 list      unknown   101 checkDependencies.R        2
-#> 2 anti_join dplyr      32 checkDependencies.R        1
-#> 3 arrange   dplyr      23 summariseFunctionUse.R     1
-#> 4 arrange   dplyr      36 checkDependencies.R        1
-#> 5 arrange   dplyr     140 summariseFunctionUse.R     1
-#> 6 bind_rows dplyr      20 summariseFunctionUse.R     1
+#> # A tibble: 6 × 4
+#>   r_file               line pkg   fun      
+#>   <chr>               <int> <chr> <chr>    
+#> 1 checkDependencies.R    27 base  function 
+#> 2 checkDependencies.R    29 dplyr filter   
+#> 3 checkDependencies.R    29 base  is.na    
+#> 4 checkDependencies.R    30 dplyr rename   
+#> 5 checkDependencies.R    31 dplyr left_join
+#> 6 checkDependencies.R    33 base  c
 ```
 
 ``` r
@@ -88,8 +95,10 @@ function_sub <- function_use %>%
   filter(pkg != "base") %>% 
   filter(pkg != "methods")
 
+fun_counts <- function_sub %>% group_by(fun, pkg, name = "n") %>% tally()
+
 ggplot(
-  data = function_sub, 
+  data = fun_counts, 
   mapping = aes(x = fun, y = n, fill = pkg)) +
   geom_col() +
   facet_wrap(
@@ -103,3 +112,17 @@ ggplot(
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+
+## ShinyApp
+
+Dependency Reviewer now includes a shiny app, which encapsulates all the
+functionality available in the package. The app consist of two sections:
+
+1.  Function Review (Function Review and Plot tab)
+
+![Function Review](man/figures/function_review.png) ![Function
+Review](man/figures/plot.png)
+
+2.  Dependency Graph (Dependency Graph tab)
+
+![Dependency Graph](man/figures/dependency_graph.png)

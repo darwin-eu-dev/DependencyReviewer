@@ -57,8 +57,10 @@ function_sub <- function_use %>%
   filter(pkg != "base") %>% 
   filter(pkg != "methods")
 
+fun_counts <- function_sub %>% group_by(fun, pkg, name = "n") %>% tally()
+
 ggplot(
-  data = function_sub, 
+  data = fun_counts, 
   mapping = aes(x = fun, y = n, fill = pkg)) +
   geom_col() +
   facet_wrap(
@@ -71,3 +73,17 @@ ggplot(
     axis.text.x = (element_text(angle = 45, hjust = 1, vjust = 1)))
 ```
 
+## ShinyApp
+
+Dependency Reviewer now includes a shiny app, which encapsulates all the 
+functionality available in the package. The app consist of two sections:
+
+1. Function Review (Function Review and Plot tab)
+
+![Function Review](man/figures/function_review.png)
+![Function Review](man/figures/plot.png)
+
+
+2. Dependency Graph (Dependency Graph tab)
+
+![Dependency Graph](man/figures/dependency_graph.png)
