@@ -17,6 +17,7 @@
 # Shiny UI
 shiny::shinyUI(
   shiny::fluidPage(
+    shinyjs::useShinyjs(),
     title = shiny::titlePanel(
       title = "Dependency Reviewer",
       windowTitle = TRUE),
@@ -65,17 +66,39 @@ shiny::shinyUI(
           "Dependency Graph",
           shiny::sidebarLayout(
             sidebarPanel = shiny::sidebarPanel(width = 2,
-              # shiny::checkboxGroupInput(
-              #   inline = TRUE,
-              #   inputId = "excludes_all",
-              #   label = "Exclude Packages",
-              #   choices = c("base", "unknown")),
+              shiny::selectInput(
+                inputId = "model",
+                label = "Model",
+                choices = c(
+                  "kk",
+                  "drl",
+                  "stress",
+                  "fr",
+                  "lgl",
+                  "graphopt",
+                  "dendrogram"),
+                selected = "kk"),
 
               shiny::numericInput(
                 inputId = "iter",
                 label = "Iterations",
-                value = 1000)
-            ),
+                value = 1000),
+
+              shiny::sliderInput(
+                inputId = "nPkgs",
+                label = "Number of Packages",
+                min = 1,
+                max = 100,
+                value = 10),
+
+              shiny::numericInput(
+                inputId = "nPkgsNum",
+                label = "Numeric: ",
+                min = 1,
+                max = 100,
+                value = 10)
+              ),
+
             mainPanel = shiny::mainPanel(
               shiny::plotOutput(
                 outputId = "graph",

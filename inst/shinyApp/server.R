@@ -18,6 +18,7 @@
 library(dplyr)
 library(ggraph)
 library(tidygraph)
+library(igraph)
 
 # Shiny Server
 shinyServer(function(input, output, session) {
@@ -88,13 +89,19 @@ shinyServer(function(input, output, session) {
   })
 
   observe({
-    updateCheckboxGroupInput(
-      inline = TRUE,
+    updateSliderInput(
       session = session,
-      inputId = "excludes_all",
-      choices = unique(
-        DependencyReviewer::summariseFunctionUse(
-          r_files = list.files(here::here("R")))$pkg))
+      inputId = "nPkgs",
+      value = input$nPkgsNum,
+      max = length(V(graphData())))
+  })
+
+  observe({
+    updateNumericInput(
+      session = session,
+      inputId = "nPkgsNum",
+      value = input$nPkgs,
+      max = length(V(graphData())))
   })
 
   output$graph <- renderPlot({
@@ -113,18 +120,87 @@ shinyServer(function(input, output, session) {
           amount = 2,
           message = "Plotting Dependencies in Graph")
 
-        ggraph::ggraph(
-          graph,
-          layout = "kk",
-          maxiter = input$iter) +
-          ggraph::geom_edge_fan(
-            alpha = 10) +
-          ggraph::geom_node_text(
-            mapping = aes(label = name),
-            size = 2,
-            colour = "red") +
-          ggplot2::coord_fixed() +
+        fEdge <- graph %>% activate(edges) %>% pull(from)
+        tEdge <- graph %>% activate(edges) %>% pull(to)
+
+        pFrom <- fEdge[fEdge <= input$nPkgs]
+        pTo <- tEdge[fEdge <= input$nPkgs]
+
+        if(input$model %in% c("kk", "fr", "lgl")) {
+          shinyjs::enable("iter")
+          shinyjs::enable("nPkgs")
+          shinyjs::enable("nPkgsNum")
+
+          g <- ggraph::ggraph(
+            graph,
+            layout = input$model,
+            maxiter = input$iter) +
+            ggraph::geom_node_text(
+              mapping = aes(
+                filter = name %in% names(V(graph)[unique(c(pFrom, pTo))]),
+                label = name),
+              size = 5,
+              colour = "red") +
+            ggraph::geom_edge_fan(
+              mapping = aes(
+                filter = from %in% pFrom & to %in% pTo))
+        } else if(input$model %in% c("drl", "stress", "graphopt")) {
+          shinyjs::enable("nPkgs")
+          shinyjs::enable("nPkgsNum")
+          shinyjs::disable(id = "iter")
+
+          g <- ggraph::ggraph(
+            graph,
+            layout = input$model) +
+            ggraph::geom_node_text(
+              mapping = aes(
+                filter = name %in% names(V(graph)[unique(c(pFrom, pTo))]),
+                label = name),
+              size = 5,
+              colour = "red") +
+            ggraph::geom_edge_fan(
+              mapping = aes(
+                filter = from %in% pFrom & to %in% pTo))
+        } else if(input$model == "dendrogram") {
+          shinyjs::disable(id = "iter")
+          shinyjs::disable(id = "nPkgs")
+          shinyjs::disable(id = "nPkgsNum")
+
+          g <- ggraph(
+            graph = graph,
+            layout = input$model,
+            circular = TRUE) +
+            geom_edge_diagonal() +
+            geom_node_text(
+              check_overlap = TRUE,
+              mapping = aes(
+                x = x * 1.005,
+                y = y * 1.005,
+                label = name,
+                angle = -((-node_angle(x, y) + 90) %% 180) + 90),
+              size = 5,
+              colour = "red",
+              hjust = 'outward')
+        }
+        g + ggplot2::coord_fixed() +
           ggplot2::theme_void()
+
+
+        # ggraph::ggraph(
+        #   graph,
+        #   layout = "kk",
+        #   maxiter = input$iter) +
+        #   ggraph::geom_edge_fan(
+        #     mapping = aes(
+        #       from %in% pFrom & to %in% pTo)) +
+        #   ggraph::geom_node_text(
+        #     mapping = aes(
+        #       filter = name %in% names(V(net_data)[unique(c(pFrom, pTo))]),
+        #       label = name),
+        #     size = 5,
+        #     colour = "red") +
+        #   ggplot2::coord_fixed() +
+        #   ggplot2::theme_void()
       })
     })
 })
