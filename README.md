@@ -91,9 +91,7 @@ head(function_use)
 
 ``` r
 function_sub <- function_use %>% 
-  filter(pkg != "unknown") %>% 
-  filter(pkg != "base") %>% 
-  filter(pkg != "methods")
+  filter(!pkg %in% c("unknown", "base", "method"))
 
 fun_counts <- function_sub %>% group_by(fun, pkg, name = "n") %>% tally()
 
@@ -104,7 +102,7 @@ ggplot(
   facet_wrap(
     vars(pkg), 
     scales = "free_x", 
-    ncol=2) +
+    ncol = 2) +
   theme_bw() +
   theme(
     legend.position = "none",
