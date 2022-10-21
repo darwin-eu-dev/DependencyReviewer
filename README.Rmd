@@ -31,11 +31,11 @@ remotes::install_github("darwin-eu/DependencyReviewer")
 
 ## Example
 Check whether dependencies in the description file are approved and whether the required version matches the current recommendation.
-```{r}
+```{r, message=FALSE}
 library(DependencyReviewer)
-library(CodelistGenerator)
 library(dplyr)
 library(ggplot2)
+library(pander)
 ```
 
 Without any options set, it will review the package you are currently inside:
@@ -48,7 +48,7 @@ r_files <- list.files(here::here("R"))
 
 function_use <- summariseFunctionUse(r_files)
 
-head(function_use)
+pander(head(function_use))
 ```
 
 ```{r, fig.height=10}
@@ -79,9 +79,15 @@ functionality available in the package. The app consist of two sections:
 1. Function Review (Function Review and Plot tab)
 
 ![Function Review](man/figures/function_review.png)
+This panel shows the locations of functions per file. The file can be changed in the top left. Packages that are found in this file can be filtered out, if desired.
+
+In a table on the left all functions are shown, with what package they're from and in what line they're found in the file. On the right the file being investigated is shown.
+
 ![Function Review](man/figures/plot.png)
+The *Plot* panel shows bar plots per package which are found in the investigated file. Filtering can be used to exclude packages.
 
 
 2. Dependency Graph (Dependency Graph tab)
 
 ![Dependency Graph](man/figures/dependency_graph.png)
+In the final tab panel a graph is shown of all packages and their dependencies. On the left hand side several options are shown. 1) *Layout* the layout of the graph; 2) *iterations* Number of iterations (if applicable for the selected layout) 3) *Number of Dependency layers* the amount of dependencies shown, with _their_ dependencies, as a slider, or numeric value.

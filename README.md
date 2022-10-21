@@ -24,17 +24,9 @@ whether the required version matches the current recommendation.
 
 ``` r
 library(DependencyReviewer)
-library(CodelistGenerator)
 library(dplyr)
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
 library(ggplot2)
+library(pander)
 ```
 
 Without any options set, it will review the package you are currently
@@ -77,17 +69,17 @@ r_files <- list.files(here::here("R"))
 
 function_use <- summariseFunctionUse(r_files)
 
-head(function_use)
-#> # A tibble: 6 × 4
-#>   r_file               line pkg   fun      
-#>   <chr>               <int> <chr> <chr>    
-#> 1 checkDependencies.R    27 base  function 
-#> 2 checkDependencies.R    29 dplyr filter   
-#> 3 checkDependencies.R    29 base  is.na    
-#> 4 checkDependencies.R    30 dplyr rename   
-#> 5 checkDependencies.R    31 dplyr left_join
-#> 6 checkDependencies.R    33 base  c
+pander(head(function_use))
 ```
+
+|       r_file        | line |  pkg  |    fun    |
+|:-------------------:|:----:|:-----:|:---------:|
+| checkDependencies.R |  27  | base  | function  |
+| checkDependencies.R |  29  | dplyr |  filter   |
+| checkDependencies.R |  29  | base  |   is.na   |
+| checkDependencies.R |  30  | dplyr |  rename   |
+| checkDependencies.R |  31  | dplyr | left_join |
+| checkDependencies.R |  33  | base  |     c     |
 
 ``` r
 function_sub <- function_use %>% 
@@ -118,9 +110,25 @@ functionality available in the package. The app consist of two sections:
 
 1.  Function Review (Function Review and Plot tab)
 
-![Function Review](man/figures/function_review.png) ![Function
-Review](man/figures/plot.png)
+![Function Review](man/figures/function_review.png) This panel shows the
+locations of functions per file. The file can be changed in the top
+left. Packages that are found in this file can be filtered out, if
+desired.
+
+In a table on the left all functions are shown, with what package
+they’re from and in what line they’re found in the file. On the right
+the file being investigated is shown.
+
+![Function Review](man/figures/plot.png) The *Plot* panel shows bar
+plots per package which are found in the investigated file. Filtering
+can be used to exclude packages.
 
 2.  Dependency Graph (Dependency Graph tab)
 
-![Dependency Graph](man/figures/dependency_graph.png)
+![Dependency Graph](man/figures/dependency_graph.png) In the final tab
+panel a graph is shown of all packages and their dependencies. On the
+left hand side several options are shown. 1) *Layout* the layout of the
+graph; 2) *iterations* Number of iterations (if applicable for the
+selected layout) 3) *Number of Dependency layers* the amount of
+dependencies shown, with *their* dependencies, as a slider, or numeric
+value.
