@@ -133,8 +133,8 @@ checkDependencies <- function(
       not_permitted = not_permitted)
 
     cli::cli_alert_warning(
-    "Please open an issue at https://github.com/darwin-eu/IncidencePrevalence
-    to request approval for packages (one issue per package).")
+    "Please add a comment at https://github.com/darwin-eu/DependencyReviewer/issues/6
+    to request approval for packages (one comment per package).")
     }
 
   # check if different version in current compared to recommended
