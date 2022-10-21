@@ -76,6 +76,7 @@ ggplot(
     legend.position = "none",
     axis.text.x = (element_text(angle = 45, hjust = 1, vjust = 1)))
 ```
+
 *unknown* and *base* are filtered out, and the functions are being tallied up for each package.
 
 *getGraphData* allows to easily get graph data for all the dependencies.

@@ -134,6 +134,7 @@ ggplot(
 ```
 
 <img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+
 *unknown* and *base* are filtered out, and the functions are being
 tallied up for each package.
 
