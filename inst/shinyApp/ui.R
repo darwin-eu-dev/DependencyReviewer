@@ -68,7 +68,7 @@ shiny::shinyUI(
             sidebarPanel = shiny::sidebarPanel(width = 2,
               shiny::selectInput(
                 inputId = "model",
-                label = "Model",
+                label = "Layout",
                 choices = c(
                   "kk",
                   "drl",
@@ -86,7 +86,7 @@ shiny::shinyUI(
 
               shiny::sliderInput(
                 inputId = "nPkgs",
-                label = "Number of Packages",
+                label = "Number of Dependency layers",
                 min = 1,
                 max = 100,
                 value = 10),
