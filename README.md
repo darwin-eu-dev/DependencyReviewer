@@ -64,6 +64,36 @@ checkDependencies()
 #> ! Please require recommended versions
 ```
 
+*getDefaultPermittedPackages* gets a table of all the ‘permitted’
+packages in the accompanying csv-file.
+
+``` r
+pander(getDefaultPermittedPackages())
+```
+
+|  package  |  version  |
+|:---------:|:---------:|
+|    cli    |    NA     |
+| checkmate |    NA     |
+|   glue    |    NA     |
+| magrittr  |    NA     |
+|   rlang   |    NA     |
+|    DBI    |    NA     |
+|  dbplyr   |    NA     |
+|   dplyr   | \>= 1.0.0 |
+|   tidyr   |    NA     |
+|   purrr   |    NA     |
+|  stringr  |    NA     |
+| lubridate |    NA     |
+
+Function use of all .R files can be investigated using the
+*sumariseFunctionUse* function. It assumes the function is is ran inside
+an R-project, and will automatically look for the files in the */R*
+folder. Functions where no package could not be found for, are binned
+under the *unknown* package. Usually base functions are not used as
+`base::mean()`. Therefore the function goes through all the base
+functions to bin them under the *base* package rather than *unknown*.
+
 ``` r
 r_files <- list.files(here::here("R"))
 
@@ -81,9 +111,11 @@ pander(head(function_use))
 | checkDependencies.R |  31  | dplyr | left_join |
 | checkDependencies.R |  33  | base  |     c     |
 
+The output could be plotted like so:
+
 ``` r
 function_sub <- function_use %>% 
-  filter(!pkg %in% c("unknown", "base", "method"))
+  filter(!pkg %in% c("unknown", "base"))
 
 fun_counts <- function_sub %>% group_by(fun, pkg, name = "n") %>% tally()
 
@@ -101,12 +133,80 @@ ggplot(
     axis.text.x = (element_text(angle = 45, hjust = 1, vjust = 1)))
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+*unknown* and *base* are filtered out, and the functions are being
+tallied up for each package.
+
+*getGraphData* allows to easily get graph data for all the dependencies.
+
+``` r
+graphData <- getGraphData()
+#> ℹ Loading metadata database✔ Loading metadata database ... done
+
+library(igraph)
+library(ggraph)
+
+ggraph(
+  graph = graphData, 
+  layout = "dendrogram",
+  circular = TRUE) +
+  ggraph::geom_edge_diagonal() +
+  ggraph::geom_node_text(
+    check_overlap = TRUE,
+    mapping = ggplot2::aes(
+      x = x * 1.005,
+      y = y * 1.005,
+      label = name,
+      angle = -((-ggraph::node_angle(x, y) + 90) %% 180) + 90),
+    size = 3,
+    colour = "red",
+    hjust = 'outward') + 
+  theme_void()
+```
+
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+
+If you would like to investigate dependencies there is a package named
+[PAK](https://pak.r-lib.org/dev/reference/features.html) that allows you
+to do various things like that. It is used in *DependencyReviewer* as a
+dependency to get all the dependency information.
+
+``` r
+library(pak)
+
+pkg_deps("darwin-eu/DependencyReviewer")
+#> # A data frame: 106 × 32
+#>    ref       type  direct direc…¹ status package version license needs…² prior…³
+#>    <chr>     <chr> <lgl>  <lgl>   <chr>  <chr>   <chr>   <chr>   <lgl>   <chr>  
+#>  1 darwin-e… gith… TRUE   TRUE    OK     Depend… 0.1.0   Apache… TRUE    <NA>   
+#>  2 MASS      stan… FALSE  FALSE   OK     MASS    7.3-58… GPL-2 … FALSE   recomm…
+#>  3 Matrix    stan… FALSE  FALSE   OK     Matrix  1.5-1   GPL (>… FALSE   recomm…
+#>  4 R6        stan… FALSE  FALSE   OK     R6      2.5.1   MIT + … FALSE   <NA>   
+#>  5 RColorBr… stan… FALSE  FALSE   OK     RColor… 1.1-3   Apache… FALSE   <NA>   
+#>  6 RcppArma… stan… FALSE  FALSE   OK     RcppAr… 0.11.4… GPL (>… FALSE   <NA>   
+#>  7 Rcpp      stan… FALSE  FALSE   OK     Rcpp    1.0.9   GPL (>… FALSE   <NA>   
+#>  8 backports stan… FALSE  FALSE   OK     backpo… 1.4.1   GPL-2 … FALSE   <NA>   
+#>  9 base64enc stan… FALSE  FALSE   OK     base64… 0.1-3   GPL-2 … FALSE   <NA>   
+#> 10 bit64     stan… FALSE  FALSE   OK     bit64   4.0.5   GPL-2 … FALSE   <NA>   
+#> # … with 96 more rows, 22 more variables: md5sum <chr>, sha256 <chr>,
+#> #   filesize <int>, built <chr>, platform <chr>, rversion <chr>,
+#> #   repotype <chr>, repodir <chr>, target <glue>, deps <list>, mirror <chr>,
+#> #   sources <list>, remote <list>, error <list>, metadata <list>,
+#> #   dep_types <list>, params <list>, sysreqs <chr>, cache_status <chr>,
+#> #   lib_status <chr>, old_version <chr>, new_version <chr>, and abbreviated
+#> #   variable names ¹​directpkg, ²​needscompilation, ³​priority
+```
 
 ## ShinyApp
 
 Dependency Reviewer now includes a shiny app, which encapsulates all the
 functionality available in the package. The app consist of two sections:
+
+The shiny app is launched using
+
+``` r
+runShiny()
+```
 
 1.  Function Review (Function Review and Plot tab)
 
