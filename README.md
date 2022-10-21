@@ -8,7 +8,14 @@
 [![Lifecycle:Experimental](https://img.shields.io/badge/Lifecycle-Experimental-339999)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
-## Installation
+## Table of Contents
+
+1.  [Installation](#Installation)
+2.  [Examples](#Examples)
+3.  [ShinyApp](#ShinyApp)
+4.  [To do](#To-do)
+
+## Installation <a name="Installation"></a>
 
 You can install the development version of DependencyReviewer like so:
 
@@ -17,7 +24,7 @@ install.packages("remotes")
 remotes::install_github("darwin-eu/DependencyReviewer")
 ```
 
-## Example
+## Examples <a name="Examples"></a>
 
 Check whether dependencies in the description file are approved and
 whether the required version matches the current recommendation.
@@ -198,7 +205,7 @@ pkg_deps("darwin-eu/DependencyReviewer")
 #> #   variable names ¹​directpkg, ²​needscompilation, ³​priority
 ```
 
-## ShinyApp
+## ShinyApp <a name="ShinyApp"></a>
 
 Dependency Reviewer now includes a shiny app, which encapsulates all the
 functionality available in the package. The app consist of two sections:
@@ -233,3 +240,10 @@ graph; 2) *iterations* Number of iterations (if applicable for the
 selected layout) 3) *Number of Dependency layers* the amount of
 dependencies shown, with *their* dependencies, as a slider, or numeric
 value.
+
+## To do <a name="To-do"></a>
+
+1.  Add an options to provide a path rather than file names to
+    summariseFunctionUse.
+2.  Update list of dependencies.
+3.  Add lintr functionality using the Hades style guide from OHDSI.
