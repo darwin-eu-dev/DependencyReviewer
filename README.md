@@ -51,8 +51,8 @@ checkDependencies()
 #> →   10) shinyAce
 #> →   11) shinyjs
 #> →   12) tidygraph
-#> ! Please open an issue at https://github.com/darwin-eu/IncidencePrevalence
-#> to request approval for packages (one issue per package).
+#> ! Please add a comment at https://github.com/darwin-eu/DependencyReviewer/issues/6
+#> to request approval for packages (one comment per package).
 #> 
 #> ── Checking if packages in Imports and Depends require recommended version ──
 #> 
