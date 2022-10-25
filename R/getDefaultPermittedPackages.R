@@ -22,6 +22,7 @@
 #' packages.
 #'
 #' @import readr
+#' @import tidyverse
 #'
 #' @export
 getDefaultPermittedPackages <- function() {
@@ -38,11 +39,17 @@ getDefaultPermittedPackages <- function() {
     dplyr::rename(package = Package, version = Built) %>%
     dplyr::tibble()
 
-  # Get CRAN packages
-  cranPackages <- data.frame(available.packages()) %>%
-    dplyr::select(Package, Version) %>%
-    dplyr::rename(package = Package, version = Version) %>%
-    dplyr::tibble()
+  # Get Tidyverse packages
+  tidyversePackages <- sapply(
+    X = tidyverse::tidyverse_packages(include_self = TRUE),
+    FUN = function(pkg) {
+      as.character(packageVersion(pkg))
+      }
+    )
+
+  tidyversePackages <- tibble(
+    package = names(tidyversePackages),
+    version = tidyversePackages)
 
   # Get HADES packages
   hadesPackages <- read.table(
