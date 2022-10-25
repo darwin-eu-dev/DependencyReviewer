@@ -62,7 +62,7 @@ getDefaultPermittedPackages <- function() {
 
   permittedPackages <- dplyr::bind_rows(
     basePackages,
-    cranPackages,
+    tidyversePackages,
     hadesPackages,
     permittedDependencies
   )
