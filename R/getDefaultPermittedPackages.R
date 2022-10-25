@@ -32,5 +32,33 @@ getDefaultPermittedPackages <- function() {
       package = "DependencyReviewer"),
     show_col_types = FALSE)
 
-  return(permittedDependencies)
+  # Get base packages
+  basePackages <- data.frame(installed.packages(priority = "base")) %>%
+    dplyr::select(Package, Built) %>%
+    dplyr::rename(package = Package, version = Built) %>%
+    dplyr::tibble()
+
+  # Get CRAN packages
+  cranPackages <- data.frame(available.packages()) %>%
+    dplyr::select(Package, Version) %>%
+    dplyr::rename(package = Package, version = Version) %>%
+    dplyr::tibble()
+
+  # Get HADES packages
+  hadesPackages <- read.table(
+    file = "https://raw.githubusercontent.com/OHDSI/Hades/main/extras/packages.csv",
+    sep = ",",
+    header = TRUE) %>% select(name) %>%
+    mutate(version = rep("*", length(names))) %>%
+    rename(package = name) %>%
+    tibble()
+
+  permittedPackages <- dplyr::bind_rows(
+    basePackages,
+    cranPackages,
+    hadesPackages,
+    permittedPackages
+  )
+
+  return(permittedPackages)
 }
