@@ -153,7 +153,7 @@ shinyServer(function(input, output, session) {
             graph,
             layout = input$model) +
             ggraph::geom_node_text(
-              mapping = aes(
+              mapping = ggplot2::aes(
                 filter = name %in% names(igraph::V(graph)[unique(c(pFrom, pTo))]),
                 label = name),
               size = 5,
