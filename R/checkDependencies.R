@@ -95,9 +95,6 @@ checkDependencies <- function(
     packageName = NULL,
     dependencyType = c("Imports", "Depends")) {
 
-  #packageName = NULL
-  #dependencyType = c("Imports", "Depends")
-
   # find dependencies
   if(is.null(packageName)) {
     description <-  desc::description$new()
@@ -110,14 +107,21 @@ checkDependencies <- function(
     dplyr::select("package", "version")
 
 
+  # Get base packages
+  basePackages <- data.frame(installed.packages(priority = "base")) %>%
+    dplyr::select(Package, Built) %>%
+    dplyr::rename(package = Package, version = Built) %>%
+    dplyr::tibble()
+
   # Get CRAN packages
   cranPackages <- data.frame(available.packages()) %>%
     dplyr::select(Package, Version) %>%
     dplyr::rename(package = Package, version = Version) %>%
-    tibble()
+    dplyr::tibble()
 
   # dependencies that are permitted
   permittedPackages <- dplyr::bind_rows(
+    basePackages,
     cranPackages,
     DependencyReviewer::getDefaultPermittedPackages())
 
