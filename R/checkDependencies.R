@@ -86,6 +86,7 @@ messagePackageVersion <- function(i, diffVersions) {
 #'
 #' @import dplyr
 #' @import cli
+#' @import knitr
 #'
 #' @param packageName Name of package to profile. If NULL current package
 #' @param dependencyType Imports, depends, and/ or suggests
@@ -136,16 +137,26 @@ checkDependencies <- function(
       not_permitted = not_permitted)
 
     # Example
-    example <- knitr::kable(pak::pkg_list() %>%
-      dplyr::filter(package %in% not_permitted) %>%
-      dplyr::select(package, version, depends, license, platform, status, sources))
+    example <-
+      dplyr::bind_rows(
+        lapply(
+          X = not_permitted,
+          FUN = function(pkg) {
+            dplyr::tibble(pak::pkg_search(pkg)) %>%
+            dplyr::filter(package == pkg) %>%
+            dplyr::select(package, version, date, downloads_last_month,
+                          license, url)
+      }))
+
+    example$url <- stringr::str_replace_all(string = example$url, pattern = ",\\\n", replacement = " ")
 
     cli::cli_alert_warning(
     "{.emph Please add a comment at https://github.com/darwin-eu/DependencyReviewer/issues/6
     to request approval for packages with the following message:}
     ")
 
-    cli::cli_alert(paste(example, collapse = "\n"))
+
+    cli::cli_alert(paste(knitr::kable(example), collapse = "\n"))
 
     }
 
