@@ -95,6 +95,9 @@ checkDependencies <- function(
     packageName = NULL,
     dependencyType = c("Imports", "Depends")) {
 
+  #packageName = NULL
+  #dependencyType = c("Imports", "Depends")
+
   # find dependencies
   if(is.null(packageName)) {
     description <-  desc::description$new()
@@ -106,8 +109,19 @@ checkDependencies <- function(
     dplyr::filter(.data$type %in% .env$dependencyType) %>%
     dplyr::select("package", "version")
 
+
+  # Get CRAN packages
+  cranPackages <- data.frame(available.packages()) %>%
+    dplyr::select(Package, Version) %>%
+    dplyr::rename(package = Package, version = Version) %>%
+    tibble()
+
   # dependencies that are permitted
-  permittedPackages <- getDefaultPermittedPackages()
+  permittedPackages <- dplyr::bind_rows(
+    cranPackages,
+    DependencyReviewer::getDefaultPermittedPackages())
+
+  #permittedPackages
 
   not_permitted <- getNotPermitted(dependencies, permittedPackages)
 
@@ -138,33 +152,33 @@ checkDependencies <- function(
     }
 
   # check if different version in current compared to recommended
-  diffVersions <- getDiffVersions(
-    dependencies = dependencies,
-    permittedPackages = permittedPackages)
+  #diffVersions <- getDiffVersions(
+  #  dependencies = dependencies,
+  #  permittedPackages = permittedPackages)
 
-  n_diffVersions <- length(diffVersions$package)
+  #n_diffVersions <- length(diffVersions$package)
 
   #message
-  cli::cli_h2(
-    "Checking if package{?s} in {dependencyType} require recommended version")
-
-  if(n_diffVersions == 0){
-    cli::cli_alert_success(
-      "Success! No package{?s} in {dependencyType} require a different
-      version")
-  } else {
-    cli::cli_div(theme = list (.alert = list(color = "red")))
-    cli::cli_alert_warning(
-      "Found {n_diffVersions} package{?s} in {dependencyType} with a different
-      version required")
-    cli::cli_end()
-
-    sapply(
-      X = 1:n_diffVersions,
-      FUN = messagePackageVersion,
-      diffVersions = diffVersions)
-
-    cli::cli_alert_warning("Please require recommended versions")
-  }
+  # cli::cli_h2(
+  #   "Checking if package{?s} in {dependencyType} require recommended version")
+  #
+  # if(n_diffVersions == 0){
+  #   cli::cli_alert_success(
+  #     "Success! No package{?s} in {dependencyType} require a different
+  #     version")
+  # } else {
+  #   cli::cli_div(theme = list (.alert = list(color = "red")))
+  #   cli::cli_alert_warning(
+  #     "Found {n_diffVersions} package{?s} in {dependencyType} with a different
+  #     version required")
+  #   cli::cli_end()
+  #
+  #   sapply(
+  #     X = 1:n_diffVersions,
+  #     FUN = messagePackageVersion,
+  #     diffVersions = diffVersions)
+  #
+  #   cli::cli_alert_warning("Please require recommended versions")
+  # }
 invisible(NULL)
 }

@@ -1,13 +1,13 @@
 package,version
-"cli",
-"checkmate",
-"glue",
-"magrittr",
-"rlang",
-"DBI",
-"dbplyr",
+"cli","*"
+"checkmate","*"
+"glue","*"
+"magrittr","*"
+"rlang","*"
+"DBI","*"
+"dbplyr","*"
 "dplyr",">= 1.0.0"
-"tidyr",
-"purrr",
-"stringr",
-"lubridate",
+"tidyr","*"
+"purrr","*"
+"stringr","*"
+"lubridate","*"
