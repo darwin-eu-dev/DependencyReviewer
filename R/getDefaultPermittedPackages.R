@@ -57,7 +57,7 @@ getDefaultPermittedPackages <- function() {
     basePackages,
     cranPackages,
     hadesPackages,
-    permittedPackages
+    permittedDependencies
   )
 
   return(permittedPackages)
