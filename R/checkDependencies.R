@@ -107,7 +107,7 @@ checkDependencies <- function(
     dplyr::select("package", "version")
 
   # dependencies that are permitted
-  permittedPackages <- getDefaultPermittedPackages()
+  permittedPackages <- DependencyReviewer::getDefaultPermittedPackages()
 
   not_permitted <- getNotPermitted(dependencies, permittedPackages)
 
