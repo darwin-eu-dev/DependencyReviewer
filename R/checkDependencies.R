@@ -95,6 +95,9 @@ checkDependencies <- function(
     packageName = NULL,
     dependencyType = c("Imports", "Depends")) {
 
+  packageName = NULL
+  dependencyType = c("Imports", "Depends")
+
   # find dependencies
   if(is.null(packageName)) {
     description <-  desc::description$new()
@@ -132,9 +135,18 @@ checkDependencies <- function(
       FUN = messagePermission,
       not_permitted = not_permitted)
 
+    # Example
+    example <- knitr::kable(pak::pkg_list() %>%
+      dplyr::filter(package %in% not_permitted) %>%
+      dplyr::select(package, version, depends, license, platform, status, sources))
+
     cli::cli_alert_warning(
-    "Please add a comment at https://github.com/darwin-eu/DependencyReviewer/issues/6
-    to request approval for packages (one comment per package).")
+    "{.emph Please add a comment at https://github.com/darwin-eu/DependencyReviewer/issues/6
+    to request approval for packages with the following message:}
+    ")
+
+    cli::cli_alert(paste(example, collapse = "\n"))
+
     }
 
   # check if different version in current compared to recommended
