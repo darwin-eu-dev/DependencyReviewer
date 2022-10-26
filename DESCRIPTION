@@ -13,27 +13,23 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Imports: 
-    checkmate,
-    cli,
-    desc,
-    dplyr,
-    magrittr,
-    rlang,
-    funspotr,
-    glue,
-    here,
-    readr,
-    stringr,
-    shiny,
-    shinyjs,
-    shinyAce,
-    DT,
-    ggplot2,
-    ggraph,
-    tidygraph,
-    igraph,
-    lintr,
-    pak
+  DT,
+  cli,
+  dplyr,
+  ggplot2,
+  ggraph,
+  glue,
+  here,
+  knitr,
+  lintr,
+  pak,
+  readr,
+  shiny,
+  shinyAce,
+  stringr,
+  tidygraph,
+  tidyverse,
+  magrittr
 Remotes:
     brshallo/funspotr
 RoxygenNote: 7.2.1
