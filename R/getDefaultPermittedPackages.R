@@ -60,12 +60,19 @@ getDefaultPermittedPackages <- function() {
     rename(package = name) %>%
     tibble()
 
-  permittedPackages <- dplyr::bind_rows(
-    basePackages,
+  hadesPackages$package <- paste0("OHDSI/", hadesPackages$package)
+
+  sourcePackages <- dplyr::bind_rows(
     tidyversePackages,
     hadesPackages,
     permittedDependencies
   )
 
+  depList <- pak::pkg_deps(sourcePackages$package)
+
+  permittedPackages <- dplyr::bind_rows(
+    basePackages,
+    depList %>%
+      select(package, version))
   return(permittedPackages)
 }
