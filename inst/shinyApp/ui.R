@@ -23,12 +23,13 @@ shiny::shinyUI(
       windowTitle = TRUE),
     shiny::verticalLayout(
       fluid = TRUE,
+
       shiny::inputPanel(
         width = 3,
         shiny::selectInput(
           inputId = "file",
           label = "File",
-          choices = list.files(here::here("R"))),
+          choices = c("ALL", list.files(here::here("R")))),
 
         shiny::checkboxGroupInput(
           inline = TRUE,

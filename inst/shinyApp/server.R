@@ -16,18 +16,18 @@
 
 # Libraries
 library(dplyr)
-#library(ggraph)
-#library(tidygraph)
-#library(igraph)
 
 # Shiny Server
 shinyServer(function(input, output, session) {
   readFile <- shiny::reactive({
+    if(input$file != "ALL") {
     paste(
       readLines(here::here("R", input$file)),
       collapse = "\n")
+      }
   })
 
+  # UpdateAceEditor
   observe({
     shinyAce::updateAceEditor(
       editorId = "ace",
@@ -35,18 +35,31 @@ shinyServer(function(input, output, session) {
       value = readFile())
   })
 
+  # Set output for table with filter
   output$tbl <- DT::renderDataTable({
-    DependencyReviewer::summariseFunctionUse(
-      r_files = input$file) %>%
-      dplyr::select(-"r_file") %>%
-      filter(!pkg %in% input$excludes)
+    if(input$file == "ALL") {
+      DependencyReviewer::summariseFunctionUse(
+        r_files = list.files(here::here("R"))) %>%
+        filter(!pkg %in% input$excludes)
+    } else {
+      DependencyReviewer::summariseFunctionUse(
+        r_files = input$file) %>%
+        dplyr::select(-"r_file") %>%
+        filter(!pkg %in% input$excludes)
+    }
   })
 
   getData <- reactive({
-    DependencyReviewer::summariseFunctionUse(
-      r_files = input$file)
+    if(input$file == "ALL") {
+      DependencyReviewer::summariseFunctionUse(
+        r_files = list.files(here::here("R")))
+    } else {
+      DependencyReviewer::summariseFunctionUse(
+        r_files = input$file)
+    }
   })
 
+  # Exclude packages
   observe({
     updateCheckboxGroupInput(
       inline = TRUE,
@@ -55,30 +68,32 @@ shinyServer(function(input, output, session) {
       choices = unique(getData()$pkg))
   })
 
-  output$plot <- renderPlot({
-    data <- getData()
+  output$plot <- renderPlot(
+    height = 1080,
+    expr = {
+      data <- getData()
 
-    data_sub <- data %>%
-      dplyr::group_by(fun, pkg) %>%
-      dplyr::tally() %>%
-      dplyr::arrange(desc(n)) %>%
-      filter(!pkg %in% input$excludes)
+      data_sub <- data %>%
+        dplyr::group_by(fun, pkg) %>%
+        dplyr::tally() %>%
+        dplyr::arrange(desc(n)) %>%
+        filter(!pkg %in% input$excludes)
 
-    ggplot2::ggplot(
-      data = data_sub,
-      mapping = ggplot2::aes(x = fun, y = n, fill = pkg)) +
-      ggplot2::geom_col() +
-      ggplot2::facet_wrap(
-        vars(pkg),
-        scales = "free_x",
-        ncol=2) +
-      ggplot2::theme_bw() +
-      ggplot2::theme(
-        legend.position = "none",
-        axis.text.x = (ggplot2::element_text(
-          angle = 45,
-          hjust = 1,
-          vjust = 1)))
+      ggplot2::ggplot(
+        data = data_sub,
+        mapping = ggplot2::aes(x = fun, y = n, fill = pkg)) +
+        ggplot2::geom_col() +
+        ggplot2::facet_wrap(
+          vars(pkg),
+          scales = "free_x",
+          ncol=2) +
+        ggplot2::theme_bw() +
+        ggplot2::theme(
+          legend.position = "none",
+          axis.text.x = (ggplot2::element_text(
+            angle = 45,
+            hjust = 1,
+            vjust = 1)))
   })
 
   graphData <- reactive({
