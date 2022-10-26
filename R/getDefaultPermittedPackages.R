@@ -34,7 +34,7 @@ getDefaultPermittedPackages <- function() {
     show_col_types = FALSE)
 
   # Get base packages
-  basePackages <- data.frame(installed.packages(priority = "base")) %>%
+  basePackages <- data.frame(installed.packages(priority = "high")) %>%
     dplyr::select(Package, Built) %>%
     dplyr::rename(package = Package, version = Built) %>%
     dplyr::tibble()
