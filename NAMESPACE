@@ -2,9 +2,10 @@
 
 export("%>%")
 export(checkDependencies)
-export(darwinLint)
+export(darwinLintPackage)
 export(getDefaultPermittedPackages)
 export(getGraphData)
+export(lintFile)
 export(runShiny)
 export(summariseFunctionUse)
 import(DT)
