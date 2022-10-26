@@ -155,7 +155,7 @@ funsUsedInFile <- function(files, verbose = FALSE, in_package = TRUE) {
 #' @return tibble
 #'
 #' @export
-summariseFunctionUse <- function(r_files, verbose = FALSE, in_package = TRUE) {
+summariseFunctionUse <- function(r_files = list.files(here::here("R")), verbose = FALSE, in_package = TRUE) {
   #tryCatch({
   deps_used <- funsUsedInFile(r_files, verbose, in_package)
   # }, error = function(e) {
