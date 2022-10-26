@@ -31,7 +31,8 @@ Imports:
     ggplot2,
     ggraph,
     tidygraph,
-    igraph
+    igraph,
+    lintr
 Remotes:
     brshallo/funspotr
 RoxygenNote: 7.2.1
