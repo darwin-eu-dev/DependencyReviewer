@@ -28,7 +28,7 @@ darwinLintPackage <- function() {
 #' @param fileName Path to file to lint
 #'
 #' @export
-lintFile <- function(fileName) {
+darwinLintFile <- function(fileName) {
   lintr::lint(
     filename = fileName,
     linters = lintr::linters_with_defaults(
