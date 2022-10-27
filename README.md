@@ -41,57 +41,38 @@ inside:
 
 ``` r
 checkDependencies()
+#> ℹ Loading metadata databaseℹ Loading metadata database✔ Loading metadata database ... done✔ Loading metadata database ... done
+#> 
 #> 
 #> ── Checking if packages in Imports and Depends have been approved ──
 #> 
-#> ! Found 12 packages in Imports and Depends that are not
+#> ! Found 3 packages in Imports and Depends that are not
 #> approved
-#> →   1) desc
-#> →   2) DT
-#> →   3) funspotr
-#> →   4) ggplot2
-#> →   5) ggraph
-#> →   6) here
-#> →   7) igraph
-#> →   8) readr
-#> →   9) shiny
-#> →   10) shinyAce
-#> →   11) shinyjs
-#> →   12) tidygraph
-#> ! Please add a comment at https://github.com/darwin-eu/DependencyReviewer/issues/6
-#> to request approval for packages (one comment per package).
-#> 
-#> ── Checking if packages in Imports and Depends require recommended version ──
-#> 
-#> ! Found 1 package in Imports and Depends with a different
-#> version required
-#> →   1) dplyr
-#> →     currently required: *
-#> →     should be: >= 1.0.0
-#> ! Please require recommended versions
+#> →   1) funspotr
+#> →   2) lintr
+#> →   3) pak
+#> ! Please add a comment at https://github.com/darwin-eu/DependencyReviewer/issues/6 to request approval for packages with the following message:
+#> → |package |version |date                | downloads_last_month|license            |url                                                     |
+#> |:-------|:-------|:-------------------|--------------------:|:------------------|:-------------------------------------------------------|
+#> |lintr   |3.0.2   |2022-10-19 08:52:37 |                73018|MIT + file LICENSE |https://github.com/r-lib/lintr, https://lintr.r-lib.org |
+#> |pak     |0.3.1   |2022-09-08 20:30:02 |                43430|GPL-3              |https://pak.r-lib.org/                                  |
 ```
 
 *getDefaultPermittedPackages* gets a table of all the ‘permitted’
 packages in the accompanying csv-file.
 
 ``` r
-pander(getDefaultPermittedPackages())
+pander(head(getDefaultPermittedPackages()))
 ```
 
-|  package  |  version  |
-|:---------:|:---------:|
-|    cli    |    NA     |
-| checkmate |    NA     |
-|   glue    |    NA     |
-| magrittr  |    NA     |
-|   rlang   |    NA     |
-|    DBI    |    NA     |
-|  dbplyr   |    NA     |
-|   dplyr   | \>= 1.0.0 |
-|   tidyr   |    NA     |
-|   purrr   |    NA     |
-|  stringr  |    NA     |
-| lubridate |    NA     |
+|  package  | version |
+|:---------:|:-------:|
+| codetools |  4.2.0  |
+|   base    |  4.2.1  |
+|   boot    |  4.2.1  |
+|   class   |  4.2.1  |
+|  cluster  |  4.2.1  |
+| codetools |  4.2.1  |
 
 Function use of all .R files can be investigated using the
 *sumariseFunctionUse* function. It assumes the function is is ran inside
@@ -149,7 +130,6 @@ tallied up for each package.
 
 ``` r
 graphData <- getGraphData()
-#> ℹ Loading metadata database✔ Loading metadata database ... done
 
 library(igraph)
 library(ggraph)
@@ -183,26 +163,39 @@ dependency to get all the dependency information.
 library(pak)
 
 pkg_deps("darwin-eu/DependencyReviewer")
-#> # A data frame: 106 × 32
+#> # A data frame: 139 × 32
 #>    ref       type  direct direc…¹ status package version license needs…² prior…³
 #>    <chr>     <chr> <lgl>  <lgl>   <chr>  <chr>   <chr>   <chr>   <lgl>   <chr>  
 #>  1 darwin-e… gith… TRUE   TRUE    OK     Depend… 0.1.0   Apache… TRUE    <NA>   
-#>  2 MASS      stan… FALSE  FALSE   OK     MASS    7.3-58… GPL-2 … FALSE   recomm…
-#>  3 Matrix    stan… FALSE  FALSE   OK     Matrix  1.5-1   GPL (>… FALSE   recomm…
-#>  4 R6        stan… FALSE  FALSE   OK     R6      2.5.1   MIT + … FALSE   <NA>   
-#>  5 RColorBr… stan… FALSE  FALSE   OK     RColor… 1.1-3   Apache… FALSE   <NA>   
-#>  6 RcppArma… stan… FALSE  FALSE   OK     RcppAr… 0.11.4… GPL (>… FALSE   <NA>   
-#>  7 Rcpp      stan… FALSE  FALSE   OK     Rcpp    1.0.9   GPL (>… FALSE   <NA>   
-#>  8 backports stan… FALSE  FALSE   OK     backpo… 1.4.1   GPL-2 … FALSE   <NA>   
-#>  9 base64enc stan… FALSE  FALSE   OK     base64… 0.1-3   GPL-2 … FALSE   <NA>   
-#> 10 bit64     stan… FALSE  FALSE   OK     bit64   4.0.5   GPL-2 … FALSE   <NA>   
-#> # … with 96 more rows, 22 more variables: md5sum <chr>, sha256 <chr>,
+#>  2 DBI       stan… FALSE  FALSE   OK     DBI     1.1.3   LGPL (… FALSE   <NA>   
+#>  3 MASS      stan… FALSE  FALSE   OK     MASS    7.3-58… GPL-2 … FALSE   recomm…
+#>  4 Matrix    stan… FALSE  FALSE   OK     Matrix  1.5-1   GPL (>… FALSE   recomm…
+#>  5 R6        stan… FALSE  FALSE   OK     R6      2.5.1   MIT + … FALSE   <NA>   
+#>  6 RColorBr… stan… FALSE  FALSE   OK     RColor… 1.1-3   Apache… FALSE   <NA>   
+#>  7 RcppArma… stan… FALSE  FALSE   OK     RcppAr… 0.11.4… GPL (>… FALSE   <NA>   
+#>  8 Rcpp      stan… FALSE  FALSE   OK     Rcpp    1.0.9   GPL (>… FALSE   <NA>   
+#>  9 askpass   stan… FALSE  FALSE   OK     askpass 1.1     MIT + … FALSE   <NA>   
+#> 10 assertth… stan… FALSE  FALSE   OK     assert… 0.2.1   GPL-3   FALSE   <NA>   
+#> # … with 129 more rows, 22 more variables: md5sum <chr>, sha256 <chr>,
 #> #   filesize <int>, built <chr>, platform <chr>, rversion <chr>,
 #> #   repotype <chr>, repodir <chr>, target <glue>, deps <list>, mirror <chr>,
 #> #   sources <list>, remote <list>, error <list>, metadata <list>,
 #> #   dep_types <list>, params <list>, sysreqs <chr>, cache_status <chr>,
 #> #   lib_status <chr>, old_version <chr>, new_version <chr>, and abbreviated
 #> #   variable names ¹​directpkg, ²​needscompilation, ³​priority
+```
+
+To lint your entire package you can use:
+
+```
+darwinLintPackage()
+```
+
+Sometimes a package might be to large to lint entirely, so you can lint
+per file instead
+
+```
+darwinLintFile()
 ```
 
 ## ShinyApp <a name="ShinyApp"></a>

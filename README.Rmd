@@ -50,7 +50,7 @@ checkDependencies()
 ```
 *getDefaultPermittedPackages* gets a table of all the 'permitted' packages in the accompanying csv-file.
 ```{r}
-pander(getDefaultPermittedPackages())
+pander(head(getDefaultPermittedPackages()))
 ```
 
 Function use of all .R files can be investigated using the _sumariseFunctionUse_ function. It assumes the function is is ran inside an R-project, and will automatically look for the files in the */R* folder. Functions where no package could not be found for, are binned under the *unknown* package. Usually base functions are not used as `base::mean()`. Therefore the function goes through all the base functions to bin them under the *base* package rather than *unknown*.
@@ -115,6 +115,15 @@ If you would like to investigate dependencies there is a package named [PAK](htt
 library(pak)
 
 pkg_deps("darwin-eu/DependencyReviewer")
+```
+To lint your entire package you can use:
+```{reval=FALSE}
+darwinLintPackage()
+```
+
+Sometimes a package might be to large to lint entirely, so you can lint per file instead
+```{reval=FALSE}
+darwinLintFile()
 ```
 
 ## ShinyApp <a name="ShinyApp"></a>
