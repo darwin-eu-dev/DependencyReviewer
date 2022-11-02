@@ -54,7 +54,7 @@ darwinLintScore <- function(lintFunction, ...) {
   nLines <- sum(unlist(lapply(
     X = files,
     FUN = function(file) {
-      length(readLines(file))
+      suppressWarnings(length(readLines(file)))
     })))
 
   pct <- lintTable %>%
