@@ -4,7 +4,11 @@
 \alias{summariseFunctionUse}
 \title{summariseFunctionUse}
 \usage{
-summariseFunctionUse(r_files, verbose = FALSE, in_package = TRUE)
+summariseFunctionUse(
+  r_files = list.files(here::here("R")),
+  verbose = FALSE,
+  in_package = TRUE
+)
 }
 \arguments{
 \item{r_files}{r_files}
