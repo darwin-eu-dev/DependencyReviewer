@@ -15,3 +15,12 @@ darwinLintScore(lintFunction, ...)
 Function that scores the lintr output as a percentage per message type
 (style, warning, error). Lintr messages / lines assessed * 100
 }
+\examples{
+\donttest{
+# With darwin file lintr
+darwinLintScore(lintFunction = darwinLintFile, "darwinLint.R")
+
+# With standard package lintr
+darwinLintScore(lintFunction = lintr::lint_package)
+}
+}

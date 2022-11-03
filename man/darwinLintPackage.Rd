@@ -10,5 +10,5 @@ darwinLintPackage()
 Darwin lintr object, using default lintr object with camelCase
 }
 \examples{
-darwinLint()
+darwinLintPackage()
 }

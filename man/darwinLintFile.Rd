@@ -12,3 +12,8 @@ darwinLintFile(fileName)
 \description{
 Lint a given file.
 }
+\examples{
+\donttest{
+darwinLintFile("SomeFileName.R")
+}
+}
