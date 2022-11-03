@@ -6,7 +6,7 @@
 #' @export
 #'
 #' @examples
-#' darwinLint()
+#' darwinLintPackage()
 darwinLintPackage <- function() {
   tryCatch({
     lintr::lint_package(
@@ -20,6 +20,7 @@ darwinLintPackage <- function() {
   })
 }
 
+
 #' darwinLintFile
 #'
 #' Lint a given file.
@@ -29,6 +30,11 @@ darwinLintPackage <- function() {
 #' @param fileName Path to file to lint
 #'
 #' @export
+#'
+#' @examples
+#' \donttest{
+#' darwinLintFile("SomeFileName.R")
+#' }
 darwinLintFile <- function(fileName) {
   lintr::lint(
     filename = fileName,
@@ -47,6 +53,14 @@ darwinLintFile <- function(fileName) {
 #' @param ...
 #'     Other parameters a Lint function might need (i.e. file name)
 #' @export
+#' @examples
+#' \donttest{
+#' # With darwin file lintr
+#' darwinLintScore(lintFunction = darwinLintFile, "darwinLint.R")
+#'
+#' # With standard package lintr
+#' darwinLintScore(lintFunction = lintr::lint_package)
+#' }
 darwinLintScore <- function(lintFunction, ...) {
   lintTable <- data.frame(lintFunction(...))
   files <- unique(lintTable$filename)
