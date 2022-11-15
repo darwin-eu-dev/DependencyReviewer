@@ -9,7 +9,7 @@
 #'
 getGraphData <- function(path = here::here(), excluded_packages = c("")) {
   # Get all dependencies using pak
-  data <- pak::local_deps(path, dependencies = TRUE)
+  data <- pak::local_deps(path, dependencies = "Imports")
 
   # Filter data
   fData <- data %>% dplyr::filter(!package %in% excluded_packages)
