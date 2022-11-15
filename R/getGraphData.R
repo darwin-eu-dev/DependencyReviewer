@@ -23,7 +23,7 @@ getGraphData <- function(path = here::here(), excluded_packages = c("")) {
 
   # Reformat dependencies to long format
   pkg_deps <- dplyr::bind_rows(lapply(X = 1:nrow(fData), FUN = function(row) {
-    deps <- unique(unlist(fData[row, ]["deps"]))
+    deps <- unique(fData[["deps"]][[row]][["package"]])
 
     pkg <- unlist(rep(fData[row, ]["package"], length(deps)))
     dplyr::tibble(pkg = pkg, deps = deps)
