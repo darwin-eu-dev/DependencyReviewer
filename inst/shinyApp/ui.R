@@ -66,38 +66,14 @@ shiny::shinyUI(
         tabPanel(
           "Dependency Graph",
           shiny::sidebarLayout(
-            sidebarPanel = shiny::sidebarPanel(width = 2,
-              shiny::selectInput(
-                inputId = "model",
-                label = "Layout",
-                choices = c(
-                  "kk",
-                  "drl",
-                  "stress",
-                  "fr",
-                  "lgl",
-                  "graphopt",
-                  "dendrogram"),
-                selected = "kk"),
-
-              shiny::numericInput(
-                inputId = "iter",
-                label = "Iterations",
-                value = 1000),
-
-              shiny::sliderInput(
-                inputId = "nPkgs",
-                label = "Number of Dependency layers",
-                min = 1,
-                max = 100,
-                value = 10),
-
-              shiny::numericInput(
-                inputId = "nPkgsNum",
-                label = "Numeric: ",
-                min = 1,
-                max = 100,
-                value = 10)
+            sidebarPanel = shiny::sidebarPanel(
+              width = 2,
+              shiny::checkboxGroupInput(
+                inline = TRUE,
+                inputId = "dep_kinds",
+                label = "Kinds of dependencies",
+                selected = "imports",
+                choices = c("imports", "depends", "suggests", "enhances", "linkingto"))
               ),
 
             mainPanel = shiny::mainPanel(
@@ -107,7 +83,26 @@ shiny::shinyUI(
                 width = "60em")
             )
           )
+          ),
+        tabPanel(
+          "Path to dependency",
+          shiny::sidebarLayout(
+            sidebarPanel = shiny::sidebarPanel(
+              width = 2,
+              shiny::selectInput(
+                inputId = "path_to_pkg",
+                label = "Package to find paths to",
+                choices = c("")
+              )
+            ),
+            shiny::mainPanel(
+              shiny::plotOutput(
+                outputId = "graph_path",
+                height = "60em",
+                width = "60em")
+            )
           )
+        )
         )
       )
     )

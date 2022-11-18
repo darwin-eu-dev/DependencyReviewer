@@ -98,7 +98,8 @@ shinyServer(function(input, output, session) {
 
   graphData <- reactive({
     DependencyReviewer::getGraphData(
-      excluded_packages = input$excludes_all)
+      excluded_packages = input$excludes_all,
+      package_types = input$dep_kinds)
     # "Not all packages are availible,
     # check the console for more information."
   })
@@ -129,76 +130,70 @@ shinyServer(function(input, output, session) {
           amount = 1,
           message = "Fetching Dependency Data")
 
-        graph <- graphData()
+        graphData <- graphData()
 
         shiny::incProgress(
           amount = 2,
           message = "Plotting Dependencies in Graph")
 
-        fEdge <- graph %>% tidygraph::activate(edges) %>% dplyr::pull(from)
-        tEdge <- graph %>% tidygraph::activate(edges) %>% dplyr::pull(to)
+        cols <- factor(as.character(apply(
+          X = igraph::distances(graphData, igraph::V(graphData)[1]),
+          MARGIN = 2,
+          FUN = max
+        )))
 
-        pFrom <- fEdge[fEdge <= input$nPkgs]
-        pTo <- tEdge[fEdge <= input$nPkgs]
-
-        if(input$model %in% c("kk", "fr", "lgl")) {
-          shinyjs::enable("iter")
-          shinyjs::enable("nPkgs")
-          shinyjs::enable("nPkgsNum")
-
-          g <- ggraph::ggraph(
-            graph,
-            layout = input$model,
-            maxiter = input$iter) +
-            ggraph::geom_node_text(
-              mapping = ggplot2::aes(
-                filter = name %in% names(igraph::V(graph)[unique(c(pFrom, pTo))]),
-                label = name),
-              size = 5,
-              colour = "red") +
-            ggraph::geom_edge_fan(
-              mapping = ggplot2::aes(
-                filter = from %in% pFrom & to %in% pTo))
-        } else if(input$model %in% c("drl", "stress", "graphopt")) {
-          shinyjs::enable("nPkgs")
-          shinyjs::enable("nPkgsNum")
-          shinyjs::disable(id = "iter")
-
-          g <- ggraph::ggraph(
-            graph,
-            layout = input$model) +
-            ggraph::geom_node_text(
-              mapping = ggplot2::aes(
-                filter = name %in% names(igraph::V(graph)[unique(c(pFrom, pTo))]),
-                label = name),
-              size = 5,
-              colour = "red") +
-            ggraph::geom_edge_fan(
-              mapping = ggplot2::aes(
-                filter = from %in% pFrom & to %in% pTo))
-        } else if(input$model == "dendrogram") {
-          shinyjs::disable(id = "iter")
-          shinyjs::disable(id = "nPkgs")
-          shinyjs::disable(id = "nPkgsNum")
-
-          g <- ggraph::ggraph(
-            graph = graph,
-            layout = input$model,
-            circular = TRUE) +
-            ggraph::geom_edge_diagonal() +
-            ggraph::geom_node_text(
-              check_overlap = TRUE,
-              mapping = ggplot2::aes(
-                x = x * 1.005,
-                y = y * 1.005,
-                label = name,
-                angle = -((-ggraph::node_angle(x, y) + 90) %% 180) + 90),
-              size = 5,
-              colour = "red",
-              hjust = 'outward')
-        }
-        g + ggplot2::coord_fixed() +
-          ggplot2::theme_void()
+        GGally::ggnet2(
+          net = graphData,
+          arrow.size = 6,
+          arrow.gap = 0.025,
+          label = TRUE,
+          palette = "Set2",
+          color.legend = "distance",
+          color = cols,
+          legend.position = "bottom",
+          edge.alpha = 0.25)
       })
     })
+
+  observe({
+    graphData <- graphData()
+
+    options <- names(tail(igraph::V(graphData), -1))
+
+    shiny::updateSelectInput(
+      session = session,
+      inputId = "path_to_pkg",
+      choices = options)
+  })
+
+  output$graph_path <- renderPlot({
+    graphData <- graphData()
+
+    subV <- igraph::all_simple_paths(
+      graph = graphData,
+      from = igraph::V(graphData)[1],
+      to = input$path_to_pkg,
+      cutoff = max(igraph::distances(graphData)))
+
+    # Add to single graph
+    graphSub <- lapply(X = subV, FUN = function(v) {
+      igraph::induced_subgraph(graphData, v)})
+
+    # Union
+    graphUnion <- do.call(igraph::union, graphSub)
+
+    cols <- factor(as.character(apply(
+      igraph::distances(graphUnion, names(igraph::V(graphData)[1])), 2, max)))
+
+    # Plot graph
+    GGally::ggnet2(
+      net = graphUnion,
+      arrow.size = 6,
+      arrow.gap = 0.025,
+      label = TRUE,
+      palette = "Set2",
+      color.legend = "distance",
+      color = cols,
+      legend.position = "bottom")
+  })
 })
