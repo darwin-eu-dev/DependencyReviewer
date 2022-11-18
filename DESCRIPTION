@@ -30,7 +30,8 @@ Imports:
   stringr,
   tidygraph,
   tidyverse,
-  magrittr
+  magrittr,
+  GGally
 Remotes:
     brshallo/funspotr
 RoxygenNote: 7.2.1
