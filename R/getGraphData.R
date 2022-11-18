@@ -16,10 +16,6 @@
 #' @export
 #'
 getGraphData <- function(path = here::here(), excluded_packages = c(""), package_types = c("imports", "depends")) {
-  # Dummy params
-  path = here::here()
-  excluded_packages = c("")
-
   # Get all dependencies using pak
   data <- pak::local_deps(path, dependencies = "Imports")
 
@@ -41,8 +37,8 @@ getGraphData <- function(path = here::here(), excluded_packages = c(""), package
     dplyr::tibble(pkg = pkg, deps = deps, type = type)
   }))
 
-  pkgs_deps <- pkg_deps %>%
-    filter(type %in% c("imports", "depends"))
+  pkg_deps <- pkg_deps %>%
+    filter(type %in% package_types)
 
   # Convert tibble to graph
   net_data <- tidygraph::as_tbl_graph(
