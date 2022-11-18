@@ -4,7 +4,19 @@
 \alias{getGraphData}
 \title{getGraphData}
 \usage{
-getGraphData(path = here::here(), excluded_packages = c(""))
+getGraphData(
+  path = here::here(),
+  excluded_packages = c(""),
+  package_types = c("imports", "depends")
+)
+}
+\arguments{
+\item{path}{path}
+
+\item{excluded_packages}{Packages to exclude}
+
+\item{package_types}{Types of packages to be included in the result. Default: c("imports", "depends")
+Availible types are: "imports", "depends", "suggests", "enhances", "linkingto"}
 }
 \value{
 net_data graph data
