@@ -18,9 +18,8 @@
 shiny::shinyUI(
   shiny::fluidPage(
     shinyjs::useShinyjs(),
-    title = shiny::titlePanel(
-      title = "Dependency Reviewer",
-      windowTitle = TRUE),
+    title = shiny::titlePanel(title = "Dependency Reviewer",
+                              windowTitle = TRUE),
     shiny::verticalLayout(
       fluid = TRUE,
 
@@ -29,80 +28,81 @@ shiny::shinyUI(
         shiny::selectInput(
           inputId = "file",
           label = "File",
-          choices = c("ALL", list.files(here::here("R")))),
+          choices = c("ALL", list.files(here::here("R")))
+        ),
 
         shiny::checkboxGroupInput(
           inline = TRUE,
           inputId = "excludes",
           label = "Exclude Packages",
-          choices = c("base", "unknown"))
+          choices = c("base", "unknown")
+        )
       ),
 
       mainPanel = shiny::mainPanel(
         width = 12,
         shiny::tabsetPanel(
           type = "tabs",
+          tabPanel(title = "Function Review",
+                   fluidRow(
+                     splitLayout(
+                       cellWidths = c("50%", "50%"),
+                       DT::dataTableOutput(outputId = "tbl"),
+                       shinyAce::aceEditor(
+                         outputId = "ace",
+                         value = "x <- 3\n\nif(x == 3) {\n\ty <- 'a'}",
+                         cursorId = "cursor",
+                         selectionId = "selection",
+                         mode = "r",
+                         readOnly = TRUE
+                       )
+                     )
+                   )),
+          tabPanel("Plot",
+                   shiny::plotOutput("plot")),
           tabPanel(
-            title = "Function Review",
-            fluidRow(
-              splitLayout(
-                cellWidths = c("50%", "50%"),
-                DT::dataTableOutput(
-                  outputId = "tbl"),
-                shinyAce::aceEditor(
-                  outputId = "ace",
-                  value = "x <- 3\n\nif(x == 3) {\n\ty <- 'a'}",
-                  cursorId = "cursor",
-                  selectionId = "selection",
-                  mode = "r",
-                  readOnly = TRUE)
-              )
-            )
-          ),
-        tabPanel(
-          "Plot",
-          shiny::plotOutput("plot")
-          ),
-        tabPanel(
-          "Dependency Graph",
-          shiny::sidebarLayout(
-            sidebarPanel = shiny::sidebarPanel(
-              width = 2,
-              shiny::checkboxGroupInput(
-                inline = TRUE,
-                inputId = "dep_kinds",
-                label = "Kinds of dependencies",
-                selected = "imports",
-                choices = c("imports", "depends", "suggests", "enhances", "linkingto"))
+            "Dependency Graph",
+            shiny::sidebarLayout(
+              sidebarPanel = shiny::sidebarPanel(
+                width = 2,
+                shiny::checkboxGroupInput(
+                  inline = TRUE,
+                  inputId = "dep_kinds",
+                  label = "Kinds of dependencies",
+                  selected = "imports",
+                  choices = c("imports", "depends", "suggests", "enhances", "linkingto")
+                )
               ),
 
-            mainPanel = shiny::mainPanel(
-              shiny::plotOutput(
-                outputId = "graph",
-                height = "60em",
-                width = "60em")
-            )
-          )
-          ),
-        tabPanel(
-          "Path to dependency",
-          shiny::sidebarLayout(
-            sidebarPanel = shiny::sidebarPanel(
-              width = 2,
-              shiny::selectInput(
-                inputId = "path_to_pkg",
-                label = "Package to find paths to",
-                choices = c("")
+              mainPanel = shiny::mainPanel(
+                shiny::plotOutput(
+                  outputId = "graph",
+                  height = "60em",
+                  width = "60em"
+                )
               )
-            ),
-            shiny::mainPanel(
-              shiny::plotOutput(
-                outputId = "graph_path",
-                height = "60em",
-                width = "60em")
+            )
+          ),
+          tabPanel(
+            "Path to dependency",
+            shiny::sidebarLayout(
+              sidebarPanel = shiny::sidebarPanel(
+                width = 2,
+                shiny::selectInput(
+                  inputId = "path_to_pkg",
+                  label = "Package to find paths to",
+                  choices = c("")
+                )
+              ),
+              shiny::mainPanel(
+                shiny::plotOutput(
+                  outputId = "graph_path",
+                  height = "60em",
+                  width = "60em"
+                )
+              )
             )
           )
-        )
         )
       )
     )

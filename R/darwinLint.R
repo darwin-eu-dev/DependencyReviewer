@@ -14,6 +14,7 @@ darwinLintPackage <- function() {
       linters = lintr::linters_with_defaults(
         lintr::object_name_linter(styles = "camelCase")))
   }, error = function(e) {
+    cli::cli_alert_danger(e)
     stop(
     "Error was caught during the linting of your package. The package
     might be to large to lint all together. Use: darwinLintFile(fileName)")
@@ -96,4 +97,5 @@ darwinLintScore <- function(lintFunction, ...) {
       }
     }))
   }
+  return(pct)
 }
