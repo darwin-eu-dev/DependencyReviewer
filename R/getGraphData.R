@@ -1,5 +1,13 @@
 #' getGraphData
 #'
+#' @param path
+#'     path
+#' @param excluded_packages
+#'     Packages to exclude
+#' @param package_types
+#'     Types of packages to be included in the result. Default: c("imports", "depends")
+#'     Availible types are: "imports", "depends", "suggests", "enhances", "linkingto"
+#'
 #' @return net_data graph data
 #' @import pak
 #' @import dplyr
@@ -7,7 +15,11 @@
 #'
 #' @export
 #'
-getGraphData <- function(path = here::here(), excluded_packages = c("")) {
+getGraphData <- function(path = here::here(), excluded_packages = c(""), package_types = c("imports", "depends")) {
+  # Dummy params
+  path = here::here()
+  excluded_packages = c("")
+
   # Get all dependencies using pak
   data <- pak::local_deps(path, dependencies = "Imports")
 
@@ -23,17 +35,14 @@ getGraphData <- function(path = here::here(), excluded_packages = c("")) {
 
   # Reformat dependencies to long format
   pkg_deps <- dplyr::bind_rows(lapply(X = 1:nrow(fData), FUN = function(row) {
-    deps <- unique(fData[["deps"]][[row]][["package"]])
-
+    deps <- fData[["deps"]][[row]][["package"]]
     pkg <- unlist(rep(fData[row, ]["package"], length(deps)))
-    dplyr::tibble(pkg = pkg, deps = deps)
+    type <- tolower(fData[["deps"]][[row]][["type"]])
+    dplyr::tibble(pkg = pkg, deps = deps, type = type)
   }))
 
-  # Filter for just package names
-  pkg_deps <- pkg_deps %>%
-    dplyr::filter(grepl(
-      pattern = "[a-z]+",
-      x = tolower(deps)))
+  pkgs_deps <- pkg_deps %>%
+    filter(type %in% c("imports", "depends"))
 
   # Convert tibble to graph
   net_data <- tidygraph::as_tbl_graph(
