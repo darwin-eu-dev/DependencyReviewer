@@ -10,7 +10,7 @@
 darwinLintPackage <- function() {
   tryCatch({
     lintr::lint_package(
-      path = ".",
+      path = here::here(),
       linters = lintr::linters_with_defaults(
         lintr::object_name_linter(styles = "camelCase")))
   }, error = function(e) {
@@ -73,9 +73,9 @@ darwinLintScore <- function(lintFunction, ...) {
     })))
 
   pct <- lintTable %>%
-    group_by(.data$type) %>%
-    tally() %>%
-    summarise(.data$type, pct = round(n / nLines * 100, 2))
+    dplyr::group_by(.data$type) %>%
+    dplyr::tally() %>%
+    dplyr::summarise(.data$type, pct = round(n / nLines * 100, 2))
 
   if (nrow(pct) == 0) {
     cli::cli_alert_info(cli::col_green(
