@@ -23,43 +23,68 @@ shiny::shinyUI(
     shiny::verticalLayout(
       fluid = TRUE,
 
-      shiny::inputPanel(
-        width = 3,
-        shiny::selectInput(
-          inputId = "file",
-          label = "File",
-          choices = c("ALL", list.files(here::here("R")))
-        ),
-
-        shiny::checkboxGroupInput(
-          inline = TRUE,
-          inputId = "excludes",
-          label = "Exclude Packages",
-          choices = c("base", "unknown")
-        )
-      ),
+      # shiny::inputPanel(
+      #   width = 3,
+      #   shiny::selectInput(
+      #     inputId = "file",
+      #     label = "File",
+      #     choices = c("ALL", list.files(here::here("R")))
+      #   ),
+      #
+      #   shiny::checkboxGroupInput(
+      #     inline = TRUE,
+      #     inputId = "excludes",
+      #     label = "Exclude Packages",
+      #     choices = c("base", "unknown")
+      #   )
+      # ),
 
       mainPanel = shiny::mainPanel(
         width = 12,
         shiny::tabsetPanel(
           type = "tabs",
-          tabPanel(title = "Function Review",
-                   fluidRow(
-                     splitLayout(
-                       cellWidths = c("50%", "50%"),
-                       DT::dataTableOutput(outputId = "tbl"),
-                       shinyAce::aceEditor(
-                         outputId = "ace",
-                         value = "x <- 3\n\nif(x == 3) {\n\ty <- 'a'}",
-                         cursorId = "cursor",
-                         selectionId = "selection",
-                         mode = "r",
-                         readOnly = TRUE
-                       )
-                     )
-                   )),
-          tabPanel("Plot",
-                   shiny::plotOutput("plot")),
+          shiny::tabPanel(
+            "Package review",
+            shiny::verticalLayout(
+              shiny::inputPanel(
+                width = 3,
+                shiny::selectInput(
+                  inputId = "file",
+                  label = "File",
+                  choices = c("ALL", list.files(here::here("R")))
+                ),
+
+                shiny::checkboxGroupInput(
+                  inline = TRUE,
+                  inputId = "excludes",
+                  label = "Exclude Packages",
+                  choices = c("base", "unknown")
+                )
+              ),
+            shiny::tabsetPanel(
+              type = "tabs",
+              shiny::tabPanel(
+                "Function review",
+                  shiny::splitLayout(
+                    cellWidths = c("50%", "50%"),
+                    DT::dataTableOutput(outputId = "tbl"),
+                    shinyAce::aceEditor(
+                      outputId = "ace",
+                      value = "x <- 3\n\nif(x == 3) {\n\ty <- 'a'}",
+                      cursorId = "cursor",
+                      selectionId = "selection",
+                      mode = "r",
+                      readOnly = TRUE
+                    )
+                  )
+                ),
+              shiny::tabPanel(
+                "Plot",
+                shiny::plotOutput("plot")
+              )
+            )
+            )
+            ),
           tabPanel(
             "Dependency Graph",
             shiny::sidebarLayout(
@@ -92,13 +117,19 @@ shiny::shinyUI(
                   inputId = "path_to_pkg",
                   label = "Package to find paths to",
                   choices = c("")
-                )
+                ),
+                shiny::sliderInput(
+                  inputId = "cutoff",
+                  label = "Cutoff",
+                  min = 1,
+                  max = 10,
+                  value = 3)
               ),
               shiny::mainPanel(
                 shiny::plotOutput(
                   outputId = "graph_path",
-                  height = "60em",
-                  width = "60em"
+                  height = "50em",
+                  width = "50em"
                 )
               )
             )

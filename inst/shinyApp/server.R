@@ -167,7 +167,7 @@ shinyServer(function(input, output, session) {
       graph = graphData,
       from = igraph::V(graphData)[1],
       to = input$path_to_pkg,
-      cutoff = max(igraph::distances(graphData))
+      cutoff = input$cutoff
     )
 
     # Add to single graph
