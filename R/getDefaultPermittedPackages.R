@@ -26,12 +26,18 @@
 #'
 #' @export
 getDefaultPermittedPackages <- function() {
-  permittedDependencies <- readr::read_csv(
-    system.file(
-      "extdata",
-      "dependencies.csv",
-      package = "DependencyReviewer"),
-    show_col_types = FALSE)
+  # permittedDependencies <- readr::read_csv(
+  #   system.file(
+  #     "extdata",
+  #     "dependencies.csv",
+  #     package = "DependencyReviewer"),
+  #   show_col_types = FALSE)
+
+  permittedDependencies <- read.table(
+    file = "https://raw.githubusercontent.com/mvankessel-EMC/DependencyReviewerWhitelists/main/dependencies.csv",
+    sep = ",",
+    header = TRUE) %>%
+    tibble()
 
   # Get base packages
   basePackages <- data.frame(installed.packages(priority = "high")) %>%
