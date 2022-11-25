@@ -93,6 +93,6 @@ getDefaultPermittedPackages <- function() {
     write.csv(
       x = permittedPackages,
       file = tmpFile)
+    return(permittedPackages)
   }
-  return(permittedPackages)
 }
