@@ -26,59 +26,73 @@
 #'
 #' @export
 getDefaultPermittedPackages <- function() {
-  # permittedDependencies <- readr::read_csv(
-  #   system.file(
-  #     "extdata",
-  #     "dependencies.csv",
-  #     package = "DependencyReviewer"),
-  #   show_col_types = FALSE)
+  tmpFile <- list.files(
+    path = tempdir(),
+    pattern = "tmpPkgs*",
+    full.names = TRUE)
 
-  permittedDependencies <- read.table(
-    file = "https://raw.githubusercontent.com/mvankessel-EMC/DependencyReviewerWhitelists/main/dependencies.csv",
-    sep = ",",
-    header = TRUE) %>%
-    tibble()
+  if (length(tmpFile) > 0) {
+    message("Get from temp file")
+    return(dplyr::tibble(read.csv(tmpFile)))
+  } else {
+    # Create tmp file
+    tmpFile <- tempfile(
+      pattern = "tmpPkgs",
+      tmpdir = tempdir(),
+      fileext = ".csv")
 
-  # Get base packages
-  basePackages <- data.frame(installed.packages(priority = "high")) %>%
-    dplyr::select(Package, Built) %>%
-    dplyr::rename(package = Package, version = Built) %>%
-    dplyr::tibble()
+    permittedDependencies <- read.table(
+      file = "https://raw.githubusercontent.com/mvankessel-EMC/DependencyReviewerWhitelists/main/dependencies.csv",
+      sep = ",",
+      header = TRUE) %>%
+      tibble()
 
-  # Get Tidyverse packages
-  tidyversePackages <- sapply(
-    X = tidyverse::tidyverse_packages(include_self = TRUE),
-    FUN = function(pkg) {
-      as.character(packageVersion(pkg))
+    # Get base packages
+    basePackages <- data.frame(installed.packages(priority = "high")) %>%
+      dplyr::select(Package, Built) %>%
+      dplyr::rename(package = Package, version = Built) %>%
+      dplyr::tibble()
+
+    # Get Tidyverse packages
+    tidyversePackages <- sapply(
+      X = tidyverse::tidyverse_packages(include_self = TRUE),
+      FUN = function(pkg) {
+        as.character(packageVersion(pkg))
       }
     )
 
-  tidyversePackages <- tibble(
-    package = names(tidyversePackages),
-    version = tidyversePackages)
+    tidyversePackages <- tibble(
+      package = names(tidyversePackages),
+      version = tidyversePackages)
 
-  # Get HADES packages
-  hadesPackages <- read.table(
-    file = "https://raw.githubusercontent.com/OHDSI/Hades/main/extras/packages.csv",
-    sep = ",",
-    header = TRUE) %>% select(name) %>%
-    mutate(version = rep("*", length(names))) %>%
-    rename(package = name) %>%
-    tibble()
+    # Get HADES packages
+    hadesPackages <- read.table(
+      file = "https://raw.githubusercontent.com/OHDSI/Hades/main/extras/packages.csv",
+      sep = ",",
+      header = TRUE) %>% select(name) %>%
+      mutate(version = rep("*", length(names))) %>%
+      rename(package = name) %>%
+      tibble()
 
-  hadesPackages$package <- paste0("OHDSI/", hadesPackages$package)
+    hadesPackages$package <- paste0("OHDSI/", hadesPackages$package)
 
-  sourcePackages <- dplyr::bind_rows(
-    tidyversePackages,
-    hadesPackages,
-    permittedDependencies
-  )
+    sourcePackages <- dplyr::bind_rows(
+      tidyversePackages,
+      hadesPackages,
+      permittedDependencies
+    )
 
-  depList <- pak::pkg_deps(sourcePackages$package)
+    depList <- pak::pkg_deps(sourcePackages$package)
 
-  permittedPackages <- dplyr::bind_rows(
-    basePackages,
-    depList %>%
-      select(package, version))
+    permittedPackages <- dplyr::bind_rows(
+      basePackages,
+      depList %>%
+        select(package, version))
+
+    message("Writing temp file")
+    write.csv(
+      x = permittedPackages,
+      file = tmpFile)
+  }
   return(permittedPackages)
 }
