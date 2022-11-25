@@ -151,7 +151,7 @@ checkDependencies <- function(
     example$url <- stringr::str_replace_all(string = example$url, pattern = ",\\\n", replacement = " ")
 
     cli::cli_alert_warning(
-    "{.emph Please add a comment at https://github.com/darwin-eu/DependencyReviewer/issues/6
+    "{.emph Please create a new issue at https://github.com/mvankessel-EMC/DependencyReviewerWhitelists/
     to request approval for packages with the following message:}
     ")
 
