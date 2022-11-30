@@ -97,9 +97,6 @@ checkDependencies <- function(
     packageName = NULL,
     dependencyType = c("Imports", "Depends")) {
 
-  packageName = NULL
-  dependencyType = c("Imports", "Depends")
-
   # find dependencies
   if(is.null(packageName)) {
     description <-  desc::description$new()
