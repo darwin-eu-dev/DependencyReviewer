@@ -41,8 +41,14 @@ shiny::shinyUI(
 
       mainPanel = shiny::mainPanel(
         width = 12,
-        shiny::tabsetPanel(
-          type = "tabs",
+        # shiny::tabsetPanel(
+        #   type = "tabs",
+        #   shiny::tabPanel(
+        #     "Lintr",
+        #     shiny::mainPanel(
+        #       DT::dataTableOutput("lintrTable")
+        #     )
+        #   ),
           shiny::tabPanel(
             "Package review",
             shiny::verticalLayout(

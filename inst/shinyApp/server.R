@@ -19,6 +19,7 @@ library(dplyr)
 
 # Shiny Server
 shinyServer(function(input, output, session) {
+  # DependencyReviewer::darwinLintScore(DependencyReviewer::darwinLintPackage)
   readFile <- shiny::reactive({
     if (input$file != "ALL") {
       paste(readLines(here::here("R", input$file)),
@@ -197,4 +198,20 @@ shinyServer(function(input, output, session) {
       legend.position = "bottom"
     )
   })
+
+  # getLintrTable <- shiny::reactive({
+  #   out <- DependencyReviewer::darwinLintScore(DependencyReviewer::darwinLintPackage)
+  #   return(out)
+  # })
+  #
+  # output$lintrTable <- DT::renderDataTable({
+  #   shiny::withProgress(expr = {
+  #     shiny::setProgress(value = 0, message = "Running Lintr on package")
+  #
+  #     out <- DT::datatable(getLintrTable())
+  #
+  #     shiny::setProgress(value = 1, message = "Supplying output in table")
+  #   }, min = 0, max = 1)
+  #   return(out)
+  # })
 })
