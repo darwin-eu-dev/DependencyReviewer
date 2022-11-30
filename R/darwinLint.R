@@ -33,7 +33,7 @@ darwinLintPackage <- function() {
 #' @export
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' darwinLintFile("SomeFileName.R")
 #' }
 darwinLintFile <- function(fileName) {
@@ -55,7 +55,7 @@ darwinLintFile <- function(fileName) {
 #'     Other parameters a Lint function might need (i.e. file name)
 #' @export
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # With darwin file lintr
 #' darwinLintScore(lintFunction = darwinLintFile, "darwinLint.R")
 #'
@@ -64,7 +64,11 @@ darwinLintFile <- function(fileName) {
 #' }
 darwinLintScore <- function(lintFunction, ...) {
   lintTable <- data.frame(lintFunction(...))
-  files <- unique(lintTable$filename)
+
+  files <- unique(paste0(
+    normalizePath(here::here()),
+    "\\",
+    unique(x$filename)))
 
   nLines <- sum(unlist(lapply(
     X = files,

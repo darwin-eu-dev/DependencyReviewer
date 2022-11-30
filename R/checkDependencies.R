@@ -87,6 +87,7 @@ messagePackageVersion <- function(i, diffVersions) {
 #' @import dplyr
 #' @import cli
 #' @import knitr
+#' @import desc
 #'
 #' @param packageName Name of package to profile. If NULL current package
 #' @param dependencyType Imports, depends, and/ or suggests

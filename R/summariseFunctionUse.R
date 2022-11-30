@@ -115,6 +115,7 @@ funsUsedInLine <- function(file_txt, file_name, i, verbose=FALSE) {
 #'
 #' @param files Files to get functions from
 #' @param verbose Verbosity
+#' @param in_package default: TRUE
 #'
 #' @return table
 funsUsedInFile <- function(files, verbose = FALSE, in_package = TRUE) {
