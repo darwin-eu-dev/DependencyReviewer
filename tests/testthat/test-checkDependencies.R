@@ -1,9 +1,18 @@
-test_that("checkDependencies", {
-  # # current package
-  # messages <- checkDependencies()
-  # expect_null(messages)
+library(testthat)
+library(DependencyReviewer)
 
-  # other installed package
-  messages <- checkDependencies(packageName = "dplyr")
-  expect_null(messages)
+test_that("Void", {
+  expect_message(checkDependencies())
+})
+
+test_that("ggplot2", {
+  expect_message(checkDependencies(packageName = "ggplot2"), c("approved"))
+})
+
+test_that("ggplot2", {
+  expect_message(checkDependencies(
+    packageName = "ggplot2",
+    dependencyType = c("Imports", "suggests")
+  ),
+  c("approved"))
 })
