@@ -16,7 +16,7 @@ Function that scores the lintr output as a percentage per message type
 (style, warning, error). Lintr messages / lines assessed * 100
 }
 \examples{
-\donttest{
+\dontrun{
 # With darwin file lintr
 darwinLintScore(lintFunction = darwinLintFile, "darwinLint.R")
 

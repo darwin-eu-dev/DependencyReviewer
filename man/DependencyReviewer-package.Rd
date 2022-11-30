@@ -4,8 +4,12 @@
 \name{DependencyReviewer-package}
 \alias{DependencyReviewer}
 \alias{DependencyReviewer-package}
-\title{DependencyReviewer: Check package dependencise}
+\title{DependencyReviewer: Tool suite to investigate other packages}
 \description{
-More about what it does (maybe more than one line) Use four spaces when indenting paragraphs within the Description.
+DependnecyReviewer is a package that helps investigating other packages during code review.
+}
+\author{
+\strong{Maintainer}: Maarten van Kessel \email{m.l.vankessel@erasmusmc.nl}
+
 }
 \keyword{internal}

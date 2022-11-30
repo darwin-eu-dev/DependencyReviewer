@@ -10,6 +10,8 @@ funsUsedInFile(files, verbose = FALSE, in_package = TRUE)
 \item{files}{Files to get functions from}
 
 \item{verbose}{Verbosity}
+
+\item{in_package}{default: TRUE}
 }
 \value{
 table

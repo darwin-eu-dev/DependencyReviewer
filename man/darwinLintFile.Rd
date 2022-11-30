@@ -13,7 +13,7 @@ darwinLintFile(fileName)
 Lint a given file.
 }
 \examples{
-\donttest{
+\dontrun{
 darwinLintFile("SomeFileName.R")
 }
 }
