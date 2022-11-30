@@ -23,6 +23,7 @@
 #'
 #' @import readr
 #' @import tidyverse
+#' @import utils
 #'
 #' @export
 getDefaultPermittedPackages <- function() {
@@ -33,7 +34,7 @@ getDefaultPermittedPackages <- function() {
 
   if (length(tmpFile) > 0) {
     message("Get from temp file")
-    return(dplyr::tibble(read.csv(tmpFile)))
+    return(dplyr::tibble(utils::read.csv(tmpFile)))
   } else {
     # Create tmp file
     tmpFile <- tempfile(
@@ -41,23 +42,23 @@ getDefaultPermittedPackages <- function() {
       tmpdir = tempdir(),
       fileext = ".csv")
 
-    permittedDependencies <- read.table(
+    permittedDependencies <- utils::read.table(
       file = "https://raw.githubusercontent.com/mvankessel-EMC/DependencyReviewerWhitelists/main/dependencies.csv",
       sep = ",",
       header = TRUE) %>%
       tibble()
 
     # Get base packages
-    basePackages <- data.frame(installed.packages(priority = "high")) %>%
-      dplyr::select(Package, Built) %>%
-      dplyr::rename(package = Package, version = Built) %>%
+    basePackages <- data.frame(utils::installed.packages(priority = "high")) %>%
+      dplyr::select(.data$Package, .data$Built) %>%
+      dplyr::rename(package = .data$Package, version = .data$Built) %>%
       dplyr::tibble()
 
     # Get Tidyverse packages
     tidyversePackages <- sapply(
       X = tidyverse::tidyverse_packages(include_self = TRUE),
       FUN = function(pkg) {
-        as.character(packageVersion(pkg))
+        as.character(utils::packageVersion(pkg))
       }
     )
 
@@ -69,9 +70,9 @@ getDefaultPermittedPackages <- function() {
     hadesPackages <- read.table(
       file = "https://raw.githubusercontent.com/OHDSI/Hades/main/extras/packages.csv",
       sep = ",",
-      header = TRUE) %>% select(name) %>%
+      header = TRUE) %>% select(.data$name) %>%
       mutate(version = rep("*", length(names))) %>%
-      rename(package = name) %>%
+      rename(package = .data$name) %>%
       tibble()
 
     hadesPackages$package <- paste0("OHDSI/", hadesPackages$package)
@@ -87,10 +88,10 @@ getDefaultPermittedPackages <- function() {
     permittedPackages <- dplyr::bind_rows(
       basePackages,
       depList %>%
-        select(package, version))
+        select(.data$package, version))
 
     message("Writing temp file")
-    write.csv(
+    utils::write.csv(
       x = permittedPackages,
       file = tmpFile)
     return(permittedPackages)

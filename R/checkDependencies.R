@@ -47,7 +47,7 @@ getDiffVersions <- function(dependencies, permittedPackages) {
 getNotPermitted <- function(dependencies, permittedPackages) {
   # check if dependencies are permitted
   not_permitted <- dependencies %>%
-    dplyr::filter(package != "R") %>%
+    dplyr::filter(.data$package != "R") %>%
     dplyr::anti_join(
       permittedPackages,
       by = "package") %>%
@@ -87,6 +87,7 @@ messagePackageVersion <- function(i, diffVersions) {
 #' @import dplyr
 #' @import cli
 #' @import knitr
+#' @import rlang
 #' @importFrom desc description
 #'
 #' @param packageName Name of package to profile. If NULL current package
@@ -141,8 +142,8 @@ checkDependencies <- function(
           X = not_permitted,
           FUN = function(pkg) {
             dplyr::tibble(pak::pkg_search(pkg)) %>%
-            dplyr::filter(package == pkg) %>%
-            dplyr::select(package, version, date, downloads_last_month,
+            dplyr::filter(.data$package == pkg) %>%
+            dplyr::select(.data$package, version, date, .data$downloads_last_month,
                           license, url)
       }))
 

@@ -27,6 +27,7 @@
 #' @import DT
 #' @import ggplot2
 #' @import dplyr
+#' @import GGally
 #'
 #'
 #' @export

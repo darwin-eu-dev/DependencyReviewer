@@ -145,8 +145,8 @@ summariseFunctionUse <- function(r_files = list.files(here::here("R")), verbose 
   }
 
   deps_used <- dplyr::bind_rows(deps_used) %>%
-    dplyr::relocate(r_file, line, pkg, fun) %>%
-    dplyr::arrange(r_file, line, pkg, fun)
+    dplyr::relocate(.data$r_file, .data$line, .data$pkg, .data$fun) %>%
+    dplyr::arrange(.data$r_file, .data$line, .data$pkg, .data$fun)
 
   deps_used$pkg[deps_used$fun %in% ls("package:base")] <- "base"
   return(deps_used)
