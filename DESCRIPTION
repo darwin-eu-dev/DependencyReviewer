@@ -1,11 +1,12 @@
 Package: DependencyReviewer
 Type: Package
-Title: Check package dependencise
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Title: Tool suite to investigate other packages
+Version: 1.0.0
+Authors@R:
+    person("Maarten", "van Kessel", email = "m.l.vankessel@erasmusmc.nl",
+           role = c("aut", "cre"))
+Description: DependnecyReviewer is a package that helps investigating other
+    packages during code review.
 License: Apache License (>= 2)
 Encoding: UTF-8
 LazyData: true
@@ -13,6 +14,7 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Imports:
+  desc,
   DT,
   cli,
   dplyr,
