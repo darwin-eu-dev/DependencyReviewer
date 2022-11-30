@@ -66,8 +66,6 @@ darwinLintScore <- function(lintFunction, ...) {
   lintTable <- data.frame(lintFunction(...))
 
   files <- unique(paste0(
-    normalizePath(here::here()),
-    "\\",
     unique(lintTable$filename)))
 
   nLines <- sum(unlist(lapply(

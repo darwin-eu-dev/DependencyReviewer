@@ -6,7 +6,7 @@
 \alias{DependencyReviewer-package}
 \title{DependencyReviewer: Tool suite to investigate other packages}
 \description{
-DependnecyReviewer is a package that helps investigating other packages during code review.
+DependencyReviewer is a package that helps investigating other packages during code review.
 }
 \author{
 \strong{Maintainer}: Maarten van Kessel \email{m.l.vankessel@erasmusmc.nl}

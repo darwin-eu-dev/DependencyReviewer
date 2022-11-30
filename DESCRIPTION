@@ -5,7 +5,7 @@ Version: 1.0.0
 Authors@R:
     person("Maarten", "van Kessel", email = "m.l.vankessel@erasmusmc.nl",
            role = c("aut", "cre"))
-Description: DependnecyReviewer is a package that helps investigating other
+Description: DependencyReviewer is a package that helps investigating other
     packages during code review.
 License: Apache License (>= 2)
 Encoding: UTF-8
@@ -14,28 +14,25 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Imports:
-  desc,
-  DT,
-  cli,
-  dplyr,
-  funspotr,
-  ggplot2,
-  ggraph,
-  glue,
-  here,
-  knitr,
-  lintr,
-  pak,
-  readr,
-  shiny,
-  shinyAce,
-  stringr,
-  tidygraph,
-  tidyverse,
-  magrittr,
-  GGally
-Remotes:
-    brshallo/funspotr
+    desc,
+    DT,
+    cli,
+    dplyr,
+    ggplot2,
+    ggraph,
+    glue,
+    here,
+    knitr,
+    lintr,
+    pak,
+    readr,
+    shiny,
+    shinyAce,
+    stringr,
+    tidygraph,
+    tidyverse,
+    magrittr,
+    GGally
 RoxygenNote: 7.2.1
 Depends: 
     R (>= 4.0)
