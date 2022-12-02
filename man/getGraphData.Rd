@@ -11,7 +11,7 @@ getGraphData(
 )
 }
 \arguments{
-\item{path}{path}
+\item{path}{Path to package}
 
 \item{excluded_packages}{Packages to exclude}
 

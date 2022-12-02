@@ -22,7 +22,6 @@
 #' packages.
 #'
 #' @import readr
-#' @import tidyverse
 #' @import utils
 #'
 #' @export
@@ -63,16 +62,11 @@ getDefaultPermittedPackages <- function() {
       dplyr::tibble()
 
     # Get Tidyverse packages
-    tidyversePackages <- sapply(
-      X = tidyverse::tidyverse_packages(include_self = TRUE),
-      FUN = function(pkg) {
-        as.character(utils::packageVersion(pkg))
-      }
-    )
-
-    tidyversePackages <- dplyr::tibble(
-      package = names(tidyversePackages),
-      version = tidyversePackages)
+    tidyversePackages <- utils::read.table(
+      file = "https://raw.githubusercontent.com/mvankessel-EMC/DependencyReviewerWhitelists/main/TidyverseDependencies.csv",
+      sep = ",",
+      header = TRUE) %>%
+      dplyr::tibble()
 
     # Get HADES packages
     hadesPackages <- utils::read.table(

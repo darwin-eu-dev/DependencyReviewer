@@ -22,7 +22,7 @@ shinyServer(function(input, output, session) {
   # DependencyReviewer::darwinLintScore(DependencyReviewer::darwinLintPackage)
   readFile <- shiny::reactive({
     if (input$file != "ALL") {
-      paste(readLines(paste0(.path, "/", input$file)),
+      paste(readLines(paste0(.GlobalEnv$.path, "/", input$file)),
             collapse = "\n")
     }
   })
@@ -37,10 +37,10 @@ shinyServer(function(input, output, session) {
   # Set output for table with filter
   output$tbl <- DT::renderDataTable({
     if (input$file == "ALL") {
-      DependencyReviewer::summariseFunctionUse(r_files = list.files(.path, full.names = TRUE)) %>%
+      DependencyReviewer::summariseFunctionUse(r_files = list.files(.GlobalEnv$.path, full.names = TRUE)) %>%
         filter(!pkg %in% input$excludes)
     } else {
-      DependencyReviewer::summariseFunctionUse(r_files = paste0(.path, "/", input$file)) %>%
+      DependencyReviewer::summariseFunctionUse(r_files = paste0(.GlobalEnv$.path, "/", input$file)) %>%
         dplyr::select(-"r_file") %>%
         filter(!pkg %in% input$excludes)
     }
@@ -48,9 +48,9 @@ shinyServer(function(input, output, session) {
 
   getData <- reactive({
     if (input$file == "ALL") {
-      DependencyReviewer::summariseFunctionUse(r_files = list.files(.path, full.names = TRUE))
+      DependencyReviewer::summariseFunctionUse(r_files = list.files(.GlobalEnv$.path, full.names = TRUE))
     } else {
-      DependencyReviewer::summariseFunctionUse(r_files = paste0(.path, "/", input$file))
+      DependencyReviewer::summariseFunctionUse(r_files = paste0(.GlobalEnv$.path, "/", input$file))
     }
   })
 
@@ -91,6 +91,7 @@ shinyServer(function(input, output, session) {
 
   graphData <- reactive({
     DependencyReviewer::getGraphData(
+      path = .GlobalEnv$.path,
       excluded_packages = input$excludes_all,
       package_types = input$dep_kinds
     )
@@ -197,6 +198,10 @@ shinyServer(function(input, output, session) {
       color = cols,
       legend.position = "bottom"
     )
+  })
+
+  shiny::onStop(fun = function() {
+    rm(.path, envir = .GlobalEnv)
   })
 
   # getLintrTable <- shiny::reactive({

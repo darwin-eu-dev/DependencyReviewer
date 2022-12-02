@@ -30,7 +30,6 @@ Imports:
     readr,
     stringr,
     tidygraph,
-    tidyverse,
     magrittr,
 RoxygenNote: 7.2.2
 Depends: 

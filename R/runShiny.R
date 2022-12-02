@@ -30,7 +30,7 @@
 #'   runShiny()
 #' }
 runShiny <- function() {
-  reqs <- c("shiny", "shinyAce", "ggplot2", "ggraph", "DT", "GGally")
+  reqs <- c("shiny", "shinyAce", "ggplot2", "ggraph", "DT", "GGally", "here")
 
   missing <- unlist(lapply(reqs, function(x) {
     if (!requireNamespace(x, quietly = TRUE)) {
@@ -44,7 +44,7 @@ runShiny <- function() {
       sep = "\n"
     ))
   } else {
-    .path <- here::here("R")
+    assign(envir = .GlobalEnv, ".path", here::here("R"))
     appDir <-
       system.file(package = "DependencyReviewer", "shinyApp")
     if (appDir == "") {

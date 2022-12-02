@@ -1,7 +1,7 @@
 #' getGraphData
 #'
 #' @param path
-#'     path
+#'     Path to package
 #' @param excluded_packages
 #'     Packages to exclude
 #' @param package_types

@@ -57,7 +57,7 @@ shiny::shinyUI(
                 shiny::selectInput(
                   inputId = "file",
                   label = "File",
-                  choices = c("ALL", list.files(.path))
+                  choices = c("ALL", list.files(with(.GlobalEnv, .GlobalEnv$.path)))
                 ),
 
                 shiny::checkboxGroupInput(
