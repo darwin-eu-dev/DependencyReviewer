@@ -5,7 +5,7 @@
 \title{getGraphData}
 \usage{
 getGraphData(
-  path = here::here(),
+  path,
   excluded_packages = c(""),
   package_types = c("imports", "depends")
 )

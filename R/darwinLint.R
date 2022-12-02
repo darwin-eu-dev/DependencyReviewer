@@ -2,6 +2,8 @@
 #'
 #' Darwin lintr object, using default lintr object with camelCase
 #'
+#' @param path Default: ".", Path to package
+#'
 #' @return List of lint objects.
 #' @import lintr
 #' @export
