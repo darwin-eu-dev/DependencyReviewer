@@ -18,12 +18,12 @@ Suggests:
     ggraph,
     DT,
     GGally,
+    here
 Imports:
     rlang,
     desc,
     cli,
     dplyr,
-    here,
     knitr,
     lintr,
     pak,
