@@ -22,7 +22,7 @@ shinyServer(function(input, output, session) {
   # DependencyReviewer::darwinLintScore(DependencyReviewer::darwinLintPackage)
   readFile <- shiny::reactive({
     if (input$file != "ALL") {
-      paste(readLines(here::here("R", input$file)),
+      paste(readLines(paste0(.path, "/", input$file)),
             collapse = "\n")
     }
   })
@@ -37,10 +37,10 @@ shinyServer(function(input, output, session) {
   # Set output for table with filter
   output$tbl <- DT::renderDataTable({
     if (input$file == "ALL") {
-      DependencyReviewer::summariseFunctionUse(r_files = list.files(here::here("R"))) %>%
+      DependencyReviewer::summariseFunctionUse(r_files = list.files(.path, full.names = TRUE)) %>%
         filter(!pkg %in% input$excludes)
     } else {
-      DependencyReviewer::summariseFunctionUse(r_files = input$file) %>%
+      DependencyReviewer::summariseFunctionUse(r_files = paste0(.path, "/", input$file)) %>%
         dplyr::select(-"r_file") %>%
         filter(!pkg %in% input$excludes)
     }
@@ -48,9 +48,9 @@ shinyServer(function(input, output, session) {
 
   getData <- reactive({
     if (input$file == "ALL") {
-      DependencyReviewer::summariseFunctionUse(r_files = list.files(here::here("R")))
+      DependencyReviewer::summariseFunctionUse(r_files = list.files(.path, full.names = TRUE))
     } else {
-      DependencyReviewer::summariseFunctionUse(r_files = input$file)
+      DependencyReviewer::summariseFunctionUse(r_files = paste0(.path, "/", input$file))
     }
   })
 

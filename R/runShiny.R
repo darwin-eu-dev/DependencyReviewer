@@ -44,12 +44,13 @@ runShiny <- function() {
       sep = "\n"
     ))
   } else {
+    .path <- here::here("R")
     appDir <-
       system.file(package = "DependencyReviewer", "shinyApp")
     if (appDir == "") {
       stop("Could not find shiny application")
     } else {
-      shiny::shinyAppDir(appDir)
+      shiny::shinyAppDir(appDir, )
     }
   }
 }
