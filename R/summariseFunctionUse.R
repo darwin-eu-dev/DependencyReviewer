@@ -134,7 +134,7 @@ summariseFunctionUse <-
 
     if (nrow(deps_used) == 0) {
       warning("No functions found, output will be empty")
-      deps_used <- tibble(
+      deps_used <- dplyr::tibble(
         r_file = character(0),
         line = numeric(0),
         pkg = character(0),
