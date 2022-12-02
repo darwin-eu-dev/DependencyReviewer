@@ -4,14 +4,12 @@
 \alias{funsUsedInFile}
 \title{funsUsedInFile}
 \usage{
-funsUsedInFile(files, verbose = FALSE, in_package = TRUE)
+funsUsedInFile(files, verbose = FALSE)
 }
 \arguments{
 \item{files}{Files to get functions from}
 
 \item{verbose}{Verbosity}
-
-\item{in_package}{default: TRUE}
 }
 \value{
 table
