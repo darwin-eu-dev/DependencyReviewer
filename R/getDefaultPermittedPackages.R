@@ -26,6 +26,12 @@
 #' @import utils
 #'
 #' @export
+#' @examples
+#' # Run only in interactive session
+#' if (interactive()) {
+#'   getDefaultPermittedPackages()
+#' }
+#'
 getDefaultPermittedPackages <- function() {
   tmpFile <- list.files(
     path = tempdir(),
@@ -49,7 +55,9 @@ getDefaultPermittedPackages <- function() {
       tibble()
 
     # Get base packages
-    basePackages <- data.frame(utils::installed.packages(priority = "high")) %>%
+    basePackages <- data.frame(utils::installed.packages(
+      lib.loc = .Library,
+      priority = "high")) %>%
       dplyr::select(.data$Package, .data$Built) %>%
       dplyr::rename(package = .data$Package, version = .data$Built) %>%
       dplyr::tibble()

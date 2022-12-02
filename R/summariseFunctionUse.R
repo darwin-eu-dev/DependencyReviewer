@@ -30,7 +30,7 @@
 #'
 #' @return data.frame of 3 colums: Package (pkg); Function (fun); Line in
 #' script (line)
-funsUsedInLine <- function(file_txt, file_name, i, verbose=FALSE) {
+funsUsedInLine <- function(file_txt, file_name, i, verbose = FALSE) {
   line <- file_txt[i]
   if (!startsWith(line, "#")) {
     line <- paste(stringr::str_split(
@@ -128,27 +128,40 @@ funsUsedInFile <- function(files, verbose = FALSE, in_package = TRUE) {
 #' @return tibble
 #'
 #' @export
-summariseFunctionUse <- function(r_files = list.files(here::here("R")), verbose = FALSE, in_package = TRUE) {
-  #tryCatch({
-  deps_used <- funsUsedInFile(r_files, verbose, in_package)
-  # }, error = function(e) {
-  #   stop(paste(r_files, "not found"))
-  # })
+#' @examples
+#' summariseFunctionUse(
+#'   r_files = system.file(package = "DependencyReviewer", "testScript.R"),
+#'   in_package = FALSE)
+#'
+#' # Only in an interactive session
+#' if (interactive()) {
+#'   summariseFunctionUse()
+#' }
+summariseFunctionUse <-
+  function(r_files = list.files(here::here("R")),
+           verbose = FALSE,
+           in_package = TRUE) {
+    #tryCatch({
+    deps_used <- funsUsedInFile(r_files, verbose, in_package)
+    # }, error = function(e) {
+    #   stop(paste(r_files, "not found"))
+    # })
 
-  if (nrow(deps_used) == 0) {
-    warning("No functions found, output will be empty")
-    deps_used <- tibble(
-      r_file = character(0),
-      line = numeric(0),
-      pkg = character(0),
-      fun = character(0))
+    if (nrow(deps_used) == 0) {
+      warning("No functions found, output will be empty")
+      deps_used <- tibble(
+        r_file = character(0),
+        line = numeric(0),
+        pkg = character(0),
+        fun = character(0)
+      )
+    }
+
+    deps_used <- dplyr::bind_rows(deps_used) %>%
+      dplyr::relocate(.data$r_file, .data$line, .data$pkg, .data$fun) %>%
+      dplyr::arrange(.data$r_file, .data$line, .data$pkg, .data$fun)
+
+    deps_used$pkg[deps_used$fun %in% ls("package:base")] <- "base"
+    return(deps_used)
   }
-
-  deps_used <- dplyr::bind_rows(deps_used) %>%
-    dplyr::relocate(.data$r_file, .data$line, .data$pkg, .data$fun) %>%
-    dplyr::arrange(.data$r_file, .data$line, .data$pkg, .data$fun)
-
-  deps_used$pkg[deps_used$fun %in% ls("package:base")] <- "base"
-  return(deps_used)
-}
 

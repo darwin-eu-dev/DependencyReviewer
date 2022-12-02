@@ -1,12 +1,12 @@
 Package: DependencyReviewer
 Type: Package
-Title: Tool suite to investigate other packages
+Title: Tool Suite to Investigate Other Packages
 Version: 1.0.0
 Authors@R:
     person("Maarten", "van Kessel", email = "m.l.vankessel@erasmusmc.nl",
            role = c("aut", "cre"))
-Description: DependencyReviewer is a package that helps investigating other
-    packages during code review.
+Description: Helps investigating other packages during code review by looking
+    at their dependencies.
 License: Apache License (>= 2)
 Encoding: UTF-8
 LazyData: true

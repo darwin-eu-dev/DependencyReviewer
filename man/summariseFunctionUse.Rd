@@ -28,3 +28,13 @@ tibble
 \description{
 Summarise functions used in R package
 }
+\examples{
+summariseFunctionUse(
+  r_files = system.file(package = "DependencyReviewer", "testScript.R"),
+  in_package = FALSE)
+
+# Only in an interactive session
+if (interactive()) {
+  summariseFunctionUse()
+}
+}

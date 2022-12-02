@@ -11,16 +11,21 @@ darwinLintScore(lintFunction, ...)
 
 \item{...}{Other parameters a Lint function might need (i.e. file name)}
 }
+\value{
+A tibble of percentage scores per type of Lint message.
+}
 \description{
 Function that scores the lintr output as a percentage per message type
 (style, warning, error). Lintr messages / lines assessed * 100
 }
 \examples{
-\dontrun{
 # With darwin file lintr
-darwinLintScore(lintFunction = darwinLintFile, "darwinLint.R")
+darwinLintScore(
+  lintFunction = darwinLintFile,
+  system.file(package = "DependencyReviewer", "testScript.R"))
 
 # With standard package lintr
-darwinLintScore(lintFunction = lintr::lint_package)
-}
+darwinLintScore(
+  lintFunction = lintr::lint_package,
+  system.file(package = "DependencyReviewer"))
 }

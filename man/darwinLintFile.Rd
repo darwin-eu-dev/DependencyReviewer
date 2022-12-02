@@ -9,11 +9,13 @@ darwinLintFile(fileName)
 \arguments{
 \item{fileName}{Path to file to lint}
 }
+\value{
+list of lint objects.
+}
 \description{
 Lint a given file.
 }
 \examples{
-\dontrun{
-darwinLintFile("SomeFileName.R")
-}
+darwinLintFile(
+  fileName = system.file(package = "DependencyReviewer", "testScript.R"))
 }

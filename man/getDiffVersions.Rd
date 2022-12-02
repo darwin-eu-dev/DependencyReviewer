@@ -12,7 +12,7 @@ getDiffVersions(dependencies, permittedPackages)
 \item{permittedPackages}{permittedPackages}
 }
 \value{
-Versions of permitted packages
+versions of permitted packages
 }
 \description{
 Helper function

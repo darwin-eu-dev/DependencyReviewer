@@ -13,3 +13,10 @@ packages.
 \description{
 Gets permitted packages
 }
+\examples{
+# Run only in interactive session
+if (interactive()) {
+  getDefaultPermittedPackages()
+}
+
+}

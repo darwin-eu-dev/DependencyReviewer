@@ -2,7 +2,7 @@
 % Please edit documentation in R/checkDependencies.R
 \name{checkDependencies}
 \alias{checkDependencies}
-\title{Check package dependencies}
+\title{checkDependencies}
 \usage{
 checkDependencies(packageName = NULL, dependencyType = c("Imports", "Depends"))
 }
@@ -11,6 +11,17 @@ checkDependencies(packageName = NULL, dependencyType = c("Imports", "Depends"))
 
 \item{dependencyType}{Imports, depends, and/ or suggests}
 }
+\value{
+Returns value NULL
+}
 \description{
 Check package dependencies
+}
+\examples{
+# Run only in interactive session
+if (interactive()) {
+  checkDependencies(packageName = "DependencyReviewer")
+
+  checkDependencies(packageName = "DependencyReviewer", c("Suggests"))
+}
 }

@@ -23,7 +23,7 @@
 #' @param dependencies Dependencies
 #' @param permittedPackages permittedPackages
 #'
-#' @return Versions of permitted packages
+#' @return versions of permitted packages
 getDiffVersions <- function(dependencies, permittedPackages) {
   permittedPackages %>%
     dplyr::filter(!is.na(version)) %>%
@@ -82,6 +82,8 @@ messagePackageVersion <- function(i, diffVersions) {
   cli::cli_alert("    {.pkg should be: {diffVersions$version_rec[i]} }")
 }
 
+#' checkDependencies
+#'
 #' Check package dependencies
 #'
 #' @import dplyr
@@ -93,7 +95,16 @@ messagePackageVersion <- function(i, diffVersions) {
 #' @param packageName Name of package to profile. If NULL current package
 #' @param dependencyType Imports, depends, and/ or suggests
 #'
+#' @return Returns value NULL
+#'
 #' @export
+#' @examples
+#' # Run only in interactive session
+#' if (interactive()) {
+#'   checkDependencies(packageName = "DependencyReviewer")
+#'
+#'   checkDependencies(packageName = "DependencyReviewer", c("Suggests"))
+#' }
 checkDependencies <- function(
     packageName = NULL,
     dependencyType = c("Imports", "Depends")) {

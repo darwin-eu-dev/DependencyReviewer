@@ -6,9 +6,15 @@
 \usage{
 runShiny()
 }
+\value{
+An object that represents the app.
+}
 \description{
 Runs a Shiny app for dependency investigation.
 }
 \examples{
-runShiny
+# Run only in interactive session
+if (interactive()) {
+  runShiny()
+}
 }

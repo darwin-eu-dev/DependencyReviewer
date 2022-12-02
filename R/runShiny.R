@@ -18,6 +18,8 @@
 #'
 #' Runs a Shiny app for dependency investigation.
 #'
+#' @return An object that represents the app.
+#'
 #' @importFrom shiny shinyAppDir
 #' @importFrom magrittr %>%
 #' @import shinyAce
@@ -29,11 +31,13 @@
 #' @import dplyr
 #' @import GGally
 #'
-#'
 #' @export
 #'
 #' @examples
-#' runShiny
+#' # Run only in interactive session
+#' if (interactive()) {
+#'   runShiny()
+#' }
 runShiny <- function() {
   appDir <- system.file(package = "DependencyReviewer", "shinyApp")
   if (appDir == "") {

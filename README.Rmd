@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 # DependencyReviewer
 
 <!-- badges: start -->
-[![Lifecycle:Experimental](https://img.shields.io/badge/Lifecycle-Experimental-339999)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Lifecycle:Experimental](https://img.shields.io/badge/Lifecycle-Experimental-339999/)](https://lifecycle.r-lib.org/articles/stages.html#experimental/)
 <!-- badges: end -->
 
 ## Table of Contents

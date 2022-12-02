@@ -24,3 +24,9 @@ net_data graph data
 \description{
 getGraphData
 }
+\examples{
+# Only run in interactive session
+if(interactive()) {
+  graphData <- getGraphData()
+}
+}

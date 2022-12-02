@@ -2,9 +2,12 @@
 % Please edit documentation in R/darwinLint.R
 \name{darwinLintPackage}
 \alias{darwinLintPackage}
-\title{darwinLint}
+\title{darwinLintPackage}
 \usage{
 darwinLintPackage()
+}
+\value{
+List of lint objects.
 }
 \description{
 Darwin lintr object, using default lintr object with camelCase

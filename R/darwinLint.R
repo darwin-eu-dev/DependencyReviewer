@@ -1,7 +1,8 @@
-#' darwinLint
+#' darwinLintPackage
 #'
 #' Darwin lintr object, using default lintr object with camelCase
 #'
+#' @return List of lint objects.
 #' @import lintr
 #' @export
 #'
@@ -26,6 +27,8 @@ darwinLintPackage <- function() {
 #'
 #' Lint a given file.
 #'
+#' @return list of lint objects.
+#'
 #' @import lintr
 #'
 #' @param fileName Path to file to lint
@@ -33,9 +36,8 @@ darwinLintPackage <- function() {
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' darwinLintFile("SomeFileName.R")
-#' }
+#' darwinLintFile(
+#'   fileName = system.file(package = "DependencyReviewer", "testScript.R"))
 darwinLintFile <- function(fileName) {
   lintr::lint(
     filename = fileName,
@@ -53,15 +55,19 @@ darwinLintFile <- function(fileName) {
 #'     Lint function to use
 #' @param ...
 #'     Other parameters a Lint function might need (i.e. file name)
+#' @return
+#'     A tibble of percentage scores per type of Lint message.
 #' @export
 #' @examples
-#' \dontrun{
 #' # With darwin file lintr
-#' darwinLintScore(lintFunction = darwinLintFile, "darwinLint.R")
+#' darwinLintScore(
+#'   lintFunction = darwinLintFile,
+#'   system.file(package = "DependencyReviewer", "testScript.R"))
 #'
 #' # With standard package lintr
-#' darwinLintScore(lintFunction = lintr::lint_package)
-#' }
+#' darwinLintScore(
+#'   lintFunction = lintr::lint_package,
+#'   system.file(package = "DependencyReviewer"))
 darwinLintScore <- function(lintFunction, ...) {
   lintTable <- data.frame(lintFunction(...))
 

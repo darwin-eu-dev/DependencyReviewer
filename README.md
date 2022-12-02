@@ -5,7 +5,7 @@
 
 <!-- badges: start -->
 
-[![Lifecycle:Experimental](https://img.shields.io/badge/Lifecycle-Experimental-339999)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Lifecycle:Experimental](https://img.shields.io/badge/Lifecycle-Experimental-339999/)](https://lifecycle.r-lib.org/articles/stages.html#experimental/)
 <!-- badges: end -->
 
 ## Table of Contents
@@ -43,19 +43,21 @@ inside:
 checkDependencies()
 #> ℹ Loading metadata databaseℹ Loading metadata database✔ Loading metadata database ... done✔ Loading metadata database ... done
 #> 
+#> Writing temp file
 #> 
 #> ── Checking if packages in Imports and Depends have been approved ──
 #> 
 #> ! Found 3 packages in Imports and Depends that are not
 #> approved
-#> →   1) funspotr
+#> →   1) GGally
 #> →   2) lintr
 #> →   3) pak
-#> ! Please add a comment at https://github.com/darwin-eu/DependencyReviewer/issues/6 to request approval for packages with the following message:
-#> → |package |version |date                | downloads_last_month|license            |url                                                     |
-#> |:-------|:-------|:-------------------|--------------------:|:------------------|:-------------------------------------------------------|
-#> |lintr   |3.0.2   |2022-10-19 08:52:37 |                73018|MIT + file LICENSE |https://github.com/r-lib/lintr, https://lintr.r-lib.org |
-#> |pak     |0.3.1   |2022-09-08 20:30:02 |                43430|GPL-3              |https://pak.r-lib.org/                                  |
+#> ! Please create a new issue at https://github.com/mvankessel-EMC/DependencyReviewerWhitelists/ to request approval for packages with the following message:
+#> → |package |version |date                | downloads_last_month|license            |url                                                              |
+#> |:-------|:-------|:-------------------|--------------------:|:------------------|:----------------------------------------------------------------|
+#> |GGally  |2.1.2   |2021-06-21 03:40:10 |                85560|GPL (>= 2.0)       |https://ggobi.github.io/ggally/, https://github.com/ggobi/ggally |
+#> |lintr   |3.0.2   |2022-10-19 08:52:37 |                62675|MIT + file LICENSE |https://github.com/r-lib/lintr, https://lintr.r-lib.org          |
+#> |pak     |0.3.1   |2022-09-08 20:30:02 |                41813|GPL-3              |https://pak.r-lib.org/                                           |
 ```
 
 *getDefaultPermittedPackages* gets a table of all the ‘permitted’
@@ -63,16 +65,17 @@ packages in the accompanying csv-file.
 
 ``` r
 pander(head(getDefaultPermittedPackages()))
+#> Get from temp file
 ```
 
-|  package  | version |
-|:---------:|:-------:|
-| codetools |  4.2.0  |
-|   base    |  4.2.1  |
-|   boot    |  4.2.1  |
-|   class   |  4.2.1  |
-|  cluster  |  4.2.1  |
-| codetools |  4.2.1  |
+|  X  |  package  | version |
+|:---:|:---------:|:-------:|
+|  1  | codetools |  4.2.0  |
+|  2  |   base    |  4.2.1  |
+|  3  |   boot    |  4.2.1  |
+|  4  |   class   |  4.2.1  |
+|  5  |  cluster  |  4.2.1  |
+|  6  | codetools |  4.2.1  |
 
 Function use of all .R files can be investigated using the
 *sumariseFunctionUse* function. It assumes the function is is ran inside
@@ -163,20 +166,20 @@ dependency to get all the dependency information.
 library(pak)
 
 pkg_deps("darwin-eu/DependencyReviewer")
-#> # A data frame: 139 × 32
+#> # A data frame: 141 × 32
 #>    ref       type  direct direc…¹ status package version license needs…² prior…³
 #>    <chr>     <chr> <lgl>  <lgl>   <chr>  <chr>   <chr>   <chr>   <lgl>   <chr>  
-#>  1 darwin-e… gith… TRUE   TRUE    OK     Depend… 0.1.0   Apache… TRUE    <NA>   
+#>  1 darwin-e… gith… TRUE   TRUE    OK     Depend… 1.0.0   Apache… TRUE    <NA>   
 #>  2 DBI       stan… FALSE  FALSE   OK     DBI     1.1.3   LGPL (… FALSE   <NA>   
-#>  3 MASS      stan… FALSE  FALSE   OK     MASS    7.3-58… GPL-2 … FALSE   recomm…
-#>  4 Matrix    stan… FALSE  FALSE   OK     Matrix  1.5-1   GPL (>… FALSE   recomm…
-#>  5 R6        stan… FALSE  FALSE   OK     R6      2.5.1   MIT + … FALSE   <NA>   
-#>  6 RColorBr… stan… FALSE  FALSE   OK     RColor… 1.1-3   Apache… FALSE   <NA>   
-#>  7 RcppArma… stan… FALSE  FALSE   OK     RcppAr… 0.11.4… GPL (>… FALSE   <NA>   
-#>  8 Rcpp      stan… FALSE  FALSE   OK     Rcpp    1.0.9   GPL (>… FALSE   <NA>   
-#>  9 askpass   stan… FALSE  FALSE   OK     askpass 1.1     MIT + … FALSE   <NA>   
-#> 10 assertth… stan… FALSE  FALSE   OK     assert… 0.2.1   GPL-3   FALSE   <NA>   
-#> # … with 129 more rows, 22 more variables: md5sum <chr>, sha256 <chr>,
+#>  3 DT        stan… FALSE  FALSE   OK     DT      0.26    GPL-3 … FALSE   <NA>   
+#>  4 GGally    stan… FALSE  FALSE   OK     GGally  2.1.2   GPL (>… FALSE   <NA>   
+#>  5 MASS      stan… FALSE  FALSE   OK     MASS    7.3-58… GPL-2 … FALSE   recomm…
+#>  6 Matrix    stan… FALSE  FALSE   OK     Matrix  1.5-3   GPL (>… FALSE   recomm…
+#>  7 R6        stan… FALSE  FALSE   OK     R6      2.5.1   MIT + … FALSE   <NA>   
+#>  8 RColorBr… stan… FALSE  FALSE   OK     RColor… 1.1-3   Apache… FALSE   <NA>   
+#>  9 Rcpp      stan… FALSE  FALSE   OK     Rcpp    1.0.9   GPL (>… FALSE   <NA>   
+#> 10 askpass   stan… FALSE  FALSE   OK     askpass 1.1     MIT + … FALSE   <NA>   
+#> # … with 131 more rows, 22 more variables: md5sum <chr>, sha256 <chr>,
 #> #   filesize <int>, built <chr>, platform <chr>, rversion <chr>,
 #> #   repotype <chr>, repodir <chr>, target <glue>, deps <list>, mirror <chr>,
 #> #   sources <list>, remote <list>, error <list>, metadata <list>,
