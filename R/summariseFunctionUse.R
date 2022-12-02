@@ -64,7 +64,7 @@ funsUsedInLine <- function(file_txt, file_name, i, verbose = FALSE) {
       df <- data.frame(t(sapply(fun_vec, unlist)))
       names(df) <- c("pkg", "fun")
 
-      df$r_file <- rep(file_name, dim(df)[1])
+      df$r_file <- rep(basename(file_name), dim(df)[1])
       df$line <- rep(i, dim(df)[1])
       return(dplyr::tibble(df))
 

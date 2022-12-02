@@ -24,6 +24,6 @@ summariseFunctionUse(
 
 # Only in an interactive session
 if (interactive()) {
-  summariseFunctionUse()
+  summariseFunctionUse(list.files(here::here("R"), full.names = TRUE))
 }
 }
