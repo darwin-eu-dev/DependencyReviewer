@@ -21,7 +21,6 @@
 #'
 #' @import stringr
 #' @import dplyr
-#' @import glue
 #'
 #' @param file_txt file to use
 #' @param file_name name of file
@@ -71,7 +70,7 @@ funsUsedInLine <- function(file_txt, file_name, i, verbose = FALSE) {
 
     } else {
       if(verbose == TRUE) {
-        message(glue::glue("No functions found for line: ", i))
+        message(paste0("No functions found for line: ", i))
       }
     }
   }
@@ -93,7 +92,7 @@ funsUsedInLine <- function(file_txt, file_name, i, verbose = FALSE) {
 funsUsedInFile <- function(files, verbose = FALSE, in_package = TRUE) {
   dplyr::bind_rows(lapply(X = files, FUN = function(file) {
     if(verbose) {
-      message(glue::glue("Started on file: ", file))
+      message(paste0("Started on file: ", file))
     }
 
     if(in_package) {

@@ -1,7 +1,7 @@
 Package: DependencyReviewer
 Type: Package
 Title: Tool Suite to Investigate Other Packages
-Version: 1.0.0
+Version: 1.0.1
 Authors@R:
     person("Maarten", "van Kessel", email = "m.l.vankessel@erasmusmc.nl",
            role = c("aut", "cre"))
@@ -11,29 +11,27 @@ License: Apache License (>= 2)
 Encoding: UTF-8
 LazyData: true
 Suggests: 
-    testthat (>= 3.0.0)
-Config/testthat/edition: 3
+    testthat (>= 3.0.0),
+    shiny,
+    shinyAce,
+    ggplot2,
+    ggraph,
+    DT,
+    GGally,
 Imports:
     rlang,
     desc,
-    DT,
     cli,
     dplyr,
-    ggplot2,
-    ggraph,
-    glue,
     here,
     knitr,
     lintr,
     pak,
     readr,
-    shiny,
-    shinyAce,
     stringr,
     tidygraph,
     tidyverse,
     magrittr,
-    GGally
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.2
 Depends: 
     R (>= 4.0)
