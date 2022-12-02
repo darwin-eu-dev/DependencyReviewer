@@ -8,10 +8,10 @@
 #'
 #' @examples
 #' darwinLintPackage()
-darwinLintPackage <- function() {
+darwinLintPackage <- function(path = ".") {
   tryCatch({
     lintr::lint_package(
-      path = here::here(),
+      path = path,
       linters = lintr::linters_with_defaults(
         lintr::object_name_linter(styles = "camelCase")))
   }, error = function(e) {

@@ -19,7 +19,7 @@
 #' if(interactive()) {
 #'   graphData <- getGraphData()
 #' }
-getGraphData <- function(path = here::here(), excluded_packages = c(""), package_types = c("imports", "depends")) {
+getGraphData <- function(path, excluded_packages = c(""), package_types = c("imports", "depends")) {
   # Get all dependencies using pak
   data <- pak::local_deps(path, dependencies = "Imports")
 
@@ -30,7 +30,7 @@ getGraphData <- function(path = here::here(), excluded_packages = c(""), package
     X = 1:nrow(fData),
     FUN = function(row) {
       fData[["deps"]][[row]] <- fData[["deps"]][[row]] %>%
-        filter(!.data$package %in% excluded_packages)
+        dplyr::filter(!.data$package %in% excluded_packages)
     })
 
   # Reformat dependencies to long format
@@ -42,7 +42,7 @@ getGraphData <- function(path = here::here(), excluded_packages = c(""), package
   }))
 
   pkg_deps <- pkg_deps %>%
-    filter(.data$type %in% package_types)
+    dplyr::filter(.data$type %in% package_types)
 
   # Convert tibble to graph
   net_data <- tidygraph::as_tbl_graph(
