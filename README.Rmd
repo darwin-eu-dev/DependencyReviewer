@@ -29,9 +29,14 @@ knitr::opts_chunk$set(
 ## Installation <a name="Installation"></a>
 
 You can install the development version of DependencyReviewer like so:
-``` r
+```{r eval=FALSE}
 install.packages("remotes")
 remotes::install_github("darwin-eu/DependencyReviewer")
+```
+
+DependencyReviewer is now availible on CRAN.
+```{r eval=FALSE}
+install.packages("DependencyReviewer")
 ```
 
 

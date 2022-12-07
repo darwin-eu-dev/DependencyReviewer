@@ -24,8 +24,9 @@ install.packages("remotes")
 remotes::install_github("darwin-eu/DependencyReviewer")
 ```
 
-DependencyReviewer is now also availible on [CRAN](https://cran.r-project.org/web/packages/DependencyReviewer/index.html).
-```
+DependencyReviewer is now availible on CRAN.
+
+``` r
 install.packages("DependencyReviewer")
 ```
 
@@ -38,6 +39,7 @@ whether the required version matches the current recommendation.
 library(DependencyReviewer)
 library(dplyr)
 library(ggplot2)
+#> Warning: package 'ggplot2' was built under R version 4.2.2
 library(pander)
 ```
 
@@ -60,9 +62,9 @@ checkDependencies()
 #> ! Please create a new issue at https://github.com/mvankessel-EMC/DependencyReviewerWhitelists/ to request approval for packages with the following message:
 #> → |package |version |date                | downloads_last_month|license            |url                                                              |
 #> |:-------|:-------|:-------------------|--------------------:|:------------------|:----------------------------------------------------------------|
-#> |GGally  |2.1.2   |2021-06-21 03:40:10 |                85560|GPL (>= 2.0)       |https://ggobi.github.io/ggally/, https://github.com/ggobi/ggally |
-#> |lintr   |3.0.2   |2022-10-19 08:52:37 |                62675|MIT + file LICENSE |https://github.com/r-lib/lintr, https://lintr.r-lib.org          |
-#> |pak     |0.3.1   |2022-09-08 20:30:02 |                41813|GPL-3              |https://pak.r-lib.org/                                           |
+#> |GGally  |2.1.2   |2021-06-21 03:40:10 |                86657|GPL (>= 2.0)       |https://ggobi.github.io/ggally/, https://github.com/ggobi/ggally |
+#> |lintr   |3.0.2   |2022-10-19 08:52:37 |                61729|MIT + file LICENSE |https://github.com/r-lib/lintr, https://lintr.r-lib.org          |
+#> |pak     |0.3.1   |2022-09-08 20:30:02 |                39420|GPL-3              |https://pak.r-lib.org/                                           |
 ```
 
 *getDefaultPermittedPackages* gets a table of all the ‘permitted’
@@ -75,12 +77,12 @@ pander(head(getDefaultPermittedPackages()))
 
 |  X  |  package  | version |
 |:---:|:---------:|:-------:|
-|  1  | codetools |  4.2.0  |
-|  2  |   base    |  4.2.1  |
-|  3  |   boot    |  4.2.1  |
-|  4  |   class   |  4.2.1  |
-|  5  |  cluster  |  4.2.1  |
-|  6  | codetools |  4.2.1  |
+|  1  |   base    |  4.2.1  |
+|  2  |   boot    |  4.2.1  |
+|  3  |   class   |  4.2.1  |
+|  4  |  cluster  |  4.2.1  |
+|  5  | codetools |  4.2.1  |
+|  6  | compiler  |  4.2.1  |
 
 Function use of all .R files can be investigated using the
 *sumariseFunctionUse* function. It assumes the function is is ran inside
@@ -129,7 +131,7 @@ ggplot(
     axis.text.x = (element_text(angle = 45, hjust = 1, vjust = 1)))
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
 
 *unknown* and *base* are filtered out, and the functions are being
 tallied up for each package.
@@ -141,6 +143,7 @@ graphData <- getGraphData()
 
 library(igraph)
 library(ggraph)
+#> Warning: package 'ggraph' was built under R version 4.2.2
 
 ggraph(
   graph = graphData, 
@@ -158,9 +161,11 @@ ggraph(
     colour = "red",
     hjust = 'outward') + 
   theme_void()
+#> Warning: Using the `size` aesthetic in this geom was deprecated in ggplot2 3.4.0.
+#> ℹ Please use `linewidth` in the `default_aes` field and elsewhere instead.
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
 
 If you would like to investigate dependencies there is a package named
 [PAK](https://pak.r-lib.org/dev/reference/features.html) that allows you
