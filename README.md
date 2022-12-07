@@ -26,7 +26,7 @@ remotes::install_github("darwin-eu/DependencyReviewer")
 
 DependencyReviewer is now also availible on [CRAN](https://cran.r-project.org/web/packages/DependencyReviewer/index.html).
 ```
-install.packages("DepeldencyReviewer")
+install.packages("DependencyReviewer")
 ```
 
 ## Examples <a name="Examples"></a>
