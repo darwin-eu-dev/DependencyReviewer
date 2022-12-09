@@ -1,6 +1,6 @@
 Package: DependencyReviewer
 Type: Package
-Title: Tool Suite to Investigate Other Packages
+Title: Tool Suite to Investigate R package dependencies
 Version: 1.0.0
 Language: en-US
 Authors@R:
