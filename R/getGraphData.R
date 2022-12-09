@@ -6,7 +6,7 @@
 #'     Packages to exclude
 #' @param package_types
 #'     Types of packages to be included in the result. Default: c("imports", "depends")
-#'     Availible types are: "imports", "depends", "suggests", "enhances", "linkingto"
+#'     Available types are: "imports", "depends", "suggests", "enhances", "linkingto"
 #'
 #' @return net_data graph data
 #' @import pak

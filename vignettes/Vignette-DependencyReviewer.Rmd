@@ -71,7 +71,7 @@ datatable(getDefaultPermittedPackages())
 
 ### checkDependencies
 #### What does it do?
-Now that we have defined our 'whitelisted' packages, `checkDependencies` allows us to check our currently used dependencies against it. `checkDependencies` will run `getDefaultPermittedPackages` internally so there is no need to run the two sperately to check your dependencies against the whitelist.
+Now that we have defined our 'whitelisted' packages, `checkDependencies` allows us to check our currently used dependencies against it. `checkDependencies` will run `getDefaultPermittedPackages` internally so there is no need to run the two separately to check your dependencies against the white list.
 
 #### What does it need?
 `checkDependencies` has two optional arguments:
@@ -118,7 +118,7 @@ checkDependencies(
 Notice how _"Imports"_ and _"Depends"_ packages of CDMConnector are whitelisted, but _"Suggests"_ packages are not.
 
 ### Requesting packages to be whitelisted
-If you find that some packages are not yet whitelisted, you can request them to be. The [DependencyReviewerWhitelists](https://github.com/mvankessel-EMC/DependencyReviewerWhitelists) repository on GitHub houses the whitelist for _DependencyReviewer_.
+If you find that some packages are not yet whitelisted, you can request them to be. The [DependencyReviewerWhitelists](https://github.com/mvankessel-EMC/DependencyReviewerWhitelists) repository on GitHub houses the white list for _DependencyReviewer_.
 
 To request new packages a new issue can be created on this repository.
 

@@ -24,7 +24,7 @@ install.packages("remotes")
 remotes::install_github("darwin-eu/DependencyReviewer")
 ```
 
-DependencyReviewer is now availible on CRAN.
+DependencyReviewer is now available on CRAN.
 
 ``` r
 install.packages("DependencyReviewer")
