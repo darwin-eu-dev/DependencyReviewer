@@ -145,13 +145,13 @@ approved
 When creating a new issue, a request template is available.
 
 ```{r, echo=FALSE, out.width="100%", fig.cap="Request template button"}
-knitr::include_graphics("D:/Users/mvankessel/Pictures/Screenshots/Schermafbeelding_20221209_100800.png")
+knitr::include_graphics("figures/Schermafbeelding_20221209_100800.png")
 ```
 
 This template asks for some basic information about the requested packages, and a reason as to why the requested packages should be whitelisted.
 
 ```{r, echo=FALSE, out.width="100%", fig.cap="Request template"}
-knitr::include_graphics("D:/Users/mvankessel/Pictures/Screenshots/Schermafbeelding_20221209_101030.png")
+knitr::include_graphics("figures/Schermafbeelding_20221209_101030.png")
 ```
 
 Initially it displays some dummy information as to what a request might look like.
@@ -163,13 +163,13 @@ Then it asks us to give a description as to why we would like these packages to 
 Finally, we can add some additional information if required.
 
 ```{r, echo=FALSE, out.width="100%", fig.cap="Request filled out"}
-knitr::include_graphics("D:/Users/mvankessel/Pictures/Screenshots/Schermafbeelding_20221209_101612.png")
+knitr::include_graphics("figures/Schermafbeelding_20221209_101612.png")
 ```
 
 We can then preview our request issue:
 
 ```{r, echo=FALSE, out.width="100%", fig.cap="Request preview"}
-knitr::include_graphics("D:/Users/mvankessel/Pictures/Screenshots/Schermafbeelding_20221209_101939.png")
+knitr::include_graphics("figures/Schermafbeelding_20221209_101939.png")
 ```
 
 If everything looks good, we can submit the issue.
@@ -308,36 +308,36 @@ On the package review tab there are three main panels.
 
 3. <span style="color:#70AD47">**Script preview**</span>: A preview of the contents of the selected file. If _ALL_ is chosen, a dummy script will appear, or the last viewed contents will stay.
 ```{r, echo=FALSE, out.width="100%", fig.cap="Function review"}
-knitr::include_graphics("D:/Users/mvankessel/Pictures/function_review.png")
+knitr::include_graphics("figures/function_review.png")
 ```
 
 Notice how the <span style="color:#C55A11">**Settings**</span>, <span style="color:#4472C4">**summariseFunctionUse table and plot**</span>, and <span style="color:#70AD47">**Script preview**</span> dynamically change when the darwinLint.R file is selected.
 ```{r, echo=FALSE, out.width="100%", fig.cap="Package review"}
-knitr::include_graphics("D:/Users/mvankessel/Pictures/Screenshots/Schermafbeelding_20221209_132449.png")
+knitr::include_graphics("figures/Schermafbeelding_20221209_132449.png")
 ```
 
 When swapping from the <span style="color:#C55A11">**Function review**</span> to the <span style="color:#4472C4">**Plot**</span> tab a bar graph is shown for each package used in the file. The bars represent the amount of function calls in that file per package.
 ```{r, echo=FALSE, out.width="100%", fig.cap="Function review plot"}
-knitr::include_graphics("D:/Users/mvankessel/Pictures/function_review_plot.png")
+knitr::include_graphics("figures/function_review_plot.png")
 ```
 
 Lets say base functions are not interesting for your use case, you can then tick the _base_ tick box in the Exclude Packages in the settings.
 
 ```{r, echo=FALSE, out.width="100%", fig.cap="Package review"}
-knitr::include_graphics("D:/Users/mvankessel/Pictures/Screenshots/Schermafbeelding_20221209_133831.png")
+knitr::include_graphics("figures/Schermafbeelding_20221209_133831.png")
 ```
 
 _base_ packages are now excluded from both the <span style="color:#4472C4">**summariseFunctionUse table and plot**</span>.
 
 ```{r, echo=FALSE, out.width="100%", fig.cap="Package review"}
-knitr::include_graphics("D:/Users/mvankessel/Pictures/Screenshots/Schermafbeelding_20221209_134126.png")
+knitr::include_graphics("figures/Schermafbeelding_20221209_134126.png")
 ```
 
 <u>Dependency Graph</u>
 
 The Dependency Graph tab displays a graph, like plotted earlier, using the `graphData` function. On the right-hand-side different kinds of dependencies are able to be chosen to be included in the graph.
 ```{r, echo=FALSE, out.width="100%", fig.cap="Package review"}
-knitr::include_graphics("D:/Users/mvankessel/Pictures/Screenshots/Schermafbeelding_20221209_134345.png")
+knitr::include_graphics("figures/Schermafbeelding_20221209_134345.png")
 ```
 
 <u>Path to dependency</u>
@@ -346,7 +346,7 @@ The path to dependency tab displays how the root package depends on any recursiv
 
 On the right-hand-side a dependency found somewhere included in the root package can be chosen. A cutoff can be defined to limit the distance from the root package to the chosen dependency.
 ```{r, echo=FALSE, out.width="100%", fig.cap="Package review"}
-knitr::include_graphics("D:/Users/mvankessel/Pictures/Screenshots/Schermafbeelding_20221209_134754.png")
+knitr::include_graphics("figures/Schermafbeelding_20221209_134754.png")
 ```
 
 ### darwinLintFile
