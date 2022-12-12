@@ -1,10 +1,13 @@
 ---
 title: "Documentation"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{getDefaultPermittedPackages}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 3
+    vignette: >
+      %\VignetteIndexEntry{Documentation}
+      %\VignetteEngine{knitr::rmarkdown}
+      %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}
@@ -35,7 +38,6 @@ install.packages("DependencyReviewer")
 ```
 
 ## Usage
-### Load packages
 ```{r loadPackages, setup, message=FALSE}
 library(DependencyReviewer)
 
@@ -190,7 +192,7 @@ If everything looks good, we can submit the issue.
 By default `summariseFunctionUse` will expect that it is ran inside a package-project and will look at the _/R/_ folder inside the project.
 
 #### What does it return?
-`summariseFunctionUse` returns a class of data.frame with the following columns: **1**) r_file, **1**) line, **1**) pkg, **1**) fun.
+`summariseFunctionUse` returns a class of data.frame with the following columns:  _r_file_, _line_, _pkg_, _fun_.
 
 ```{r}
 # Assumes the function is run inside a package-project.
@@ -236,7 +238,7 @@ if (interactive()) {
 
 ### getGraphData
 #### What does it do?
-`getGraphData` 
+`getGraphData` creates an igraph graph object of all the dependencies that the root package depends on. This includes direct and transitive dependencies.
 
 #### What does it need?
 `getGraphData` has three optional parameters:
@@ -400,6 +402,7 @@ It returns a class of lints.
 
 The percentage is calculated as:
 $$darwinLintScore_{type} = {n_{messages} \over n_{lines}} \times 100 $$
+
 #### What does it need?
 `darwinLintScore` takes one predefined argument:
 1. **lintFunction**: A lint function extended from `lintr::lint_package` or `lintr::lint`
