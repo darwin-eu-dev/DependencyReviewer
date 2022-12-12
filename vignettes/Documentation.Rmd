@@ -199,34 +199,38 @@ datatable(
 ```
 
 ```{r}
-# Any other R-file, with verbose messages
-foundFuns <- summariseFunctionUse(
-    r_files = "../../CDMConnector/R/cdm.R",
-    verbose = TRUE,
-    in_package = FALSE)
-
-datatable(foundFuns)
+if (interactive()) {
+  # Any other R-file, with verbose messages
+  foundFuns <- summariseFunctionUse(
+      r_files = "../../CDMConnector/R/cdm.R",
+      verbose = TRUE,
+      in_package = FALSE)
+  
+  datatable(foundFuns)
+}
 ```
 
 The found functions can then be plotted out for each package. For the sake of this demonstration, only a few packages will be plotted.
 ```{r dpi=250, fig.height=10, out.width="100%"}
-funCounts <- foundFuns %>%
-  group_by(fun, pkg, name = "n") %>%
-  tally() %>%
-  filter(pkg %in% c("checkmate", "DBI", "dplyr"))
+if (interactive()) {
+  funCounts <- foundFuns %>%
+    group_by(fun, pkg, name = "n") %>%
+    tally() %>%
+    dplyr::filter(pkg %in% c("checkmate", "DBI", "dplyr"))
 
-ggplot(
-  data = funCounts, 
-  mapping = aes(x = fun, y = n, fill = pkg)) +
-  geom_col() +
-  facet_wrap(
-    vars(pkg), 
-    scales = "free_x", 
-    ncol = 1) +
-  theme_bw() +
-  theme(
-    legend.position = "none",
-    axis.text.x = (element_text(angle = 45, hjust = 1, vjust = 1)))
+  ggplot(
+    data = funCounts, 
+    mapping = aes(x = fun, y = n, fill = pkg)) +
+    geom_col() +
+    facet_wrap(
+      vars(pkg), 
+      scales = "free_x", 
+      ncol = 1) +
+    theme_bw() +
+    theme(
+      legend.position = "none",
+      axis.text.x = (element_text(angle = 45, hjust = 1, vjust = 1)))
+}
 ```
 
 
@@ -362,17 +366,21 @@ It returns a class of lints.
 
 However the output of a lintr function can be cast to a data.frame.
 ```{r warning=FALSE, error=FALSE, message=FALSE}
-lintOut <- data.frame(
-  darwinLintFile(
-    fileName = "../../CDMConnector/R/cdm.R"))
+if (interactive()) {
+  lintOut <- data.frame(
+    darwinLintFile(
+      fileName = "../../CDMConnector/R/cdm.R"))
+}
 ```
 
 Which can then be manipulated to get a summary of lint messages.
 ```{r}
-lintOut %>%
-  group_by(type, message) %>%
-  tally(sort = TRUE) %>%
-  datatable()
+if (interactive()) {
+  lintOut %>%
+    group_by(type, message) %>%
+    tally(sort = TRUE) %>%
+    datatable()
+}
 ```
 
 
@@ -402,7 +410,9 @@ Returns a class of data.frame with two columns: **1**) type, and **2**) pct.
 
 It will also print out colour coded messages with the percentages per message type.
 ```{r eval=FALSE}
-darwinLintScore(darwinLintPackage)
+if (interactive()) {
+  darwinLintScore(darwinLintPackage)
+}
 ```
 ```
 i style: 5.9% of lines of code have linting messages
