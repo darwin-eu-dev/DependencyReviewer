@@ -94,7 +94,8 @@ checkDependencies()
 
 # Check dependencies for installed package "CDMConnector"
 checkDependencies(
-  packageName = "CDMConnector")
+  packageName = "CDMConnector"
+)
 ```
 
 1. If packages are not approved yet:
@@ -102,7 +103,8 @@ checkDependencies(
 # Check Imports and Suggests
 checkDependencies(
   packageName = "CDMConnector",
-  dependencyType = c("Imports", "Suggests"))
+  dependencyType = c("Imports", "Suggests")
+)
 ```
 
 As you can see, it returns a list of all the packages that are not white listed. Below the list it will display some information in a _markdown table_ format. This will come in handy later on. The table has six columns: **1**) package, **2**) version, **3**) date, **4**) downloads_last_month, **5**) license, and **6**) url.
@@ -114,7 +116,8 @@ Note that only packages available on CRAN are reported in the table. Non-CRAN pa
 # Only check directly imported dependencies of installed package "CDMConnector"
 checkDependencies(
   packageName = "CDMConnector",
-  dependencyType = c("Imports"))
+  dependencyType = c("Imports")
+)
 ```
 
 Notice how _"Imports"_ and _"Depends"_ packages of CDMConnector are whitelisted, but _"Suggests"_ packages are not.
@@ -197,17 +200,19 @@ By default `summariseFunctionUse` will expect that it is ran inside a package-pr
 ```{r}
 # Assumes the function is run inside a package-project.
 datatable(
-  summariseFunctionUse())
+  summariseFunctionUse()
+)
 ```
 
 ```{r}
 if (interactive()) {
   # Any other R-file, with verbose messages
   foundFuns <- summariseFunctionUse(
-      r_files = "../../CDMConnector/R/cdm.R",
-      verbose = TRUE,
-      in_package = FALSE)
-  
+    r_files = "../../CDMConnector/R/cdm.R",
+    verbose = TRUE,
+    in_package = FALSE
+  )
+
   datatable(foundFuns)
 }
 ```
@@ -221,17 +226,20 @@ if (interactive()) {
     dplyr::filter(pkg %in% c("checkmate", "DBI", "dplyr"))
 
   ggplot(
-    data = funCounts, 
-    mapping = aes(x = fun, y = n, fill = pkg)) +
+    data = funCounts,
+    mapping = aes(x = fun, y = n, fill = pkg)
+  ) +
     geom_col() +
     facet_wrap(
-      vars(pkg), 
-      scales = "free_x", 
-      ncol = 1) +
+      vars(pkg),
+      scales = "free_x",
+      ncol = 1
+    ) +
     theme_bw() +
     theme(
       legend.position = "none",
-      axis.text.x = (element_text(angle = 45, hjust = 1, vjust = 1)))
+      axis.text.x = (element_text(angle = 45, hjust = 1, vjust = 1))
+    )
 }
 ```
 
@@ -371,7 +379,9 @@ However the output of a lintr function can be cast to a data.frame.
 if (interactive()) {
   lintOut <- data.frame(
     darwinLintFile(
-      fileName = "../../CDMConnector/R/cdm.R"))
+      fileName = "../../CDMConnector/R/cdm.R"
+    )
+  )
 }
 ```
 

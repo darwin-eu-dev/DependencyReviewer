@@ -33,34 +33,41 @@
 funsUsedInLine <- function(file_txt, file_name, i, verbose = FALSE) {
   line <- file_txt[i]
   if (!startsWith(line, "#")) {
-    line <- paste(stringr::str_split(
+    line <- paste(
+      stringr::str_split(
         string = line,
         pattern = "\\w+\\$",
-        simplify = TRUE),
-      collapse = "")
+        simplify = TRUE
+      ),
+      collapse = ""
+    )
 
     fun_vec <- unlist(stringr::str_extract_all(
       string = line,
-      pattern = "(\\w+::(?:\\w+\\.)?\\w+\\(|(?:\\w+\\.)?\\w+\\()"))
+      pattern = "(\\w+::(?:\\w+\\.)?\\w+\\(|(?:\\w+\\.)?\\w+\\()"
+    ))
 
     fun_vec <- stringr::str_remove_all(
       string = fun_vec,
-      pattern = "\\(")
+      pattern = "\\("
+    )
 
     fun_vec <- stringr::str_split(
       string = fun_vec,
-      pattern = "::")
+      pattern = "::"
+    )
 
-    if(length(fun_vec) > 0) {
+    if (length(fun_vec) > 0) {
       fun_vec <- lapply(
         X = fun_vec,
         FUN = function(x) {
-          if(length(x) == 1) {
+          if (length(x) == 1) {
             x <- list("unknown", x)
           } else {
             list(x)
           }
-        })
+        }
+      )
 
       df <- data.frame(t(sapply(fun_vec, unlist)))
       names(df) <- c("pkg", "fun")
@@ -68,9 +75,8 @@ funsUsedInLine <- function(file_txt, file_name, i, verbose = FALSE) {
       df$r_file <- rep(file_name, dim(df)[1])
       df$line <- rep(i, dim(df)[1])
       return(dplyr::tibble(df))
-
     } else {
-      if(verbose == TRUE) {
+      if (verbose == TRUE) {
         message(glue::glue("No functions found for line: ", i))
       }
     }
@@ -92,11 +98,11 @@ funsUsedInLine <- function(file_txt, file_name, i, verbose = FALSE) {
 #' @return table
 funsUsedInFile <- function(files, verbose = FALSE, in_package = TRUE) {
   dplyr::bind_rows(lapply(X = files, FUN = function(file) {
-    if(verbose) {
+    if (verbose) {
       message(glue::glue("Started on file: ", file))
     }
 
-    if(in_package) {
+    if (in_package) {
       file_txt <- readLines(here::here("R", file))
     } else {
       file_txt <- readLines(file)
@@ -106,7 +112,8 @@ funsUsedInFile <- function(files, verbose = FALSE, in_package = TRUE) {
       X = 1:length(file_txt),
       FUN = funsUsedInLine,
       file_txt = file_txt,
-      file_name = file)
+      file_name = file
+    )
   }))
 }
 
@@ -131,7 +138,8 @@ funsUsedInFile <- function(files, verbose = FALSE, in_package = TRUE) {
 #' @examples
 #' summariseFunctionUse(
 #'   r_files = system.file(package = "DependencyReviewer", "testScript.R"),
-#'   in_package = FALSE)
+#'   in_package = FALSE
+#' )
 #'
 #' # Only in an interactive session
 #' if (interactive()) {
@@ -141,7 +149,7 @@ summariseFunctionUse <-
   function(r_files = list.files(here::here("R")),
            verbose = FALSE,
            in_package = TRUE) {
-    #tryCatch({
+    # tryCatch({
     deps_used <- funsUsedInFile(r_files, verbose, in_package)
     # }, error = function(e) {
     #   stop(paste(r_files, "not found"))
@@ -164,4 +172,3 @@ summariseFunctionUse <-
     deps_used$pkg[deps_used$fun %in% ls("package:base")] <- "base"
     return(deps_used)
   }
-

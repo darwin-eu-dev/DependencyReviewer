@@ -16,7 +16,7 @@
 #' @export
 #' @examples
 #' # Only run in interactive session
-#' if(interactive()) {
+#' if (interactive()) {
 #'   graphData <- getGraphData()
 #' }
 getGraphData <- function(path = here::here(), excluded_packages = c(""), package_types = c("imports", "depends")) {
@@ -31,7 +31,8 @@ getGraphData <- function(path = here::here(), excluded_packages = c(""), package
     FUN = function(row) {
       fData[["deps"]][[row]] <- fData[["deps"]][[row]] %>%
         filter(!.data$package %in% excluded_packages)
-    })
+    }
+  )
 
   # Reformat dependencies to long format
   pkg_deps <- dplyr::bind_rows(lapply(X = 1:nrow(fData), FUN = function(row) {
@@ -47,6 +48,6 @@ getGraphData <- function(path = here::here(), excluded_packages = c(""), package
   # Convert tibble to graph
   net_data <- tidygraph::as_tbl_graph(
     x = pkg_deps,
-    directed = TRUE)
+    directed = TRUE
+  )
 }
-

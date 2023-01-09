@@ -36,7 +36,8 @@ getDefaultPermittedPackages <- function() {
   tmpFile <- list.files(
     path = tempdir(),
     pattern = "tmpPkgs*",
-    full.names = TRUE)
+    full.names = TRUE
+  )
 
   if (length(tmpFile) > 0) {
     message("Get from temp file")
@@ -46,18 +47,21 @@ getDefaultPermittedPackages <- function() {
     tmpFile <- tempfile(
       pattern = "tmpPkgs",
       tmpdir = tempdir(),
-      fileext = ".csv")
+      fileext = ".csv"
+    )
 
     permittedDependencies <- utils::read.table(
       file = "https://raw.githubusercontent.com/mvankessel-EMC/DependencyReviewerWhitelists/main/dependencies.csv",
       sep = ",",
-      header = TRUE) %>%
+      header = TRUE
+    ) %>%
       tibble()
 
     # Get base packages
     basePackages <- data.frame(utils::installed.packages(
       lib.loc = .Library,
-      priority = "high")) %>%
+      priority = "high"
+    )) %>%
       dplyr::select(.data$Package, .data$Built) %>%
       dplyr::rename(package = .data$Package, version = .data$Built) %>%
       dplyr::tibble()
@@ -72,13 +76,16 @@ getDefaultPermittedPackages <- function() {
 
     tidyversePackages <- tibble(
       package = names(tidyversePackages),
-      version = tidyversePackages)
+      version = tidyversePackages
+    )
 
     # Get HADES packages
     hadesPackages <- read.table(
       file = "https://raw.githubusercontent.com/OHDSI/Hades/main/extras/packages.csv",
       sep = ",",
-      header = TRUE) %>% select(.data$name) %>%
+      header = TRUE
+    ) %>%
+      select(.data$name) %>%
       mutate(version = rep("*", length(names))) %>%
       rename(package = .data$name) %>%
       tibble()
@@ -96,12 +103,14 @@ getDefaultPermittedPackages <- function() {
     permittedPackages <- dplyr::bind_rows(
       basePackages,
       depList %>%
-        select(.data$package, version))
+        select(.data$package, version)
+    )
 
     message("Writing temp file")
     utils::write.csv(
       x = permittedPackages,
-      file = tmpFile)
+      file = tmpFile
+    )
     return(permittedPackages)
   }
 }
