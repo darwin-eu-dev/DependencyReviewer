@@ -8,7 +8,7 @@
 [![Lifecycle:Experimental](https://img.shields.io/badge/Lifecycle-Stable-339999/)](https://lifecycle.r-lib.org/articles/stages.html#stable/)
 <!-- badges: end -->
 
-DependenyReviewer is a package that Helps investigating other packages
+DependencyReviewer is a package that Helps investigating other packages
 during code review by looking at their dependencies.
 
 ## Features

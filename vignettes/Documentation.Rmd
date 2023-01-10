@@ -1,8 +1,11 @@
 ---
 title: "Documentation"
 output:
-  rmarkdown::html_vignette:
-    toc: true
+  pdf_document:
+      toc: yes
+      latex_engine: xelatex
+  html_vignette:
+    toc: yes
     toc_depth: 3
     vignette: >
       %\VignetteIndexEntry{Documentation}

@@ -1,4 +1,4 @@
-# Copyright 2022 Observational Health Data Sciences and Informatics
+# Copyright 2023 Observational Health Data Sciences and Informatics
 #
 # This file is part of SqlRender
 #
@@ -16,28 +16,28 @@
 
 # Format and check code --------------------------------------------------------
 styler::style_pkg()
-OhdsiRTools::checkUsagePackage("SqlRender")
+OhdsiRTools::checkUsagePackage("DependencyReviewer")
 OhdsiRTools::updateCopyrightYearFolder()
 devtools::spell_check()
 
 # Create manual and vignettes --------------------------------------------------
-unlink("extras/SqlRender.pdf")
-shell("R CMD Rd2pdf ./ --output=extras/SqlRender.pdf")
+unlink("extras/DependencyReviewer.pdf")
+shell("R CMD Rd2pdf ./ --output=extras/DependencyReviewer.pdf")
 
 dir.create("inst/doc")
-rmarkdown::render("vignettes/UsingSqlRender.Rmd",
-                  output_file = "../inst/doc/UsingSqlRender.pdf",
-                  rmarkdown::pdf_document(latex_engine = "pdflatex",
+rmarkdown::render("vignettes/Documentation.Rmd",
+                  output_file = "../inst/doc/UsingDependencyReviewer.pdf",
+                  rmarkdown::pdf_document(latex_engine = "xelatex",
                                           toc = TRUE,
                                           number_sections = TRUE))
-unlink("inst/doc/UsingSqlRender.tex")
+unlink("inst/doc/UsingDependencyReviewer.tex")
 
 pkgdown::build_site()
 OhdsiRTools::fixHadesLogo()
 
 # Store JAR checksum -----------------------------------------------------------
-checksum <- rJava::J("org.ohdsi.sql.JarChecksum", "computeJarChecksum")
-write(checksum, file.path("inst", "csv", "jarChecksum.txt"))
+# checksum <- rJava::J("org.ohdsi.sql.JarChecksum", "computeJarChecksum")
+# write(checksum, file.path("inst", "csv", "jarChecksum.txt"))
 
 # Release package --------------------------------------------------------------
 devtools::check_win_devel()
