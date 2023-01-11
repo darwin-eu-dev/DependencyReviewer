@@ -22,7 +22,6 @@
 #' packages.
 #'
 #' @import readr
-#' @import tidyverse
 #' @import utils
 #'
 #' @export
@@ -53,9 +52,8 @@ getDefaultPermittedPackages <- function() {
     permittedDependencies <- utils::read.table(
       file = "https://raw.githubusercontent.com/mvankessel-EMC/DependencyReviewerWhitelists/main/dependencies.csv",
       sep = ",",
-      header = TRUE
-    ) %>%
-      tibble()
+      header = TRUE) %>%
+      dplyr::tibble()
 
     # Get base packages
     basePackages <- data.frame(utils::installed.packages(
@@ -67,28 +65,21 @@ getDefaultPermittedPackages <- function() {
       dplyr::tibble()
 
     # Get Tidyverse packages
-    tidyversePackages <- sapply(
-      X = tidyverse::tidyverse_packages(include_self = TRUE),
-      FUN = function(pkg) {
-        as.character(utils::packageVersion(pkg))
-      }
-    )
-
-    tidyversePackages <- tibble(
-      package = names(tidyversePackages),
-      version = tidyversePackages
-    )
+    tidyversePackages <- utils::read.table(
+      file = "https://raw.githubusercontent.com/mvankessel-EMC/DependencyReviewerWhitelists/main/TidyverseDependencies.csv",
+      sep = ",",
+      header = TRUE) %>%
+      dplyr::tibble()
 
     # Get HADES packages
-    hadesPackages <- read.table(
+    hadesPackages <- utils::read.table(
       file = "https://raw.githubusercontent.com/OHDSI/Hades/main/extras/packages.csv",
       sep = ",",
-      header = TRUE
-    ) %>%
-      select(.data$name) %>%
-      mutate(version = rep("*", length(names))) %>%
-      rename(package = .data$name) %>%
-      tibble()
+      header = TRUE) %>%
+      dplyr::select(.data$name) %>%
+      dplyr::mutate(version = rep("*", length(names))) %>%
+      dplyr::rename(package = .data$name) %>%
+      dplyr::tibble()
 
     hadesPackages$package <- paste0("OHDSI/", hadesPackages$package)
 
@@ -103,8 +94,7 @@ getDefaultPermittedPackages <- function() {
     permittedPackages <- dplyr::bind_rows(
       basePackages,
       depList %>%
-        select(.data$package, version)
-    )
+        dplyr::select(.data$package, version))
 
     message("Writing temp file")
     utils::write.csv(

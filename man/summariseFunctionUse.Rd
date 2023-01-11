@@ -4,23 +4,13 @@
 \alias{summariseFunctionUse}
 \title{summariseFunctionUse}
 \usage{
-summariseFunctionUse(
-  r_files = list.files(here::here("R")),
-  verbose = FALSE,
-  in_package = TRUE
-)
+summariseFunctionUse(r_files, verbose = FALSE)
 }
 \arguments{
-\item{r_files}{r_files}
+\item{r_files}{Complete path(s) to files to be investigated}
 
 \item{verbose}{Default: FALSE; prints message to console which file is
 currently being worked on.}
-
-\item{in_package}{Default: TRUE; Indicate if the function is called within a
-package project or not.
-TRUE: expects a file name "myFile.R", may be a vector of multiple.
-FALSE: expects a file path "./my/file/path/myFile.R", my be a vector of
-multiple}
 }
 \value{
 tibble
@@ -30,11 +20,10 @@ Summarise functions used in R package
 }
 \examples{
 summariseFunctionUse(
-  r_files = system.file(package = "DependencyReviewer", "testScript.R"),
-  in_package = FALSE)
+  r_files = system.file(package = "DependencyReviewer", "testScript.R"))
 
 # Only in an interactive session
 if (interactive()) {
-  summariseFunctionUse()
+  summariseFunctionUse(list.files(here::here("R"), full.names = TRUE))
 }
 }

@@ -4,7 +4,10 @@
 \alias{darwinLintPackage}
 \title{darwinLintPackage}
 \usage{
-darwinLintPackage()
+darwinLintPackage(path = ".")
+}
+\arguments{
+\item{path}{Default: ".", Path to package}
 }
 \value{
 List of lint objects.

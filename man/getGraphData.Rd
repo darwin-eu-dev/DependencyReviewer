@@ -5,13 +5,13 @@
 \title{getGraphData}
 \usage{
 getGraphData(
-  path = here::here(),
+  path,
   excluded_packages = c(""),
   package_types = c("imports", "depends")
 )
 }
 \arguments{
-\item{path}{path}
+\item{path}{Path to package}
 
 \item{excluded_packages}{Packages to exclude}
 

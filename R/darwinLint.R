@@ -2,30 +2,26 @@
 #'
 #' Darwin lintr object, using default lintr object with camelCase
 #'
+#' @param path Default: ".", Path to package
+#'
 #' @return List of lint objects.
 #' @import lintr
 #' @export
 #'
 #' @examples
 #' darwinLintPackage()
-darwinLintPackage <- function() {
-  tryCatch(
-    {
-      lintr::lint_package(
-        path = here::here(),
-        linters = lintr::linters_with_defaults(
-          lintr::object_name_linter(styles = "camelCase")
-        )
-      )
-    },
-    error = function(e) {
-      cli::cli_alert_danger(e)
-      stop(
-        "Error was caught during the linting of your package. The package
-    might be to large to lint all together. Use: darwinLintFile(fileName)"
-      )
-    }
-  )
+darwinLintPackage <- function(path = ".") {
+  tryCatch({
+    lintr::lint_package(
+      path = path,
+      linters = lintr::linters_with_defaults(
+        lintr::object_name_linter(styles = "camelCase")))
+  }, error = function(e) {
+    cli::cli_alert_danger(e)
+    stop(
+    "Error was caught during the linting of your package. The package
+    might be to large to lint all together. Use: darwinLintFile(fileName)")
+  })
 }
 
 

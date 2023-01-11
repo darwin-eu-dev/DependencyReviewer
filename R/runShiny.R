@@ -20,16 +20,7 @@
 #'
 #' @return An object that represents the app.
 #'
-#' @importFrom shiny shinyAppDir
 #' @importFrom magrittr %>%
-#' @import shinyAce
-#' @import ggplot2
-#' @import ggraph
-#' @import here
-#' @import DT
-#' @import ggplot2
-#' @import dplyr
-#' @import GGally
 #'
 #' @export
 #'
@@ -39,10 +30,27 @@
 #'   runShiny()
 #' }
 runShiny <- function() {
-  appDir <- system.file(package = "DependencyReviewer", "shinyApp")
-  if (appDir == "") {
-    stop("Could not find shiny application")
+  reqs <- c("shiny", "shinyAce", "ggplot2", "ggraph", "DT", "GGally", "here")
+
+  missing <- unlist(lapply(reqs, function(x) {
+    if (!requireNamespace(x, quietly = TRUE)) {
+      x
+    }
+  }))
+  if (length(missing > 0)) {
+    stop(paste(
+      "Additional packages required to run the shiny app. Install them with:",
+      paste0("  install.packages(", paste0("'", missing, "'", collapse = ", "), ")"),
+      sep = "\n"
+    ))
   } else {
-    shinyAppDir(appDir)
+    assign(envir = .GlobalEnv, ".path", here::here("R"))
+    appDir <-
+      system.file(package = "DependencyReviewer", "shinyApp")
+    if (appDir == "") {
+      stop("Could not find shiny application")
+    } else {
+      shiny::shinyAppDir(appDir, )
+    }
   }
 }
