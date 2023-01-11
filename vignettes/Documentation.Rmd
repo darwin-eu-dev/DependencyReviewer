@@ -200,8 +200,8 @@ By default `summariseFunctionUse` will expect that it is ran inside a package-pr
 ```{r}
 # Assumes the function is run inside a package-project.
 datatable(
-  summariseFunctionUse()
-)
+  summariseFunctionUse(list.files(here::here("R"), full.names = TRUE)
+))
 ```
 
 ```{r}
@@ -270,7 +270,7 @@ It could then be plotted like so:
 
 ```{r, out.width="100%", dpi=500, messages=FALSE}
 # Get graphData with only imports
-graphData <- getGraphData(package_types = c("imports"))
+graphData <- getGraphData()
 
 # Calculate colour of nodes based on distances from root package
 cols <- factor(as.character(apply(
