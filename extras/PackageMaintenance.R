@@ -30,9 +30,12 @@ rmarkdown::render("vignettes/Documentation.Rmd",
                   rmarkdown::pdf_document(latex_engine = "xelatex",
                                           toc = TRUE,
                                           number_sections = TRUE))
+# Compress
+tools::compactPDF(paths = "inst/doc/UsingDependencyReviewer.pdf", gs_quality = "ebook")
+
 unlink("inst/doc/UsingDependencyReviewer.tex")
 
-pkgdown::build_site()
+ pkgdown::build_site()
 OhdsiRTools::fixHadesLogo()
 
 # Store JAR checksum -----------------------------------------------------------

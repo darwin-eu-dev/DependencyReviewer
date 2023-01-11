@@ -17,6 +17,10 @@
 # Libraries
 library(dplyr)
 
+print("From shiny")
+print(parent.env)
+print(names(parent.env))
+
 # Shiny Server
 shinyServer(function(input, output, session) {
   # DependencyReviewer::darwinLintScore(DependencyReviewer::darwinLintPackage)

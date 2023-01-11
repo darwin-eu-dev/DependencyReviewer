@@ -219,8 +219,7 @@ if (interactive()) {
   # Any other R-file, with verbose messages
   foundFuns <- summariseFunctionUse(
     r_files = "../../CDMConnector/R/cdm.R",
-    verbose = TRUE,
-    in_package = FALSE
+    verbose = TRUE
   )
 
   datatable(foundFuns)
@@ -280,7 +279,7 @@ It could then be plotted like so:
 
 ```{r, out.width="100%", dpi=500, messages=FALSE}
 # Get graphData with only imports
-graphData <- getGraphData()
+graphData <- getGraphData("./")
 
 # Calculate colour of nodes based on distances from root package
 cols <- factor(as.character(apply(
@@ -421,7 +420,8 @@ It returns a class of lints.
 `darwinLintScore` calculates a percentage per type of lint-message from the lintr.
 
 The percentage is calculated as:
-$$darwinLintScore_{type} = {n_{messages} \over n_{lines}} \times 100 $$
+
+$$darwinLintScore_{type} = \frac{n_{messages}}{n_{lines}} \times 100 $$
 
 #### What does it need?
 `darwinLintScore` takes one predefined argument:

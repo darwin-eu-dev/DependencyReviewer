@@ -19,7 +19,9 @@ Suggests:
     ggraph,
     DT,
     GGally,
-    here
+    here,
+    igraph,
+    withr
 Imports:
     rlang,
     desc,
@@ -31,8 +33,8 @@ Imports:
     readr,
     stringr,
     tidygraph,
-    magrittr,
-RoxygenNote: 7.2.2
+    magrittr
+RoxygenNote: 7.2.3
 Depends: 
     R (>= 4.0)
 VignetteBuilder: knitr

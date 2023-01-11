@@ -1,9 +1,9 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.1.9)  9 JAN 2023 14:58
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.1.9)  11 JAN 2023 13:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**C:/Users/mvankessel/AppData/Local/Temp/RtmpOYS6EN/preview-4724719720c.dir/Documentation.tex
-(c:/Users/mvankessel/AppData/Local/Temp/RtmpOYS6EN/preview-4724719720c.dir/Documentation.tex
+**C:/Users/mvankessel/AppData/Local/Temp/RtmpMDQ4FS/preview-6c44589245a6.dir/Documentation.tex
+(c:/Users/mvankessel/AppData/Local/Temp/RtmpMDQ4FS/preview-6c44589245a6.dir/Documentation.tex
 LaTeX2e <2022-11-01> patch level 1
 L3 programming layer <2022-12-17> (c:/Users/mvankessel/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
@@ -766,14 +766,16 @@ Underfull \hbox (badness 3428) in paragraph at lines 192--195
 []\TU/lmr/m/n/10 Base packages with a high priority \TU/lmtt/m/n/10 installed.packages(lib.loc = .Library, priority =
  []
 
+Missing character: There is no ✔ (U+2714) in font [lmmono10-italic]:!
+Missing character: There is no ✔ (U+2714) in font [lmmono10-italic]:!
 Missing character: There is no ℹ (U+2139) in font [lmmono10-italic]:!
 Missing character: There is no ℹ (U+2139) in font [lmmono10-italic]:!
 Missing character: There is no ✔ (U+2714) in font [lmmono10-italic]:!
 Missing character: There is no ✔ (U+2714) in font [lmmono10-italic]:!
-File: C:/Users/mvankessel/AppData/Local/Temp/RtmpOYS6EN/preview-4724719720c.dir/Documentation_files/figure-latex/getDefaultPermittedPackages-1.pdf Graphic file (type pdf)
-<use C:/Users/mvankessel/AppData/Local/Temp/RtmpOYS6EN/preview-4724719720c.dir/Documentation_files/figure-latex/getDefaultPermittedPackages-1.pdf>
+File: C:/Users/mvankessel/AppData/Local/Temp/RtmpMDQ4FS/preview-6c44589245a6.dir/Documentation_files/figure-latex/getDefaultPermittedPackages-1.pdf Graphic file (type pdf)
+<use C:/Users/mvankessel/AppData/Local/Temp/RtmpMDQ4FS/preview-6c44589245a6.dir/Documentation_files/figure-latex/getDefaultPermittedPackages-1.pdf>
 [2]
-Overfull \hbox (10.60498pt too wide) in paragraph at lines 242--248
+Overfull \hbox (10.60498pt too wide) in paragraph at lines 244--250
 \TU/lmr/m/n/10 check our currently used dependencies against it. \TU/lmtt/m/n/10 checkDependencies \TU/lmr/m/n/10 will run \TU/lmtt/m/n/10 getDefaultPermittedPackages
  []
 
@@ -783,32 +785,32 @@ Missing character: There is no ─ (U+2500) in font [lmmono10-regular]:!
 Missing character: There is no ─ (U+2500) in font [lmmono10-regular]:!
 Missing character: There is no ─ (U+2500) in font [lmmono10-regular]:!
 
-Overfull \hbox (343.99498pt too wide) in paragraph at lines 389--389
+Overfull \hbox (343.99498pt too wide) in paragraph at lines 391--391
 []\TU/lmtt/m/n/10 ! Please create a new issue at https://github.com/mvankessel-EMC/DependencyReviewerWhitelists/ to request approval for packages with the following message:[] 
  []
 
 
-Overfull \hbox (307.24498pt too wide) in paragraph at lines 389--389
+Overfull \hbox (307.24498pt too wide) in paragraph at lines 391--391
 []\TU/lmtt/m/n/10 |package |version |date                | downloads_last_month|license            |url                                                              |[] 
  []
 
 
-Overfull \hbox (307.24498pt too wide) in paragraph at lines 389--389
+Overfull \hbox (307.24498pt too wide) in paragraph at lines 391--391
 []\TU/lmtt/m/n/10 |:-------|:-------|:-------------------|--------------------:|:------------------|:----------------------------------------------------------------|[] 
  []
 
 
-Overfull \hbox (307.24498pt too wide) in paragraph at lines 389--389
+Overfull \hbox (307.24498pt too wide) in paragraph at lines 391--391
 []\TU/lmtt/m/n/10 |GGally  |2.1.2   |2021-06-21 03:40:10 |                86657|GPL (>= 2.0)       |https://ggobi.github.io/ggally/, https://github.com/ggobi/ggally |[] 
  []
 
 
-Overfull \hbox (307.24498pt too wide) in paragraph at lines 389--389
+Overfull \hbox (307.24498pt too wide) in paragraph at lines 391--391
 []\TU/lmtt/m/n/10 |lintr   |3.0.2   |2022-10-19 08:52:37 |                61729|MIT + file LICENSE |https://github.com/r-lib/lintr, https://lintr.r-lib.org          |[] 
  []
 
 
-Overfull \hbox (307.24498pt too wide) in paragraph at lines 389--389
+Overfull \hbox (307.24498pt too wide) in paragraph at lines 391--391
 []\TU/lmtt/m/n/10 |pak     |0.3.1   |2022-09-08 20:30:02 |                39420|GPL-3              |https://pak.r-lib.org/                                           |[] 
  []
 
@@ -822,14 +824,14 @@ File: figures/Schermafbeelding_20221209_101612.png Graphic file (type bmp)
 File: figures/Schermafbeelding_20221209_101939.png Graphic file (type bmp)
 <figures/Schermafbeelding_20221209_101939.png>
 [7] [8]
-File: C:/Users/mvankessel/AppData/Local/Temp/RtmpOYS6EN/preview-4724719720c.dir/Documentation_files/figure-latex/unnamed-chunk-9-1.pdf Graphic file (type pdf)
-<use C:/Users/mvankessel/AppData/Local/Temp/RtmpOYS6EN/preview-4724719720c.dir/Documentation_files/figure-latex/unnamed-chunk-9-1.pdf>
+File: C:/Users/mvankessel/AppData/Local/Temp/RtmpMDQ4FS/preview-6c44589245a6.dir/Documentation_files/figure-latex/unnamed-chunk-10-1.pdf Graphic file (type pdf)
+<use C:/Users/mvankessel/AppData/Local/Temp/RtmpMDQ4FS/preview-6c44589245a6.dir/Documentation_files/figure-latex/unnamed-chunk-10-1.pdf>
 [9]
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 488.
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 490.
 [10] [11]
-File: C:/Users/mvankessel/AppData/Local/Temp/RtmpOYS6EN/preview-4724719720c.dir/Documentation_files/figure-latex/unnamed-chunk-13-1.pdf Graphic file (type pdf)
-<use C:/Users/mvankessel/AppData/Local/Temp/RtmpOYS6EN/preview-4724719720c.dir/Documentation_files/figure-latex/unnamed-chunk-13-1.pdf>
+File: C:/Users/mvankessel/AppData/Local/Temp/RtmpMDQ4FS/preview-6c44589245a6.dir/Documentation_files/figure-latex/unnamed-chunk-14-1.pdf Graphic file (type pdf)
+<use C:/Users/mvankessel/AppData/Local/Temp/RtmpMDQ4FS/preview-6c44589245a6.dir/Documentation_files/figure-latex/unnamed-chunk-14-1.pdf>
 [12]
 File: figures/function_review.png Graphic file (type bmp)
 <figures/function_review.png>
@@ -851,7 +853,7 @@ File: figures/Schermafbeelding_20221209_134754.png Graphic file (type bmp)
 
 Package amsmath Warning: Foreign command \over;
 (amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 803.
+(amsmath)                 on input line 804.
 
 [18] [19] (./Documentation.aux)
 Package rerunfilecheck Info: File `Documentation.out' has not changed.
@@ -859,11 +861,11 @@ Package rerunfilecheck Info: File `Documentation.out' has not changed.
  ) 
 Here is how much of TeX's memory you used:
  17801 strings out of 478777
- 338249 string characters out of 5848830
+ 338286 string characters out of 5848830
  1861973 words of memory out of 5000000
  37563 multiletter control sequences out of 15000+600000
  518722 words of font info for 83 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 86i,6n,121p,450b,435s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 86i,6n,121p,451b,435s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 Output written on Documentation.pdf (19 pages).

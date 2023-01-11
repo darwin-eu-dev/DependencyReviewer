@@ -2,7 +2,7 @@
 % Please edit documentation in R/getDefaultPermittedPackages.R
 \name{getDefaultPermittedPackages}
 \alias{getDefaultPermittedPackages}
-\title{getDefaultPermittedpackages}
+\title{getDefaultPermittedPackages}
 \usage{
 getDefaultPermittedPackages()
 }
