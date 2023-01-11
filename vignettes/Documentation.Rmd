@@ -70,6 +70,13 @@ These packages are deemed _OK_ to use. This list will, and should change overtim
 #### What does it return?
 `getDefaultPermittedPackages` returns a class of data.frame with columns: _package <character>_ and _version <character>_
 
+```{r, echo=FALSE}
+library(withr)
+local_envvar(
+  R_USER_CACHE_DIR = tempfile()
+)
+```
+
 ```{r getDefaultPermittedPackages}
 datatable(getDefaultPermittedPackages())
 ```
