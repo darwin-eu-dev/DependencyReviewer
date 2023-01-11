@@ -6,9 +6,11 @@
 <!-- badges: start -->
 
 [![Lifecycle:Experimental](https://img.shields.io/badge/Lifecycle-Stable-339999/)](https://lifecycle.r-lib.org/articles/stages.html#stable/)
+[![R_CMD_check_HADES](https://github.com/darwin-eu/DependencyReviewer/actions/workflows/R_CMD_check_HADES.yaml/badge.svg)](https://github.com/darwin-eu/DependencyReviewer/actions/workflows/R_CMD_check_HADES.yaml)
+[![R-CMD-check](https://github.com/darwin-eu/DependencyReviewer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/darwin-eu/DependencyReviewer/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-DependenyReviewer is a package that Helps investigating other packages
+DependencyReviewer is a package that Helps investigating other packages
 during code review by looking at their dependencies.
 
 ## Features
