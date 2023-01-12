@@ -102,9 +102,9 @@ Because both arguments are optional it can also be run without specifying anythi
 # Defaults are: packageName = NULL, packageTypes = c("Imports", "Depends")
 checkDependencies()
 
-# Check dependencies for installed package "CDMConnector"
+# Check dependencies for installed package "dplyr"
 checkDependencies(
-  packageName = "CDMConnector"
+  packageName = "dplyr"
 )
 ```
 
@@ -112,7 +112,7 @@ checkDependencies(
 ```{r}
 # Check Imports and Suggests
 checkDependencies(
-  packageName = "CDMConnector",
+  packageName = "dplyr",
   dependencyType = c("Imports", "Suggests")
 )
 ```
@@ -123,14 +123,14 @@ Note that only packages available on CRAN are reported in the table. Non-CRAN pa
 
 2. If all packages are approved:
 ```{r}
-# Only check directly imported dependencies of installed package "CDMConnector"
+# Only check directly imported dependencies of installed package "dplyr"
 checkDependencies(
-  packageName = "CDMConnector",
+  packageName = "dplyr",
   dependencyType = c("Imports")
 )
 ```
 
-Notice how _"Imports"_ and _"Depends"_ packages of CDMConnector are whitelisted, but _"Suggests"_ packages are not.
+Notice how _"Imports"_ and _"Depends"_ packages of dplyr are whitelisted, but _"Suggests"_ packages are not.
 
 ### Requesting packages to be whitelisted
 If you find that some packages are not yet whitelisted, you can request them to be. The [DependencyReviewerWhitelists](https://github.com/mvankessel-EMC/DependencyReviewerWhitelists) repository on GitHub houses the white list for _DependencyReviewer_.
@@ -218,7 +218,7 @@ datatable(
 if (interactive()) {
   # Any other R-file, with verbose messages
   foundFuns <- summariseFunctionUse(
-    r_files = "../../CDMConnector/R/cdm.R",
+    r_files = "../inst/testScript.R",
     verbose = TRUE
   )
 
@@ -388,7 +388,7 @@ However the output of a lintr function can be cast to a data.frame.
 if (interactive()) {
   lintOut <- data.frame(
     darwinLintFile(
-      fileName = "../../CDMConnector/R/cdm.R"
+      fileName = "../inst/testScript.R"
     )
   )
 }
