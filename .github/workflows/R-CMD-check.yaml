@@ -43,5 +43,6 @@ jobs:
 
       - uses: r-lib/actions/check-r-package@v2
         with:
+          latexmk_use_xelatex: true
           args: 'c("--no-manual", "--as-cran", "--no-build-vignettes", "--ignore-vignettes", " --no-vignettes")'
           upload-snapshots: true
