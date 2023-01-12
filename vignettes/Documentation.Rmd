@@ -1,11 +1,11 @@
 ---
 title: "Documentation"
+always_allow_html: true
 output:
   pdf_document:
       toc: yes
       latex_engine: xelatex
   html_vignette:
-    always_allow_html: yes
     toc: yes
     toc_depth: 3
     vignette: >
