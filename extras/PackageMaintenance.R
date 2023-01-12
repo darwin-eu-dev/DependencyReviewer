@@ -35,7 +35,7 @@ tools::compactPDF(paths = "inst/doc/UsingDependencyReviewer.pdf", gs_quality = "
 
 unlink("inst/doc/UsingDependencyReviewer.tex")
 
- pkgdown::build_site()
+pkgdown::build_site()
 OhdsiRTools::fixHadesLogo()
 
 # Store JAR checksum -----------------------------------------------------------

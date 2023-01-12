@@ -278,9 +278,9 @@ Because the amount of dependencies in the graph quickly get out of hand, it is s
 
 It could then be plotted like so:
 
-```{r, echo=TRUE, results='asis'}
+```{r, eval=FALSE}
 # Get graphData with only imports
-graphData <- getGraphData("./")
+graphData <- getGraphData()
 ```
 
 ```{r, out.width="100%", dpi=500, messages=FALSE}
