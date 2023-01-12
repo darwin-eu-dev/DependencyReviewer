@@ -4,7 +4,6 @@ always_allow_html: true
 output:
   pdf_document:
       toc: yes
-      latex_engine: xelatex
   html_vignette:
     toc: yes
     toc_depth: 3
