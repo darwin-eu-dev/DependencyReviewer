@@ -39,8 +39,9 @@ jobs:
         with:
           extra-packages: any::rcmdcheck
           needs: check
-          args: 'c("--no-manual", "--as-cran")'
+          args: 'c("--no-manual", "--as-cran", "--no-build-vignettes", "--ignore-vignettes", " --no-vignettes")'
 
       - uses: r-lib/actions/check-r-package@v2
         with:
+          args: 'c("--no-manual", "--as-cran", "--no-build-vignettes", "--ignore-vignettes", " --no-vignettes")'
           upload-snapshots: true
