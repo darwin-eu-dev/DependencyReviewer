@@ -2,7 +2,7 @@
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
-    branches: [main, master, rc]
+    branches: [main, master]
   pull_request:
     branches: [main, master]
 
@@ -39,10 +39,7 @@ jobs:
         with:
           extra-packages: any::rcmdcheck
           needs: check
-          args: 'c("--no-manual", "--as-cran", "--no-build-vignettes", "--ignore-vignettes", " --no-vignettes")'
 
       - uses: r-lib/actions/check-r-package@v2
         with:
-          latexmk_use_xelatex: true
-          args: 'c("--no-manual", "--as-cran", "--no-build-vignettes", "--ignore-vignettes", " --no-vignettes")'
           upload-snapshots: true
