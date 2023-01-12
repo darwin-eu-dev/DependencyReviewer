@@ -21,7 +21,8 @@ Suggests:
     GGally,
     here,
     igraph,
-    withr
+    withr,
+    network
 Imports:
     rlang,
     desc,
