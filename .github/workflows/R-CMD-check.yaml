@@ -38,7 +38,8 @@ jobs:
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
-          needs: check no-build-vignettes ignore-vignettes
+          needs: check
+          args: 'c("--no-build-vignettes", "--ignore-vignettes", "--as-cran")'
 
       - uses: r-lib/actions/check-r-package@v2
         with:
