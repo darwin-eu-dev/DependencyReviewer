@@ -288,7 +288,7 @@ graphData <- DependencyReviewer::getGraphData()
 ```
 
 ```{r, out.width="100%", dpi=500, messages=FALSE}
-# Calculate colour of nodes based on distances from root package.
+# Calculate colour of nodes based on distances from root package
 cols <- factor(as.character(apply(
   X = distances(graphData, V(graphData)[1]),
   MARGIN = 2,
