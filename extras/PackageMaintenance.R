@@ -26,14 +26,14 @@ shell("R CMD Rd2pdf ./ --output=extras/DependencyReviewer.pdf")
 
 dir.create("inst/doc")
 rmarkdown::render("vignettes/Documentation.Rmd",
-                  output_file = "../inst/doc/UsingDependencyReviewer.pdf",
+                  output_file = "../inst/doc/Documentation.pdf",
                   rmarkdown::pdf_document(latex_engine = "xelatex",
                                           toc = TRUE,
                                           number_sections = TRUE))
 # Compress
-tools::compactPDF(paths = "inst/doc/UsingDependencyReviewer.pdf", gs_quality = "ebook")
+tools::compactPDF(paths = "inst/doc/Documentation.pdf", gs_quality = "ebook")
 
-unlink("inst/doc/UsingDependencyReviewer.tex")
+unlink("inst/doc/Documentation.tex")
 
 pkgdown::build_site()
 OhdsiRTools::fixHadesLogo()
