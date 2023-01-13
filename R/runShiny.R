@@ -21,6 +21,7 @@
 #' @return An object that represents the app.
 #'
 #' @import dplyr
+#' @import utils
 #' @importFrom desc description
 #' @importFrom magrittr %>%
 #'
@@ -34,8 +35,8 @@
 runShiny <- function() {
   desc <- description$new()
   reqs <- desc$get_deps() %>%
-    dplyr::filter(`type` == "Suggests") %>%
-    dplyr::select(`package`) %>%
+    dplyr::filter(.data$type == "Suggests") %>%
+    dplyr::select(.data$package) %>%
     unlist %>%
     as.character()
 
@@ -51,7 +52,8 @@ runShiny <- function() {
       sep = "\n"
     ))
   } else {
-    .path <<- here::here("R")
+    utils::globalVariables(c(".path"))
+    .GlobalEnv$.path <- here::here("R")
     appDir <-
       system.file(package = "DependencyReviewer", "shinyApp")
     if (appDir == "") {
