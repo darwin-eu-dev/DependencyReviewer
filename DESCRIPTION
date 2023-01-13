@@ -21,10 +21,7 @@ Suggests:
     GGally,
     here,
     igraph,
-    withr,
-    network,
-    sna,
-    intergraph
+    withr
 Imports:
     rlang,
     desc,
