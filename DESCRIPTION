@@ -33,6 +33,7 @@ Imports:
     knitr,
     lintr,
     pak,
+    pkgdepends,
     readr,
     stringr,
     tidygraph,
