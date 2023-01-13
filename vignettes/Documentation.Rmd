@@ -265,7 +265,7 @@ if (interactive()) {
 
 2. **excluded_packages** default (c("")): A character vector of packages to be excluded. By default is empty.
 
-3. **package_types** default (c("imports", "depends")): Package dependency types to be included. By default imports and depends are included. Availible types are: **1**) _"imports"_, **2**) _"depends"_, **3**) _"suggests"_, **4**) _"enhances"_, **5**) _"linkingto"_
+3. **package_types** default (c("imports", "depends")): Package dependency types to be included. By default imports and depends are included. Available types are: **1**) _"imports"_, **2**) _"depends"_, **3**) _"suggests"_, **4**) _"enhances"_, **5**) _"linkingto"_
 
 Without any of these specified, the `getGraphData` function assumes that it is ran inside an package-project. 
 
