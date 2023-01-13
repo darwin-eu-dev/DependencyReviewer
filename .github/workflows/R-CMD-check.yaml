@@ -36,7 +36,7 @@ jobs:
       - uses: r-lib/actions/setup-pandoc@v2
 
       - name: Compact PDF
-        -run:
+        - run:
           Rscript -e 'tools::compactPDF("vignettes/Documentation.pdf", gs_quality = "ebook")'
 
       - uses: r-lib/actions/setup-r-dependencies@v2
