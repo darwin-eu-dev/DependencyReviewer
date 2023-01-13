@@ -35,6 +35,10 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v2
 
+      - name:
+        -run:
+          Rscript -e 'tools::compactPDF("vignettes/Documentation.pdf", gs_quality = "ebook")''
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
