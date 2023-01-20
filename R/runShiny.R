@@ -33,18 +33,20 @@
 #'   runShiny()
 #' }
 runShiny <- function() {
-  desc <- description$new()
-  reqs <- desc$get_deps() %>%
-    dplyr::filter(.data$type == "Suggests") %>%
-    dplyr::select(.data$package) %>%
-    unlist %>%
-    as.character()
+  #desc <- description$new()
+  # reqs <- desc$get_deps() %>%
+  #   dplyr::filter(.data$type == "Suggests") %>%
+  #   dplyr::select(.data$package) %>%
+  #   unlist %>%
+  #   as.character()
+  #
+  # missing <- unlist(lapply(reqs, function(x) {
+  #   if (!requireNamespace(x, quietly = TRUE)) {
+  #     x
+  #   }
+  # }))
 
-  missing <- unlist(lapply(reqs, function(x) {
-    if (!requireNamespace(x, quietly = TRUE)) {
-      x
-    }
-  }))
+  missing <- c()
   if (length(missing > 0)) {
     stop(paste(
       "Additional packages required to run the shiny app. Install them with:",
