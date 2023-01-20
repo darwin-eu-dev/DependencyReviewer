@@ -52,7 +52,7 @@ runShiny <- function() {
       sep = "\n"
     ))
   } else {
-    utils::globalVariables(c(".path"))
+    # utils::globalVariables(c(".path"))
     .GlobalEnv$.path <- here::here("R")
     appDir <-
       system.file(package = "DependencyReviewer", "shinyApp")
