@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DependencyReviewer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0</span>
       </span>
     </div>
 
@@ -60,9 +60,15 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">darwinLintPackage</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">darwinLintPackage</span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span><span class="op">)</span></span></code></pre></div>
     </div>
 
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>path</dt>
+<dd><p>Default: ".", Path to package</p></dd>
+
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     
@@ -73,252 +79,8 @@
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">darwinLintPackage</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\checkDependencies.R:50:3: </span><span style="color: #0000BB;">style: </span>[object_name_linter] <span style="font-weight: bold;">Variable and function name style should be camelCase.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   not_permitted &lt;- dependencies %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ^~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\checkDependencies.R:50:3: </span><span style="color: #BB00BB;">warning: </span>[object_usage_linter] <span style="font-weight: bold;">local variable 'not_permitted' assigned but may not be used</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   not_permitted &lt;- dependencies %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ^~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\checkDependencies.R:69:34: </span><span style="color: #0000BB;">style: </span>[object_name_linter] <span style="font-weight: bold;">Variable and function name style should be camelCase.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> messagePermission &lt;- function(i, not_permitted) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  ^~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\checkDependencies.R:126:3: </span><span style="color: #0000BB;">style: </span>[object_name_linter] <span style="font-weight: bold;">Variable and function name style should be camelCase.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   not_permitted &lt;- getNotPermitted(dependencies, permittedPackages)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ^~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\checkDependencies.R:128:3: </span><span style="color: #0000BB;">style: </span>[object_name_linter] <span style="font-weight: bold;">Variable and function name style should be camelCase.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   n_not_permitted &lt;- length(not_permitted)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ^~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\checkDependencies.R:169:81: </span><span style="color: #0000BB;">style: </span>[line_length_linter] <span style="font-weight: bold;">Lines should not be more than 80 characters.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     example$url &lt;- stringr::str_replace_all(string = example$url, pattern = ",\\\n", replacement = " ")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\checkDependencies.R:172:81: </span><span style="color: #0000BB;">style: </span>[line_length_linter] <span style="font-weight: bold;">Lines should not be more than 80 characters.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       "{.emph Please create a new issue at https://github.com/mvankessel-EMC/DependencyReviewerWhitelists/</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\checkDependencies.R:183:6: </span><span style="color: #0000BB;">style: </span>[commented_code_linter] <span style="font-weight: bold;">Commented code should be removed.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   #  dependencies = dependencies,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\checkDependencies.R:186:5: </span><span style="color: #0000BB;">style: </span>[commented_code_linter] <span style="font-weight: bold;">Commented code should be removed.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   # n_diffVersions &lt;- length(diffVersions$package)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\checkDependencies.R:197:7: </span><span style="color: #0000BB;">style: </span>[commented_code_linter] <span style="font-weight: bold;">Commented code should be removed.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   #   cli::cli_div(theme = list (.alert = list(color = "red")))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\checkDependencies.R:201:7: </span><span style="color: #0000BB;">style: </span>[commented_code_linter] <span style="font-weight: bold;">Commented code should be removed.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   #   cli::cli_end()</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       ^~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\checkDependencies.R:204:9: </span><span style="color: #0000BB;">style: </span>[commented_code_linter] <span style="font-weight: bold;">Commented code should be removed.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   #     X = 1:n_diffVersions,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         ^~~~~~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\checkDependencies.R:205:9: </span><span style="color: #0000BB;">style: </span>[commented_code_linter] <span style="font-weight: bold;">Commented code should be removed.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   #     FUN = messagePackageVersion,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\checkDependencies.R:208:7: </span><span style="color: #0000BB;">style: </span>[commented_code_linter] <span style="font-weight: bold;">Commented code should be removed.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   #   cli::cli_alert_warning("Please require recommended versions")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\getDefaultPermittedPackages.R:54:81: </span><span style="color: #0000BB;">style: </span>[line_length_linter] <span style="font-weight: bold;">Lines should not be more than 80 characters.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       file = "https://raw.githubusercontent.com/mvankessel-EMC/DependencyReviewerWhitelists/main/dependencies.csv",</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\getDefaultPermittedPackages.R:84:81: </span><span style="color: #0000BB;">style: </span>[line_length_linter] <span style="font-weight: bold;">Lines should not be more than 80 characters.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       file = "https://raw.githubusercontent.com/OHDSI/Hades/main/extras/packages.csv",</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\getGraphData.R:8:81: </span><span style="color: #0000BB;">style: </span>[line_length_linter] <span style="font-weight: bold;">Lines should not be more than 80 characters.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #'     Types of packages to be included in the result. Default: c("imports", "depends")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\getGraphData.R:9:81: </span><span style="color: #0000BB;">style: </span>[line_length_linter] <span style="font-weight: bold;">Lines should not be more than 80 characters.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #'     Available types are: "imports", "depends", "suggests", "enhances", "linkingto"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\getGraphData.R:22:47: </span><span style="color: #0000BB;">style: </span>[object_name_linter] <span style="font-weight: bold;">Variable and function name style should be camelCase.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> getGraphData &lt;- function(path = here::here(), excluded_packages = c(""), package_types = c("imports", "depends")) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                               ^~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\getGraphData.R:22:74: </span><span style="color: #0000BB;">style: </span>[object_name_linter] <span style="font-weight: bold;">Variable and function name style should be camelCase.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> getGraphData &lt;- function(path = here::here(), excluded_packages = c(""), package_types = c("imports", "depends")) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                          ^~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\getGraphData.R:22:81: </span><span style="color: #0000BB;">style: </span>[line_length_linter] <span style="font-weight: bold;">Lines should not be more than 80 characters.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> getGraphData &lt;- function(path = here::here(), excluded_packages = c(""), package_types = c("imports", "depends")) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\getGraphData.R:30:9: </span><span style="color: #BB00BB;">warning: </span>[seq_linter] <span style="font-weight: bold;">1:nrow(...) is likely to be wrong in the empty edge case. Use seq_len(nrow(...)) instead.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     X = 1:nrow(fData),</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         ^~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\getGraphData.R:38:3: </span><span style="color: #0000BB;">style: </span>[object_name_linter] <span style="font-weight: bold;">Variable and function name style should be camelCase.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   pkg_deps &lt;- dplyr::bind_rows(lapply(X = 1:nrow(fData), FUN = function(row) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ^~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\getGraphData.R:38:43: </span><span style="color: #BB00BB;">warning: </span>[seq_linter] <span style="font-weight: bold;">1:nrow(...) is likely to be wrong in the empty edge case. Use seq_len(nrow(...)) instead.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   pkg_deps &lt;- dplyr::bind_rows(lapply(X = 1:nrow(fData), FUN = function(row) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                           ^~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\getGraphData.R:45:3: </span><span style="color: #0000BB;">style: </span>[object_name_linter] <span style="font-weight: bold;">Variable and function name style should be camelCase.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   pkg_deps &lt;- pkg_deps %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ^~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\getGraphData.R:49:3: </span><span style="color: #0000BB;">style: </span>[object_name_linter] <span style="font-weight: bold;">Variable and function name style should be camelCase.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   net_data &lt;- tidygraph::as_tbl_graph(</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ^~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\getGraphData.R:49:3: </span><span style="color: #BB00BB;">warning: </span>[object_usage_linter] <span style="font-weight: bold;">local variable 'net_data' assigned but may not be used</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   net_data &lt;- tidygraph::as_tbl_graph(</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ^~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\summariseFunctionUse.R:33:28: </span><span style="color: #0000BB;">style: </span>[object_name_linter] <span style="font-weight: bold;">Variable and function name style should be camelCase.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> funsUsedInLine &lt;- function(file_txt, file_name, i, verbose = FALSE) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                            ^~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\summariseFunctionUse.R:33:38: </span><span style="color: #0000BB;">style: </span>[object_name_linter] <span style="font-weight: bold;">Variable and function name style should be camelCase.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> funsUsedInLine &lt;- function(file_txt, file_name, i, verbose = FALSE) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                      ^~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\summariseFunctionUse.R:45:5: </span><span style="color: #0000BB;">style: </span>[object_name_linter] <span style="font-weight: bold;">Variable and function name style should be camelCase.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     fun_vec &lt;- unlist(stringr::str_extract_all(</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     ^~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\summariseFunctionUse.R:50:5: </span><span style="color: #0000BB;">style: </span>[object_name_linter] <span style="font-weight: bold;">Variable and function name style should be camelCase.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     fun_vec &lt;- stringr::str_remove_all(</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     ^~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\summariseFunctionUse.R:55:5: </span><span style="color: #0000BB;">style: </span>[object_name_linter] <span style="font-weight: bold;">Variable and function name style should be camelCase.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     fun_vec &lt;- stringr::str_split(</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     ^~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\summariseFunctionUse.R:61:7: </span><span style="color: #0000BB;">style: </span>[object_name_linter] <span style="font-weight: bold;">Variable and function name style should be camelCase.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       fun_vec &lt;- lapply(</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       ^~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\summariseFunctionUse.R:99:52: </span><span style="color: #0000BB;">style: </span>[object_name_linter] <span style="font-weight: bold;">Variable and function name style should be camelCase.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> funsUsedInFile &lt;- function(files, verbose = FALSE, in_package = TRUE) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                    ^~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\summariseFunctionUse.R:106:7: </span><span style="color: #0000BB;">style: </span>[object_name_linter] <span style="font-weight: bold;">Variable and function name style should be camelCase.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       file_txt &lt;- readLines(here::here("R", file))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       ^~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\summariseFunctionUse.R:108:7: </span><span style="color: #0000BB;">style: </span>[object_name_linter] <span style="font-weight: bold;">Variable and function name style should be camelCase.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       file_txt &lt;- readLines(file)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       ^~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\summariseFunctionUse.R:111:5: </span><span style="color: #BB00BB;">warning: </span>[object_usage_linter] <span style="font-weight: bold;">local variable 'out' assigned but may not be used</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     out &lt;- sapply(</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     ^~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\summariseFunctionUse.R:112:11: </span><span style="color: #BB00BB;">warning: </span>[seq_linter] <span style="font-weight: bold;">1:length(...) is likely to be wrong in the empty edge case. Use seq_along(...) instead.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       X = 1:length(file_txt),</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           ^~~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\summariseFunctionUse.R:149:12: </span><span style="color: #0000BB;">style: </span>[object_name_linter] <span style="font-weight: bold;">Variable and function name style should be camelCase.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   function(r_files = list.files(here::here("R")),</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            ^~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\summariseFunctionUse.R:151:12: </span><span style="color: #0000BB;">style: </span>[object_name_linter] <span style="font-weight: bold;">Variable and function name style should be camelCase.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            in_package = TRUE) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            ^~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\summariseFunctionUse.R:153:5: </span><span style="color: #0000BB;">style: </span>[object_name_linter] <span style="font-weight: bold;">Variable and function name style should be camelCase.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     deps_used &lt;- funsUsedInFile(r_files, verbose, in_package)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     ^~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\summariseFunctionUse.R:155:9: </span><span style="color: #0000BB;">style: </span>[commented_code_linter] <span style="font-weight: bold;">Commented code should be removed.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     #   stop(paste(r_files, "not found"))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\summariseFunctionUse.R:160:7: </span><span style="color: #0000BB;">style: </span>[object_name_linter] <span style="font-weight: bold;">Variable and function name style should be camelCase.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       deps_used &lt;- tibble(</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       ^~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\summariseFunctionUse.R:168:5: </span><span style="color: #0000BB;">style: </span>[object_name_linter] <span style="font-weight: bold;">Variable and function name style should be camelCase.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     deps_used &lt;- dplyr::bind_rows(deps_used) %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     ^~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">R\summariseFunctionUse.R:172:5: </span><span style="color: #0000BB;">style: </span>[object_name_linter] <span style="font-weight: bold;">Variable and function name style should be camelCase.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     deps_used$pkg[deps_used$fun %in% ls("package:base")] &lt;- "base"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     ^~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\shinyApp\server.R:22:5: </span><span style="color: #0000BB;">style: </span>[commented_code_linter] <span style="font-weight: bold;">Commented code should be removed.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   # DependencyReviewer::darwinLintScore(DependencyReviewer::darwinLintPackage)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\shinyApp\server.R:40:81: </span><span style="color: #0000BB;">style: </span>[line_length_linter] <span style="font-weight: bold;">Lines should not be more than 80 characters.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       DependencyReviewer::summariseFunctionUse(r_files = list.files(here::here("R"))) %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\shinyApp\server.R:51:81: </span><span style="color: #0000BB;">style: </span>[line_length_linter] <span style="font-weight: bold;">Lines should not be more than 80 characters.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       DependencyReviewer::summariseFunctionUse(r_files = list.files(here::here("R")))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\shinyApp\server.R:71:31: </span><span style="color: #0000BB;">style: </span>[object_name_linter] <span style="font-weight: bold;">Variable and function name style should be camelCase.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                               data_sub &lt;- data %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                               ^~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\shinyApp\server.R:78:81: </span><span style="color: #0000BB;">style: </span>[line_length_linter] <span style="font-weight: bold;">Lines should not be more than 80 characters.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                               mapping = ggplot2::aes(x = fun, y = n, fill = pkg)) +</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\shinyApp\server.R:85:81: </span><span style="color: #0000BB;">style: </span>[line_length_linter] <span style="font-weight: bold;">Lines should not be more than 80 characters.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                axis.text.x = (ggplot2::element_text(</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\shinyApp\server.R:157:48: </span><span style="color: #0000BB;">style: </span>[commas_linter] <span style="font-weight: bold;">Commas should always have a space after.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     options &lt;- names(tail(igraph::V(graphData),-1))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                ^</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\shinyApp\server.R:203:7: </span><span style="color: #0000BB;">style: </span>[commented_code_linter] <span style="font-weight: bold;">Commented code should be removed.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   #   out &lt;- DependencyReviewer::darwinLintScore(DependencyReviewer::darwinLintPackage)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\shinyApp\server.R:203:81: </span><span style="color: #0000BB;">style: </span>[line_length_linter] <span style="font-weight: bold;">Lines should not be more than 80 characters.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   #   out &lt;- DependencyReviewer::darwinLintScore(DependencyReviewer::darwinLintPackage)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\shinyApp\server.R:204:7: </span><span style="color: #0000BB;">style: </span>[commented_code_linter] <span style="font-weight: bold;">Commented code should be removed.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   #   return(out)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       ^~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\shinyApp\server.R:209:9: </span><span style="color: #0000BB;">style: </span>[commented_code_linter] <span style="font-weight: bold;">Commented code should be removed.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   #     shiny::setProgress(value = 0, message = "Running Lintr on package")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\shinyApp\server.R:211:9: </span><span style="color: #0000BB;">style: </span>[commented_code_linter] <span style="font-weight: bold;">Commented code should be removed.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   #     out &lt;- DT::datatable(getLintrTable())</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\shinyApp\server.R:213:9: </span><span style="color: #0000BB;">style: </span>[commented_code_linter] <span style="font-weight: bold;">Commented code should be removed.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   #     shiny::setProgress(value = 1, message = "Supplying output in table")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\shinyApp\server.R:215:7: </span><span style="color: #0000BB;">style: </span>[commented_code_linter] <span style="font-weight: bold;">Commented code should be removed.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   #   return(out)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       ^~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\shinyApp\ui.R:27:11: </span><span style="color: #0000BB;">style: </span>[commented_code_linter] <span style="font-weight: bold;">Commented code should be removed.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       #   width = 3,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           ^~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\shinyApp\ui.R:29:13: </span><span style="color: #0000BB;">style: </span>[commented_code_linter] <span style="font-weight: bold;">Commented code should be removed.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       #     inputId = "file",</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             ^~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\shinyApp\ui.R:30:13: </span><span style="color: #0000BB;">style: </span>[commented_code_linter] <span style="font-weight: bold;">Commented code should be removed.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       #     label = "File",</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             ^~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\shinyApp\ui.R:31:13: </span><span style="color: #0000BB;">style: </span>[commented_code_linter] <span style="font-weight: bold;">Commented code should be removed.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       #     choices = c("ALL", list.files(here::here("R")))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\shinyApp\ui.R:35:13: </span><span style="color: #0000BB;">style: </span>[commented_code_linter] <span style="font-weight: bold;">Commented code should be removed.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       #     inline = TRUE,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             ^~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\shinyApp\ui.R:36:13: </span><span style="color: #0000BB;">style: </span>[commented_code_linter] <span style="font-weight: bold;">Commented code should be removed.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       #     inputId = "excludes",</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             ^~~~~~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\shinyApp\ui.R:37:13: </span><span style="color: #0000BB;">style: </span>[commented_code_linter] <span style="font-weight: bold;">Commented code should be removed.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       #     label = "Exclude Packages",</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             ^~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\shinyApp\ui.R:38:13: </span><span style="color: #0000BB;">style: </span>[commented_code_linter] <span style="font-weight: bold;">Commented code should be removed.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       #     choices = c("base", "unknown")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\shinyApp\ui.R:49:17: </span><span style="color: #0000BB;">style: </span>[commented_code_linter] <span style="font-weight: bold;">Commented code should be removed.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           #     DT::dataTableOutput("lintrTable")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\shinyApp\ui.R:104:81: </span><span style="color: #0000BB;">style: </span>[line_length_linter] <span style="font-weight: bold;">Lines should not be more than 80 characters.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   choices = c("imports", "depends", "suggests", "enhances", "linkingto")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\testScript.R:45:81: </span><span style="color: #0000BB;">style: </span>[line_length_linter] <span style="font-weight: bold;">Lines should not be more than 80 characters.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       file = "https://raw.githubusercontent.com/mvankessel-EMC/DependencyReviewerWhitelists/main/dependencies.csv",</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\testScript.R:52:21: </span><span style="color: #BB00BB;">warning: </span>[object_usage_linter] <span style="font-weight: bold;">no visible binding for global variable 'Package'</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       dplyr::select(Package, Built) %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     ^~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\testScript.R:52:21: </span><span style="color: #BB00BB;">warning: </span>[object_usage_linter] <span style="font-weight: bold;">no visible binding for global variable 'Package'</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       dplyr::select(Package, Built) %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     ^~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\testScript.R:52:30: </span><span style="color: #BB00BB;">warning: </span>[object_usage_linter] <span style="font-weight: bold;">no visible binding for global variable 'Built'</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       dplyr::select(Package, Built) %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                              ^~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\testScript.R:52:30: </span><span style="color: #BB00BB;">warning: </span>[object_usage_linter] <span style="font-weight: bold;">no visible binding for global variable 'Built'</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       dplyr::select(Package, Built) %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                              ^~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\testScript.R:70:81: </span><span style="color: #0000BB;">style: </span>[line_length_linter] <span style="font-weight: bold;">Lines should not be more than 80 characters.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       file = "https://raw.githubusercontent.com/OHDSI/Hades/main/extras/packages.csv",</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\testScript.R:72:33: </span><span style="color: #BB00BB;">warning: </span>[object_usage_linter] <span style="font-weight: bold;">no visible binding for global variable 'name'</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       header = TRUE) %&gt;% select(name) %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                 ^~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\testScript.R:72:33: </span><span style="color: #BB00BB;">warning: </span>[object_usage_linter] <span style="font-weight: bold;">no visible binding for global variable 'name'</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       header = TRUE) %&gt;% select(name) %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                 ^~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\testScript.R:72:39: </span><span style="color: #0000BB;">style: </span>[pipe_continuation_linter] <span style="font-weight: bold;">`%&gt;%` should always have a space before it and a new line after it, unless the full pipeline fits on one line.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       header = TRUE) %&gt;% select(name) %&gt;%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                       ^~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">inst\testScript.R:90:16: </span><span style="color: #BB00BB;">warning: </span>[object_usage_linter] <span style="font-weight: bold;">no visible binding for global variable 'package'</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         select(package, version))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                ^~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">tests\testthat\test-checkDependencies.R:6:5: </span><span style="color: #0000BB;">style: </span>[commented_code_linter] <span style="font-weight: bold;">Commented code should be removed.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #   expect_message(checkDependencies())</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">tests\testthat\test-darwinLint.R:6:5: </span><span style="color: #0000BB;">style: </span>[commented_code_linter] <span style="font-weight: bold;">Commented code should be removed.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #   expect_type(darwinLintScore(lintFunction = darwinLintPackage), "list")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">tests\testthat\test-getDefaultPermittedPackages.R:6:5: </span><span style="color: #0000BB;">style: </span>[commented_code_linter] <span style="font-weight: bold;">Commented code should be removed.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #   expect_type(getDefaultPermittedPackages(), "list")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Didn't find any R package searching upwards from '.'.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 </code></pre></div>
     </div>
   </div>
