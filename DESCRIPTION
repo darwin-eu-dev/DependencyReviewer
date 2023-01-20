@@ -23,7 +23,8 @@ Suggests:
     igraph,
     withr,
     network,
-    sna
+    sna,
+    intergraph
 Imports:
     rlang,
     desc,
