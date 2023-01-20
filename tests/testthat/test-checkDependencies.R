@@ -1,7 +1,14 @@
 library(DependencyReviewer)
 library(testthat)
+library(withr)
 
-# Tests breaks in check due to PAK environment
-# test_that("Void", {
-#   expect_message(checkDependencies())
-# })
+# Set R_USER_CAHCE_DIR to tmpfile for tests
+local_envvar(
+  R_USER_CACHE_DIR = tempfile()
+)
+
+# Test with base
+test_that("base", {
+  expect_message(checkDependencies(packageName = "base"))
+})
+
