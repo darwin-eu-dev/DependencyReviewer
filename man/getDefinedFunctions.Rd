@@ -22,5 +22,5 @@ of lines occupied by function), fun (function name).
 }
 \examples{
 filePath <- system.file(package = "DependencyReviewer", "testScript.R")
-df <- getDefinedFunctions(file)
+df <- getDefinedFunctions(filePath)
 }
