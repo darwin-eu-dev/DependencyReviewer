@@ -29,6 +29,7 @@ Imports:
     pak,
     readr,
     stringr,
+    glue,
     tidygraph,
     magrittr,
 RoxygenNote: 7.2.3
