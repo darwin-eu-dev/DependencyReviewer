@@ -24,6 +24,8 @@
 #' @param verbose Prints message as to what file is currently being worked on.
 #' Usefull if used in an apply funciton, investigating alot of different files.
 #'
+#' @import glue
+#'
 #' @return Returns a tibble object.
 #' @export
 #'
