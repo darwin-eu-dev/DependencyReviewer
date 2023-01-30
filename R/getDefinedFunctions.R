@@ -31,7 +31,7 @@
 #'
 #' @examples
 #' filePath <- system.file(package = "DependencyReviewer", "testScript.R")
-#' df <- getDefinedFunctions(file)
+#' df <- getDefinedFunctions(filePath)
 getDefinedFunctions <- function(filePath, verbose = FALSE) {
   # Read lines
   lines <- readLines(filePath, warn = FALSE)
