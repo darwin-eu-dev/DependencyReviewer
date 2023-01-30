@@ -6,7 +6,7 @@
 #'     Packages to exclude
 #' @param package_types
 #'     Types of packages to be included in the result. Default: c("imports", "depends")
-#'     Availible types are: "imports", "depends", "suggests", "enhances", "linkingto"
+#'     Available types are: "imports", "depends", "suggests", "enhances", "linkingto"
 #'
 #' @return net_data graph data
 #' @import pak
@@ -16,10 +16,10 @@
 #' @export
 #' @examples
 #' # Only run in interactive session
-#' if(interactive()) {
+#' if (interactive()) {
 #'   graphData <- getGraphData()
 #' }
-getGraphData <- function(path, excluded_packages = c(""), package_types = c("imports", "depends")) {
+getGraphData <- function(path = "./", excluded_packages = c(""), package_types = c("imports", "depends")) {
   # Get all dependencies using pak
   data <- pak::local_deps(path, dependencies = "Imports")
 
@@ -47,6 +47,6 @@ getGraphData <- function(path, excluded_packages = c(""), package_types = c("imp
   # Convert tibble to graph
   net_data <- tidygraph::as_tbl_graph(
     x = pkg_deps,
-    directed = TRUE)
+    directed = TRUE
+  )
 }
-

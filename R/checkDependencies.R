@@ -1,4 +1,4 @@
-# Copyright 2022 DARWIN EU®
+# Copyright 2023 DARWIN EU®
 #
 # This file is part of DependencyReviewer
 #
@@ -27,10 +27,11 @@
 getDiffVersions <- function(dependencies, permittedPackages) {
   permittedPackages %>%
     dplyr::filter(!is.na(version)) %>%
-    dplyr::rename("version_rec"="version") %>%
+    dplyr::rename("version_rec" = "version") %>%
     dplyr::left_join(
       dependencies,
-      by = c("package")) %>%
+      by = c("package")
+    ) %>%
     dplyr::filter("version_rec" != "version")
 }
 
@@ -50,7 +51,8 @@ getNotPermitted <- function(dependencies, permittedPackages) {
     dplyr::filter(.data$package != "R") %>%
     dplyr::anti_join(
       permittedPackages,
-      by = "package") %>%
+      by = "package"
+    ) %>%
     dplyr::select(.data$package) %>%
     dplyr::arrange(.data$package) %>%
     dplyr::pull()
@@ -105,13 +107,11 @@ messagePackageVersion <- function(i, diffVersions) {
 #'
 #'   checkDependencies(packageName = "DependencyReviewer", c("Suggests"))
 #' }
-checkDependencies <- function(
-    packageName = NULL,
-    dependencyType = c("Imports", "Depends")) {
-
+checkDependencies <- function(packageName = NULL,
+                              dependencyType = c("Imports", "Depends")) {
   # find dependencies
-  if(is.null(packageName)) {
-    description <-  desc::description$new()
+  if (is.null(packageName)) {
+    description <- desc::description$new()
   } else {
     description <- desc::description$new(package = packageName)
   }
@@ -129,22 +129,26 @@ checkDependencies <- function(
 
   # message
   cli::cli_h2(
-    "Checking if package{?s} in {dependencyType} have been approved")
+    "Checking if package{?s} in {dependencyType} have been approved"
+  )
 
-  if(n_not_permitted == 0) {
+  if (n_not_permitted == 0) {
     cli::cli_alert_success(
-      "{.strong All package{?s} in {dependencyType} are  already approved}")
+      "{.strong All package{?s} in {dependencyType} are  already approved}"
+    )
   } else {
     cli::cli_div(theme = list(.alert = list(color = "red")))
     cli::cli_alert_warning(
       "Found {n_not_permitted} package{?s} in {dependencyType} that are not
-      approved")
+      approved"
+    )
     cli::cli_end()
 
     sapply(
       X = 1:n_not_permitted,
       FUN = messagePermission,
-      not_permitted = not_permitted)
+      not_permitted = not_permitted
+    )
 
     # Example
     example <-
@@ -153,31 +157,35 @@ checkDependencies <- function(
           X = not_permitted,
           FUN = function(pkg) {
             dplyr::tibble(pak::pkg_search(pkg)) %>%
-            dplyr::filter(.data$package == pkg) %>%
-            dplyr::select(.data$package, version, date, .data$downloads_last_month,
-                          license, url)
-      }))
+              dplyr::filter(.data$package == pkg) %>%
+              dplyr::select(
+                .data$package, version, date, .data$downloads_last_month,
+                license, url
+              )
+          }
+        )
+      )
 
     example$url <- stringr::str_replace_all(string = example$url, pattern = ",\\\n", replacement = " ")
 
     cli::cli_alert_warning(
-    "{.emph Please create a new issue at https://github.com/mvankessel-EMC/DependencyReviewerWhitelists/
+      "{.emph Please create a new issue at https://github.com/mvankessel-EMC/DependencyReviewerWhitelists/
     to request approval for packages with the following message:}
-    ")
+    "
+    )
 
 
     cli::cli_alert(paste(knitr::kable(example), collapse = "\n"))
-
-    }
+  }
 
   # check if different version in current compared to recommended
-  #diffVersions <- getDiffVersions(
+  # diffVersions <- getDiffVersions(
   #  dependencies = dependencies,
   #  permittedPackages = permittedPackages)
 
-  #n_diffVersions <- length(diffVersions$package)
+  # n_diffVersions <- length(diffVersions$package)
 
-  #message
+  # message
   # cli::cli_h2(
   #   "Checking if package{?s} in {dependencyType} require recommended version")
   #
@@ -199,5 +207,5 @@ checkDependencies <- function(
   #
   #   cli::cli_alert_warning("Please require recommended versions")
   # }
-invisible(NULL)
+  invisible(NULL)
 }

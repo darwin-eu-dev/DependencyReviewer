@@ -17,5 +17,6 @@ Lint a given file.
 }
 \examples{
 darwinLintFile(
-  fileName = system.file(package = "DependencyReviewer", "testScript.R"))
+  fileName = system.file(package = "DependencyReviewer", "testScript.R")
+)
 }

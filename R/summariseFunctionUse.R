@@ -1,4 +1,4 @@
-# Copyright 2022 DARWIN EU®
+# Copyright 2023 DARWIN EU®
 #
 # This file is part of IncidencePrevalence
 #
@@ -32,34 +32,41 @@
 funsUsedInLine <- function(file_txt, file_name, i, verbose = FALSE) {
   line <- file_txt[i]
   if (!startsWith(line, "#")) {
-    line <- paste(stringr::str_split(
+    line <- paste(
+      stringr::str_split(
         string = line,
         pattern = "\\w+\\$",
-        simplify = TRUE),
-      collapse = "")
+        simplify = TRUE
+      ),
+      collapse = ""
+    )
 
     fun_vec <- unlist(stringr::str_extract_all(
       string = line,
-      pattern = "(\\w+::(?:\\w+\\.)?\\w+\\(|(?:\\w+\\.)?\\w+\\()"))
+      pattern = "(\\w+::(?:\\w+\\.)?\\w+\\(|(?:\\w+\\.)?\\w+\\()"
+    ))
 
     fun_vec <- stringr::str_remove_all(
       string = fun_vec,
-      pattern = "\\(")
+      pattern = "\\("
+    )
 
     fun_vec <- stringr::str_split(
       string = fun_vec,
-      pattern = "::")
+      pattern = "::"
+    )
 
-    if(length(fun_vec) > 0) {
+    if (length(fun_vec) > 0) {
       fun_vec <- lapply(
         X = fun_vec,
         FUN = function(x) {
-          if(length(x) == 1) {
+          if (length(x) == 1) {
             x <- list("unknown", x)
           } else {
             list(x)
           }
-        })
+        }
+      )
 
       df <- data.frame(t(sapply(fun_vec, unlist)))
       names(df) <- c("pkg", "fun")
@@ -67,7 +74,6 @@ funsUsedInLine <- function(file_txt, file_name, i, verbose = FALSE) {
       df$r_file <- rep(basename(file_name), dim(df)[1])
       df$line <- rep(i, dim(df)[1])
       return(dplyr::tibble(df))
-
     } else {
       if(verbose == TRUE) {
         message(paste0("No functions found for line: ", i))
@@ -89,7 +95,7 @@ funsUsedInLine <- function(file_txt, file_name, i, verbose = FALSE) {
 #' @return table
 funsUsedInFile <- function(files, verbose = FALSE) {
   dplyr::bind_rows(lapply(X = files, FUN = function(file) {
-    if(verbose) {
+    if (verbose) {
       message(paste0("Started on file: ", file))
     }
     file_txt <- readLines(file)
@@ -98,7 +104,8 @@ funsUsedInFile <- function(files, verbose = FALSE) {
       X = 1:length(file_txt),
       FUN = funsUsedInLine,
       file_txt = file_txt,
-      file_name = file)
+      file_name = file
+    )
   }))
 }
 
@@ -123,30 +130,27 @@ funsUsedInFile <- function(files, verbose = FALSE) {
 #' if (interactive()) {
 #'   summariseFunctionUse(list.files(here::here("R"), full.names = TRUE))
 #' }
-summariseFunctionUse <-
-  function(r_files,
-           verbose = FALSE) {
-    #tryCatch({
-    deps_used <- funsUsedInFile(r_files, verbose)
-    # }, error = function(e) {
-    #   stop(paste(r_files, "not found"))
-    # })
+summariseFunctionUse <- function(r_files, verbose = FALSE) {
+  #tryCatch({
+  deps_used <- funsUsedInFile(r_files, verbose)
+  # }, error = function(e) {
+  #   stop(paste(r_files, "not found"))
+  # })
 
-    if (nrow(deps_used) == 0) {
-      warning("No functions found, output will be empty")
-      deps_used <- dplyr::tibble(
-        r_file = character(0),
-        line = numeric(0),
-        pkg = character(0),
-        fun = character(0)
-      )
-    }
-
-    deps_used <- dplyr::bind_rows(deps_used) %>%
-      dplyr::relocate(.data$r_file, .data$line, .data$pkg, .data$fun) %>%
-      dplyr::arrange(.data$r_file, .data$line, .data$pkg, .data$fun)
-
-    deps_used$pkg[deps_used$fun %in% ls("package:base")] <- "base"
-    return(deps_used)
+  if (nrow(deps_used) == 0) {
+    warning("No functions found, output will be empty")
+    deps_used <- dplyr::tibble(
+      r_file = character(0),
+      line = numeric(0),
+      pkg = character(0),
+      fun = character(0)
+    )
   }
 
+  deps_used <- dplyr::bind_rows(deps_used) %>%
+    dplyr::relocate(.data$r_file, .data$line, .data$pkg, .data$fun) %>%
+    dplyr::arrange(.data$r_file, .data$line, .data$pkg, .data$fun)
+
+  deps_used$pkg[deps_used$fun %in% ls("package:base")] <- "base"
+  return(deps_used)
+  }

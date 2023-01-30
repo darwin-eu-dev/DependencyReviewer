@@ -22,10 +22,12 @@ Function that scores the lintr output as a percentage per message type
 # With darwin file lintr
 darwinLintScore(
   lintFunction = darwinLintFile,
-  system.file(package = "DependencyReviewer", "testScript.R"))
+  system.file(package = "DependencyReviewer", "testScript.R")
+)
 
 # With standard package lintr
 darwinLintScore(
   lintFunction = lintr::lint_package,
-  system.file(package = "DependencyReviewer"))
+  system.file(package = "DependencyReviewer")
+)
 }

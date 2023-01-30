@@ -1,4 +1,4 @@
-# Copyright 2022 DARWIN EU®
+# Copyright 2023 DARWIN EU®
 #
 # This file is part of IncidencePrevalence
 #
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#' getDefaultPermittedpackages
+#' getDefaultPermittedPackages
 #'
 #' Gets permitted packages
 #'
@@ -23,6 +23,8 @@
 #'
 #' @import readr
 #' @import utils
+#' @import pak
+#' @importFrom pkgdepends new_pkg_deps
 #'
 #' @export
 #' @examples
@@ -35,7 +37,8 @@ getDefaultPermittedPackages <- function() {
   tmpFile <- list.files(
     path = tempdir(),
     pattern = "tmpPkgs*",
-    full.names = TRUE)
+    full.names = TRUE
+  )
 
   if (length(tmpFile) > 0) {
     message("Get from temp file")
@@ -45,7 +48,8 @@ getDefaultPermittedPackages <- function() {
     tmpFile <- tempfile(
       pattern = "tmpPkgs",
       tmpdir = tempdir(),
-      fileext = ".csv")
+      fileext = ".csv"
+    )
 
     permittedDependencies <- utils::read.table(
       file = "https://raw.githubusercontent.com/mvankessel-EMC/DependencyReviewerWhitelists/main/dependencies.csv",
@@ -56,7 +60,8 @@ getDefaultPermittedPackages <- function() {
     # Get base packages
     basePackages <- data.frame(utils::installed.packages(
       lib.loc = .Library,
-      priority = "high")) %>%
+      priority = "high"
+    )) %>%
       dplyr::select(.data$Package, .data$Built) %>%
       dplyr::rename(package = .data$Package, version = .data$Built) %>%
       dplyr::tibble()
@@ -96,7 +101,8 @@ getDefaultPermittedPackages <- function() {
     message("Writing temp file")
     utils::write.csv(
       x = permittedPackages,
-      file = tmpFile)
+      file = tmpFile
+    )
     return(permittedPackages)
   }
 }
