@@ -43,7 +43,7 @@ funsUsedInLine <- function(file_txt, file_name, i, verbose = FALSE) {
 
     fun_vec <- unlist(stringr::str_extract_all(
       string = line,
-      pattern = "(\\w+::(?:\\w+\\.)?\\w+\\(|(?:\\w+\\.)?\\w+\\()"
+      pattern = "(\\w+[\\.]?\\w+::(?:\\w+\\.)?\\w+\\(|(?:\\w+\\.)?\\w+\\()"
     ))
 
     fun_vec <- stringr::str_remove_all(
