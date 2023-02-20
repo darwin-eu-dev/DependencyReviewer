@@ -1,7 +1,7 @@
 Package: DependencyReviewer
 Type: Package
 Title: Tool Suite to Investigate Other Packages
-Version: 1.1.0
+Version: 1.2.0
 Language: en-US
 Authors@R:
     person("Maarten", "van Kessel", email = "m.l.vankessel@erasmusmc.nl",
