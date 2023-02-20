@@ -6,6 +6,8 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/darwin-eu/DependencyReviewer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/darwin-eu/DependencyReviewer/actions/workflows/R-CMD-check.yaml)
+![](https://www.r-pkg.org/badges/version/DependencyReviewer?colour=blue)
+![](https://cranlogs.r-pkg.org/badges/grand-total/DependencyReviewer)
 <!-- badges: end -->
 
 DependencyReviewer is a package that Helps investigating other packages
