@@ -36,7 +36,7 @@ DependencyReviewer is a package that Helps investigating other packages during c
 You can install the development version of DependencyReviewer like so:
 ```{r eval=FALSE}
 install.packages("remotes")
-remotes::install_github("darwin-eu/DependencyReviewer")
+remotes::install_github("darwin-eu-dev/DependencyReviewer")
 ```
 
 DependencyReviewer is now available on CRAN.

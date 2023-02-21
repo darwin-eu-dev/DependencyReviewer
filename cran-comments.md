@@ -8,6 +8,8 @@ to:
 https://github.com/darwin-eu-dev/DependencyReviewer/actions/workflows/R-CMD-check.yaml/badge.svg
 https://github.com/darwin-eu-dev/DependencyReviewer/actions/workflows/R-CMD-check.yaml
 
+In both README.Rmd and README.md
+
 Built package with following args:
 "--compact-vignettes=gs+qpdf"
 

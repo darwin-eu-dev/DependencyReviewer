@@ -5,7 +5,7 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/darwin-eu/DependencyReviewer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/darwin-eu/DependencyReviewer/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/darwin-eu-dev/DependencyReviewer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/darwin-eu-dev/DependencyReviewer/actions/workflows/R-CMD-check.yaml)
 ![](https://www.r-pkg.org/badges/version/DependencyReviewer?colour=blue)
 ![](https://cranlogs.r-pkg.org/badges/grand-total/DependencyReviewer)
 <!-- badges: end -->
@@ -30,7 +30,7 @@ You can install the development version of DependencyReviewer like so:
 
 ``` r
 install.packages("remotes")
-remotes::install_github("darwin-eu/DependencyReviewer")
+remotes::install_github("darwin-eu-dev/DependencyReviewer")
 ```
 
 DependencyReviewer is now available on CRAN.
