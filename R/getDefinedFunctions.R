@@ -85,10 +85,16 @@ getBodyIndices <- function(line, lines) {
     checkOpen <- stringr::str_detect(string = lines[endFunLine], "\\{")
     checkClose <- stringr::str_detect(string = lines[endFunLine], "\\}")
 
+    if (length(checkOpen) == 0 || length(checkClose) == 0) {
+      checkOpen <- FALSE
+      checkClose <- FALSE
+    }
+
     if (is.na(checkOpen) || is.na(checkClose)) {
       cntOpen <- max(c(cntOpen, cntClosed))
       cntClosed <- max(c(cntOpen, cntClosed))
     } else {
+      # print(glue::glue("getBody: {checkOpen}"))
       if (checkOpen) {
         cntOpen <- cntOpen + 1
       }
@@ -122,6 +128,10 @@ goToBody <- function(line, lines) {
   line <- line
   while (startFun == FALSE) {
     checkOpen <- stringr::str_detect(string = lines[line], "\\{")
+
+    if (is.na(checkOpen)) {
+      return(line)
+    }
     if (checkOpen) {
       startFun <- TRUE
     } else {
