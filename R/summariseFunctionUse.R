@@ -41,9 +41,12 @@ funsUsedInLine <- function(file_txt, file_name, i, verbose = FALSE) {
       collapse = ""
     )
 
+    # Remove strings
+    line <- str_replace_all(line, "[\"\'\`].+[\"\'\`]+", "")
+
     fun_vec <- unlist(stringr::str_extract_all(
       string = line,
-      pattern = "(\\w+[\\.]?\\w+::(?:\\w+\\.)?\\w+\\(|(?:\\w+\\.)?\\w+\\()"
+      pattern = "[\\w\\.]+(::)?[\\w\\.]+\\("
     ))
 
     fun_vec <- stringr::str_remove_all(
