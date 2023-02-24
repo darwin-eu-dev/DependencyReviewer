@@ -1,0 +1,125 @@
+#' makeGraph
+#'
+#' Makes the graph
+#'
+#' @param funsPerDefFun
+#'
+#' @import glue
+#' @import DiagrammeR
+#' @import stringr
+#'
+#' @return
+makeGraph <- function(funsPerDefFun, width, height, pkgName, expFuns) {
+  pkgDef <- funsPerDefFun %>%
+    filter(fun %in% name)
+
+  graphSyntx <- unlist(lapply(seq_len(nrow(pkgDef)), function(i) {
+    glue::glue("{pkgDef[i, ]$name} -> {pkgDef[i, ]$fun}")
+  }))
+
+  graphSyntx <- unique(stringr::str_replace_all(
+    string = graphSyntx,
+    pattern = "\\.",
+    replacement = "_"))
+
+  DiagrammeR::grViz(
+    diagram = paste0(
+      "digraph {
+  graph [layout = dot, rankdir = LR]
+  node [shape = rectangle]
+  Exported [shape = oval]
+  Non_exported [shape = rectangle]",
+      "subgraph cluster0 {label = <<B>Legend</B>> Exported -> Non_exported}",
+      "subgraph cluster1 {label = <<B>", pkgName, "</B>> ",
+      paste0(expFuns, " [shape = oval]", collapse = "\n"),
+      paste0(graphSyntx, collapse = "\n"), "}",
+      "}",
+      collapse = "\n"),
+    height = height,
+    width = width)
+}
+
+#' getFunsPerDefFun
+#'
+#' Gets all function calls per defined function in the package.
+#'
+#' @param files Vector of files to investigate.
+#'
+#' @return returns data.frame of all functions per defined function of package.
+getFunsPerDefFun <- function(files, allFuns, verbose) {
+  dplyr::bind_rows(lapply(files, function(file) {
+    defFuns <- DependencyReviewer::getDefinedFunctions(file, verbose = verbose)
+
+    df <- dplyr::bind_rows(lapply(seq_len(nrow(defFuns)), function(i) {
+      allFuns %>%
+        filter(r_file %in% defFuns$file) %>%
+        filter(line >= defFuns$start[i] & line <= defFuns$start[i] + defFuns$size[i]) %>%
+        mutate(name = defFuns$fun[i]) %>%
+        relocate(c("r_file", "name", "line", "pkg", "fun"))
+    }))
+  }))
+}
+
+#' getExportedFunctions
+#'
+#' Gets all the exported functions of a package, from NAMESPACE.
+#'
+#' @param path path to package
+#'
+#' @import glue
+#' @import stringr
+#'
+#' @return vector of exported functions
+getExportedFunctions <- function(path) {
+  expFuns <- readLines(glue::glue("{path}/NAMESPACE"))
+
+  expFuns <- unlist(stringr::str_extract_all(
+    string = expFuns,
+    pattern = "export\\(.+\\)"))
+
+  expFuns <- unlist(stringr::str_extract_all(
+    string = expFuns,
+    pattern = "\\(\\w+\\)"))
+
+  expFuns <- unlist(stringr::str_extract_all(
+    string = expFuns,
+    pattern = "\\w+"))
+
+  return(expFuns)
+}
+
+#' pkgDiagram
+#'
+#' Creates a diagram of all defined functions in a package.
+#'
+#' @import glue
+#' @import dplyr
+#'
+#' @return diagram image
+#' @export
+#' @examples
+#' if (interactive()) {
+#'   pkgDiagram(
+#'     pkgPath = "./",
+#'     width = 1000,
+#'     height = 4000,
+#'     verbose = TRUE)
+#' }
+pkgDiagram <- function(pkgPath, width = 1000, height = 1000, verbose = FALSE) {
+  path <- normalizePath(pkgPath)
+
+  rPath <- glue::glue("{path}/R")
+
+  files <- list.files(
+    path = rPath,
+    full.names = TRUE,
+    recursive = TRUE)
+
+  expFuns <- getExportedFunctions(path)
+
+  allFuns <- DependencyReviewer::summariseFunctionUse(files)
+
+  funsPerDefFun <- getFunsPerDefFun(files, allFuns, verbose)
+
+  makeGraph(funsPerDefFun, width, height, basename(pkgPath), expFuns)
+}
