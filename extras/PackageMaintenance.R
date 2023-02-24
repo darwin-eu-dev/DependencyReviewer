@@ -45,6 +45,6 @@ OhdsiRTools::fixHadesLogo()
 # Release package --------------------------------------------------------------
 devtools::check_win_devel()
 
-devtools::check_rhub()
+devtools::check_rhub(build_args = "--compact-vignettes=gs+qpdf")
 
-devtools::release()
+devtools::release(args = "--compact-vignettes=gs+qpdf")
