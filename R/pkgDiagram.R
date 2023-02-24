@@ -62,7 +62,7 @@ getFunsPerDefFun <- function(files, allFuns, verbose) {
       allFuns %>%
         dplyr::filter(.data$r_file %in% defFuns$file) %>%
         dplyr::filter(.data$line >= defFuns$start[i] & .data$line <= defFuns$start[i] + defFuns$size[i]) %>%
-        dplyr::mutate(.data$name == defFuns$fun[i]) %>%
+        dplyr::mutate(name = defFuns$fun[i]) %>%
         dplyr::relocate(c("r_file", "name", "line", "pkg", "fun"))
     }))
   }))
