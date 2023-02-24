@@ -8,6 +8,10 @@ getFunsPerDefFun(files, allFuns, verbose)
 }
 \arguments{
 \item{files}{Vector of files to investigate.}
+
+\item{allFuns}{allFunctions data.frame}
+
+\item{verbose}{Verbose messages}
 }
 \value{
 returns data.frame of all functions per defined function of package.

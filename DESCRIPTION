@@ -38,7 +38,8 @@ Imports:
     stringr,
     glue,
     tidygraph,
-    magrittr
+    magrittr,
+    DiagrammeR
 RoxygenNote: 7.2.3
 Depends: 
     R (>= 4.0)

@@ -6,6 +6,15 @@
 \usage{
 pkgDiagram(pkgPath, width = 1000, height = 1000, verbose = FALSE)
 }
+\arguments{
+\item{pkgPath}{Path to package}
+
+\item{width}{Width of diagram}
+
+\item{height}{Height of diagram}
+
+\item{verbose}{Verbose messages}
+}
 \value{
 diagram image
 }

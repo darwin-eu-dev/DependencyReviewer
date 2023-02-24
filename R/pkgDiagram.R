@@ -2,7 +2,11 @@
 #'
 #' Makes the graph
 #'
-#' @param funsPerDefFun
+#' @param funsPerDefFun Functions per defined function data.frame
+#' @param width Width of diagram
+#' @param height Height of diagram
+#' @param pkgName Name of package
+#' @param expFuns Exported functinos data.frame
 #'
 #' @import glue
 #' @import DiagrammeR
@@ -11,7 +15,7 @@
 #' @return diagram of the package
 makeGraph <- function(funsPerDefFun, width, height, pkgName, expFuns) {
   pkgDef <- funsPerDefFun %>%
-    filter(fun %in% name)
+    dplyr::filter(.data$fun %in% .data$name)
 
   graphSyntx <- unlist(lapply(seq_len(nrow(pkgDef)), function(i) {
     glue::glue("{pkgDef[i, ]$name} -> {pkgDef[i, ]$fun}")
@@ -44,6 +48,10 @@ makeGraph <- function(funsPerDefFun, width, height, pkgName, expFuns) {
 #' Gets all function calls per defined function in the package.
 #'
 #' @param files Vector of files to investigate.
+#' @param allFuns allFunctions data.frame
+#' @param verbose Verbose messages
+#'
+#' @import dplyr
 #'
 #' @return returns data.frame of all functions per defined function of package.
 getFunsPerDefFun <- function(files, allFuns, verbose) {
@@ -52,10 +60,10 @@ getFunsPerDefFun <- function(files, allFuns, verbose) {
 
     df <- dplyr::bind_rows(lapply(seq_len(nrow(defFuns)), function(i) {
       allFuns %>%
-        filter(r_file %in% defFuns$file) %>%
-        filter(line >= defFuns$start[i] & line <= defFuns$start[i] + defFuns$size[i]) %>%
-        mutate(name = defFuns$fun[i]) %>%
-        relocate(c("r_file", "name", "line", "pkg", "fun"))
+        dplyr::filter(.data$r_file %in% defFuns$file) %>%
+        dplyr::filter(.data$line >= defFuns$start[i] & .data$line <= defFuns$start[i] + defFuns$size[i]) %>%
+        dplyr::mutate(.data$name == defFuns$fun[i]) %>%
+        dplyr::relocate(c("r_file", "name", "line", "pkg", "fun"))
     }))
   }))
 }
@@ -91,6 +99,11 @@ getExportedFunctions <- function(path) {
 #' pkgDiagram
 #'
 #' Creates a diagram of all defined functions in a package.
+#'
+#' @param pkgPath Path to package
+#' @param width Width of diagram
+#' @param height Height of diagram
+#' @param verbose Verbose messages
 #'
 #' @import glue
 #' @import dplyr

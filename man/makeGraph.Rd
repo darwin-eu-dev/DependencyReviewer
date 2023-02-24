@@ -7,7 +7,15 @@
 makeGraph(funsPerDefFun, width, height, pkgName, expFuns)
 }
 \arguments{
-\item{funsPerDefFun}{}
+\item{funsPerDefFun}{Functions per defined function data.frame}
+
+\item{width}{Width of diagram}
+
+\item{height}{Height of diagram}
+
+\item{pkgName}{Name of package}
+
+\item{expFuns}{Exported functinos data.frame}
 }
 \value{
 diagram of the package
