@@ -39,7 +39,9 @@ Imports:
     glue,
     tidygraph,
     magrittr,
-    DiagrammeR
+    DiagrammeR,
+    DiagrammeRsvg,
+    rsvg
 RoxygenNote: 7.2.3
 Depends: 
     R (>= 4.0)

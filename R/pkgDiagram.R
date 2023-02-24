@@ -136,3 +136,36 @@ pkgDiagram <- function(pkgPath, width = 1000, height = 1000, verbose = FALSE) {
 
   makeGraph(funsPerDefFun, width, height, basename(pkgPath), expFuns)
 }
+
+
+#' exportDiagram
+#'
+#' Exports the diagram from `pkgDiagram` to a PDF-file.
+#'
+#' @param diagram Graph object from the `pkgDiagram` function.
+#' @param fileName Path to file, where to save the diagram to.
+#'
+#' @import DiagrammeRsvg
+#' @import rsvg
+#'
+#' @return NULL
+#' @export
+#'
+#' @examples
+#' if (interactive()) {
+#'   diagram <- pkgDiagram(
+#'     pkgPath = "./",
+#'     width = 1000,
+#'     height = 4000,
+#'     verbose = TRUE)
+#'
+#'   exportDiagram(
+#'     diagram = diagram,
+#'     "diagram.pdf")
+#' }
+exportDiagram <- function(diagram, fileName) {
+  diagram %>%
+    DiagrammeRsvg::export_svg() %>%
+    charToRaw() %>%
+    rsvg::rsvg_pdf(fileName)
+}
