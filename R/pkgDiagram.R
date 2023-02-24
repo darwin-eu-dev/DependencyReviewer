@@ -8,7 +8,7 @@
 #' @import DiagrammeR
 #' @import stringr
 #'
-#' @return
+#' @return diagram of the package
 makeGraph <- function(funsPerDefFun, width, height, pkgName, expFuns) {
   pkgDef <- funsPerDefFun %>%
     filter(fun %in% name)
