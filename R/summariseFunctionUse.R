@@ -31,7 +31,8 @@
 #' script (line)
 funsUsedInLine <- function(file_txt, file_name, i, verbose = FALSE) {
   line <- file_txt[i]
-  if (!startsWith(line, "#")) {
+
+  if (!startsWith(line, "#") && !is.na(line) && length(line) >= 0 && line != "NA") {
     line <- paste(
       stringr::str_split(
         string = line,
@@ -42,7 +43,7 @@ funsUsedInLine <- function(file_txt, file_name, i, verbose = FALSE) {
     )
 
     # Remove strings
-    line <- str_replace_all(line, "[\"\'\`].+[\"\'\`]+", "")
+    line <- stringr::str_replace_all(line, "[\"\'\`].+[\"\'\`]+", "")
 
     fun_vec <- unlist(stringr::str_extract_all(
       string = line,
@@ -97,19 +98,19 @@ funsUsedInLine <- function(file_txt, file_name, i, verbose = FALSE) {
 #'
 #' @return table
 funsUsedInFile <- function(files, verbose = FALSE) {
-  dplyr::bind_rows(lapply(X = files, FUN = function(file) {
+  lapply(X = files, FUN = function(file) {
     if (verbose) {
       message(paste0("Started on file: ", file))
     }
     file_txt <- readLines(file)
 
-    out <- sapply(
-      X = 1:length(file_txt),
-      FUN = funsUsedInLine,
-      file_txt = file_txt,
-      file_name = file
+    out <- lapply(
+      X = seq_len(length(file_txt)),
+      FUN = function(i) {
+        funsUsedInLine(file_txt = file_txt, file_name = file, i = i)
+      }
     )
-  }))
+  })
 }
 
 #' summariseFunctionUse
@@ -140,7 +141,7 @@ summariseFunctionUse <- function(r_files, verbose = FALSE) {
   #   stop(paste(r_files, "not found"))
   # })
 
-  if (nrow(deps_used) == 0) {
+  if (length(deps_used) == 0) {
     warning("No functions found, output will be empty")
     deps_used <- dplyr::tibble(
       r_file = character(0),
