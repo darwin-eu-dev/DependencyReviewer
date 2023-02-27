@@ -43,8 +43,8 @@ OhdsiRTools::fixHadesLogo()
 # write(checksum, file.path("inst", "csv", "jarChecksum.txt"))
 
 # Release package --------------------------------------------------------------
-devtools::check_win_devel()
+devtools::check_win_devel(args = "--compact-vignettes=gs+qpdf")
 
-devtools::check_rhub()
+devtools::check_rhub(build_args = "--compact-vignettes=gs+qpdf")
 
-devtools::release()
+devtools::release(args = "--compact-vignettes=gs+qpdf")
