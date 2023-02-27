@@ -58,10 +58,12 @@ getFunsPerDefFun <- function(files, allFuns, verbose) {
   dplyr::bind_rows(lapply(files, function(file) {
     defFuns <- DependencyReviewer::getDefinedFunctions(file, verbose = verbose)
 
-    df <- dplyr::bind_rows(lapply(seq_len(nrow(defFuns)), function(i) {
+    dplyr::bind_rows(lapply(seq_len(nrow(defFuns)), function(i) {
       allFuns %>%
         dplyr::filter(.data$r_file %in% defFuns$file) %>%
-        dplyr::filter(.data$line >= defFuns$start[i] & .data$line <= defFuns$start[i] + defFuns$size[i]) %>%
+        dplyr::filter(
+          .data$line >= defFuns$start[i] &
+            .data$line <= defFuns$start[i] + defFuns$size[i]) %>%
         dplyr::mutate(name = defFuns$fun[i]) %>%
         dplyr::relocate(c("r_file", "name", "line", "pkg", "fun"))
     }))
