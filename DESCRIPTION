@@ -24,7 +24,8 @@ Suggests:
     withr,
     network,
     sna,
-    intergraph
+    intergraph,
+    glue
 Imports:
     rlang,
     desc,
