@@ -16,9 +16,9 @@ makeGraph <- function(funsPerDefFun, width, height, pkgName, expFuns) {
   pkgDef <- funsPerDefFun %>%
     dplyr::filter(.data$fun %in% .data$name)
 
-  graphSyntx <- unlist(lapply(seq_len(nrow(pkgDef)), function(i) {
+  graphSyntx <- unique(unlist(lapply(seq_len(nrow(pkgDef)), function(i) {
     glue::glue("'{pkgDef[i, ]$name}' -> '{pkgDef[i, ]$fun}'")
-  }))
+  })))
 
   DiagrammeR::grViz(
     diagram = paste0(
