@@ -10,7 +10,6 @@
 #'
 #' @import glue
 #' @import DiagrammeR
-#' @import stringr
 #'
 #' @return diagram of the package
 makeGraph <- function(funsPerDefFun, width, height, pkgName, expFuns) {
@@ -18,13 +17,8 @@ makeGraph <- function(funsPerDefFun, width, height, pkgName, expFuns) {
     dplyr::filter(.data$fun %in% .data$name)
 
   graphSyntx <- unlist(lapply(seq_len(nrow(pkgDef)), function(i) {
-    glue::glue("{pkgDef[i, ]$name} -> {pkgDef[i, ]$fun}")
+    glue::glue("'{pkgDef[i, ]$name}' -> '{pkgDef[i, ]$fun}'")
   }))
-
-  graphSyntx <- unique(stringr::str_replace_all(
-    string = graphSyntx,
-    pattern = "\\.",
-    replacement = "_"))
 
   DiagrammeR::grViz(
     diagram = paste0(
