@@ -55,6 +55,23 @@ funsUsedInLine <- function(file_txt, file_name, i, verbose = FALSE) {
       pattern = "\\("
     )
 
+    if ("do.call" %in% fun_vec) {
+      funDoCall <- unlist(
+        stringr::str_extract_all(string = line, pattern = "do\\.call\\(\\w+,"))
+
+      funDoCall <- unlist(
+        stringr::str_split(string = funDoCall, pattern = "\\("))[2]
+
+      fun_vec <- c(
+        fun_vec,
+        unlist(stringr::str_extract_all(string = funDoCall, pattern = "\\w+")))
+    }
+
+    if (any(stringr::str_detect(string = fun_vec, pattern = "apply"))) {
+      funApply <- unlist(stringr::str_extract_all(string = line, pattern = "apply\\(.+,[ ]?\\w+"))
+      fun_vec <- c(fun_vec, stringr::word(funApply, -1))
+    }
+
     fun_vec <- stringr::str_split(
       string = fun_vec,
       pattern = "::"
