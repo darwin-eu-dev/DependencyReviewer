@@ -122,7 +122,9 @@ funsUsedInLine <- function(file_txt, file_name, i, verbose = FALSE) {
 
     if ("do.call" %in% fun_vec) {
       fun_vec <- append(fun_vec, getDoCallFun(i, file_txt))
-    } else if (any(stringr::str_detect(string = fun_vec, pattern = "apply"))) {
+    }
+
+    if (any(stringr::str_detect(string = fun_vec, pattern = "apply"))) {
       fun_vec <- append(fun_vec, getApplyFun(i, file_txt))
     }
 
