@@ -14,6 +14,71 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#' getMultiLineFun
+#'
+#' @param line Current line number
+#' @param lines All lines
+#'
+#' @return Returns vector of functions found in do.call function call.
+getMultiLineFun <- function(line, lines) {
+  nLine <- line
+
+  # Init
+  doCallVec <- c()
+  bracOpen <- 0
+  bracClose <- 0
+
+  while (bracOpen != bracClose || bracOpen < 1 && bracClose < 1 && !is.na(lines[nLine])) {
+    bracOpen <- bracOpen + stringr::str_count(string = lines[nLine], pattern = "\\(")
+    bracClose <- bracClose + stringr::str_count(string = lines[nLine], pattern = "\\)")
+
+    doCallVec <- append(doCallVec, lines[nLine])
+    nLine <- nLine + 1
+  }
+  return(doCallVec)
+}
+
+
+#' getApplyFun
+#'
+#' @param line All lines
+#' @param lines Current line number
+#'
+#' @return Returns function in (vsl)apply function call.
+getApplyFun <- function(line, lines) {
+  applyVec <- getMultiLineFun(line, lines)
+
+  applyFun <- unlist(stringr::str_split(
+    string = paste0(applyVec, collapse = ""),
+    pattern = "[\\w]?apply"))[2]
+
+  applyFun <- applyFun[!stringr::str_detect(string = applyFun, pattern = "function[ ]?\\(")]
+  applyFun <- unlist(stringr::str_remove_all(string = applyFun, pattern = "\\s"))
+  applyFun <- unlist(stringr::str_extract_all(string = applyFun, pattern = "[\\w\\.]+(::)?[\\w\\.]+\\)"))
+  applyFun <- stringr::str_extract_all(string = applyFun, pattern = "[\\w\\.]+(::)?[\\w\\.]+")
+  return(applyFun)
+}
+
+
+#' getDoCallFun
+#'
+#' @param line Current line number
+#' @param lines All lines
+#'
+#' @return Returns function used in do.call function call.
+getDoCallFun <- function(line, lines) {
+  doCallVec <- getMultiLineFun(line, lines)
+
+  doCallFun <- unlist(stringr::str_split(
+    string = paste0(doCallVec, collapse = ""),
+    pattern = "do\\.call"))[2]
+
+  fun <- unlist(stringr::str_remove_all(string = doCallFun, pattern = "\\s"))
+  fun <- unlist(stringr::str_extract_all(string = fun, pattern = "\\([\\w\\.]+(::)?[\\w\\.]+"))
+  fun <- stringr::str_extract_all(string = fun, pattern = "[\\w\\.]+(::)?[\\w\\.]+")
+  return(fun)
+}
+
 
 #' funsUsedInLine
 #'
@@ -56,20 +121,9 @@ funsUsedInLine <- function(file_txt, file_name, i, verbose = FALSE) {
     )
 
     if ("do.call" %in% fun_vec) {
-      funDoCall <- unlist(
-        stringr::str_extract_all(string = line, pattern = "do\\.call\\(\\w+,"))
-
-      funDoCall <- unlist(
-        stringr::str_split(string = funDoCall, pattern = "\\("))[2]
-
-      fun_vec <- c(
-        fun_vec,
-        unlist(stringr::str_extract_all(string = funDoCall, pattern = "\\w+")))
-    }
-
-    if (any(stringr::str_detect(string = fun_vec, pattern = "apply"))) {
-      funApply <- unlist(stringr::str_extract_all(string = line, pattern = "apply\\(.+,[ ]?\\w+"))
-      fun_vec <- c(fun_vec, stringr::word(funApply, -1))
+      fun_vec <- append(fun_vec, getDoCallFun(i, file_txt))
+    } else if (any(stringr::str_detect(string = fun_vec, pattern = "apply"))) {
+      fun_vec <- append(fun_vec, getApplyFun(i, file_txt))
     }
 
     fun_vec <- stringr::str_split(
