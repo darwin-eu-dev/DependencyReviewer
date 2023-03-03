@@ -38,6 +38,24 @@ getMultiLineFun <- function(line, lines) {
   return(doCallVec)
 }
 
+#' getDlply
+#'
+#' @param line All lines
+#' @param lines Current line number
+#'
+#' @return Returns function in plyr::dlply function call.
+getDlply <- function(line, lines) {
+  funVec <- paste0(getMultiLineFun(line, lines), collapse = "")
+
+  fun <- unlist(stringr::str_remove_all(string = funVec, pattern = "\\s"))
+  fun <- unlist(stringr::str_split(fun, "dlply"))[2]
+  fun <- unlist(stringr::str_split(fun, ","))[4]
+  fun <- unlist(stringr::str_extract(fun, "\\=\\w+"))
+  fun <- unlist(stringr::str_extract(fun, "\\w+"))
+
+  return(fun)
+}
+
 
 #' getApplyFun
 #'
@@ -50,10 +68,11 @@ getApplyFun <- function(line, lines) {
 
   applyFun <- unlist(stringr::str_split(
     string = paste0(applyVec, collapse = ""),
-    pattern = "[\\w]?apply"))[2]
+    pattern = "[\\w]+?[Aa]pply"))[2]
 
   applyFun <- applyFun[!stringr::str_detect(string = applyFun, pattern = "function[ ]?\\(")]
   applyFun <- unlist(stringr::str_remove_all(string = applyFun, pattern = "\\s"))
+  applyFun <- unlist(stringr::str_remove_all(string = applyFun, pattern = ",\\w+=\\w+"))
   applyFun <- unlist(stringr::str_extract_all(string = applyFun, pattern = "[\\w\\.]+(::)?[\\w\\.]+\\)"))
   applyFun <- stringr::str_extract_all(string = applyFun, pattern = "[\\w\\.]+(::)?[\\w\\.]+")
   return(applyFun)
@@ -126,6 +145,10 @@ funsUsedInLine <- function(file_txt, file_name, i, verbose = FALSE) {
 
     if (any(stringr::str_detect(string = fun_vec, pattern = "apply"))) {
       fun_vec <- append(fun_vec, getApplyFun(i, file_txt))
+    }
+
+    if ("plyr::dlply" %in% fun_vec) {
+      fun_vec <- append(fun_vec, getDlply(i, file_txt))
     }
 
     fun_vec <- stringr::str_split(
