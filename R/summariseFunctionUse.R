@@ -143,7 +143,7 @@ funsUsedInLine <- function(file_txt, file_name, i, verbose = FALSE) {
       fun_vec <- append(fun_vec, getDoCallFun(i, file_txt))
     }
 
-    if (any(stringr::str_detect(string = fun_vec, pattern = "apply"))) {
+    if (any(stringr::str_detect(string = fun_vec, pattern = "[\\w]+?[Aa]pply"))) {
       fun_vec <- append(fun_vec, getApplyFun(i, file_txt))
     }
 
