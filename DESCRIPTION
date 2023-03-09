@@ -24,7 +24,9 @@ Suggests:
     withr,
     network,
     sna,
-    intergraph
+    intergraph,
+    cyclocomp,
+    dupree
 Imports:
     rlang,
     desc,
