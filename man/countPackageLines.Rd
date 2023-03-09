@@ -17,3 +17,6 @@ Tibble
 \description{
 Counts the lines of files ending with a specific extension.
 }
+\examples{
+countPackageLines("./")
+}
