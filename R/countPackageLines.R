@@ -4,10 +4,7 @@
 #'
 #' @param files
 #'
-#' @return
-#' @export
-#'
-#' @examples
+#' @return numeric
 countLines <- function(files) {
   sum(unlist(lapply(files, function(file) {
     length(readLines(file, warn = FALSE))
