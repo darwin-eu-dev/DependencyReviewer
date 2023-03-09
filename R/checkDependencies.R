@@ -174,38 +174,7 @@ checkDependencies <- function(packageName = NULL,
     "
     )
 
-
     cli::cli_alert(paste(knitr::kable(example), collapse = "\n"))
   }
-
-  # check if different version in current compared to recommended
-  # diffVersions <- getDiffVersions(
-  #  dependencies = dependencies,
-  #  permittedPackages = permittedPackages)
-
-  # n_diffVersions <- length(diffVersions$package)
-
-  # message
-  # cli::cli_h2(
-  #   "Checking if package{?s} in {dependencyType} require recommended version")
-  #
-  # if(n_diffVersions == 0){
-  #   cli::cli_alert_success(
-  #     "Success! No package{?s} in {dependencyType} require a different
-  #     version")
-  # } else {
-  #   cli::cli_div(theme = list (.alert = list(color = "red")))
-  #   cli::cli_alert_warning(
-  #     "Found {n_diffVersions} package{?s} in {dependencyType} with a different
-  #     version required")
-  #   cli::cli_end()
-  #
-  #   sapply(
-  #     X = 1:n_diffVersions,
-  #     FUN = messagePackageVersion,
-  #     diffVersions = diffVersions)
-  #
-  #   cli::cli_alert_warning("Please require recommended versions")
-  # }
   invisible(NULL)
 }
