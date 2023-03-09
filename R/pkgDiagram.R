@@ -23,13 +23,10 @@ makeGraph <- function(funsPerDefFun, width, height, pkgName, expFuns) {
   DiagrammeR::grViz(
     diagram = paste0(
       "digraph {
-  graph [layout = dot, rankdir = LR]
-  node [shape = rectangle]
-  Exported [shape = oval]
-  Non_exported [shape = rectangle]",
-      "subgraph cluster0 {label = <<B>Legend</B>> Exported -> Non_exported}",
-      "subgraph cluster1 {label = <<B>", pkgName, "</B>> ",
-      paste0(expFuns, " [shape = oval]", collapse = "\n"),
+  graph [layout = dot, rankdir = LR]",
+      "subgraph cluster0 {node [style = filled fillcolor = lightgrey] label = <<B>Legend</B>> Exported -> Non_exported}",
+      "subgraph cluster1 {node [style = filled fillcolor = lightgrey] Exported [fillcolor = white] label = <<B>", pkgName, "</B>> ",
+      paste0(paste0(expFuns, " [fillcolor = white]"), collapse = "\n"),
       paste0(graphSyntx, collapse = "\n"), "}",
       "}",
       collapse = "\n"),
