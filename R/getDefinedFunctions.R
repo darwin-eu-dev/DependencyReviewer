@@ -14,7 +14,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#' getDefinedFunctions
+#' getDefinedFunctionsPkg
+#'
+#' Gets defined functions of the package
+#'
+#' @param path Path to package
+#' @param verbose Verbose messages
+#'
+#' @return tibble
+#' @export
+getDefinedFunctionsPkg <- function(path, verbose = FALSE) {
+  dplyr::bind_rows(lapply(
+    list.files(paste0(path, "R"), full.names = TRUE, recursive = TRUE),
+    getDefinedFunctionsFile,
+    verbose = verbose))
+}
+
+#' getDefinedFunctionsFile
 #'
 #' Gets all the defined functions in a file, stored in a a tibble, with the
 #' following columns: file (filename), start (start line in file), size (Amount
@@ -31,8 +47,8 @@
 #'
 #' @examples
 #' filePath <- system.file(package = "DependencyReviewer", "testScript.R")
-#' df <- getDefinedFunctions(filePath)
-getDefinedFunctions <- function(filePath, verbose = FALSE) {
+#' df <- getDefinedFunctionsFile(filePath)
+getDefinedFunctionsFile <- function(filePath, verbose = FALSE) {
   # Read lines
   lines <- readLines(filePath, warn = FALSE)
 
@@ -56,7 +72,7 @@ getDefinedFunctions <- function(filePath, verbose = FALSE) {
       df["fun"] <- funNames[i]
       df["size"] <- df["end"] - df["start"]
       df["file"] <- tail(unlist(stringr::str_split(filePath, "/")), 1)
-      df <- df %>% select(c("file", "start", "size", "fun"))
+      df <- df %>% select(c("file", "start", "size", "fun", "nArgs"))
       return(df)
     }))
 }
@@ -76,6 +92,13 @@ getBodyIndices <- function(line, lines) {
 
   # Get start of body
   startFunLine <- goToBody(line, lines)
+
+  mergedConstructor <- paste0(lines[line:startFunLine], collapse = "")
+  args <- unlist(stringr::str_remove_all(mergedConstructor, "\\s"))
+  args <- unlist(stringr::str_split(args, "function\\("))[2]
+  args <- unlist(stringr::str_split(args, "\\)\\{"))[1]
+  args <- unlist(stringr::str_remove_all(args, "\\w+\\(.+\\)"))
+  nArgs <- length(unlist(stringr::str_split(args, ",")))
 
   endFunLine <- startFunLine
   cntOpen <- 0
@@ -111,7 +134,7 @@ getBodyIndices <- function(line, lines) {
       endFunLine <- endFunLine + 1
     }
   }
-  return(data.frame(start = startFunLine, end = endFunLine))
+  return(data.frame(start = startFunLine, end = endFunLine, nArgs = nArgs))
 }
 
 #' goToBody
