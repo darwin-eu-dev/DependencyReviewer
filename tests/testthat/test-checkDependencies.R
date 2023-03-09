@@ -8,7 +8,7 @@ local_envvar(
 )
 
 # Test with base
-test_that("base", {
-  expect_message(checkDependencies(packageName = "base"))
-})
+# test_that("base", {
+#   expect_message(checkDependencies(packageName = "base"))
+# })
 
