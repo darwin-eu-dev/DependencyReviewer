@@ -2,7 +2,7 @@
 #'
 #' Counts the lines of a list of files
 #'
-#' @param files
+#' @param files List of files
 #'
 #' @return numeric
 countLines <- function(files) {

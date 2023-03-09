@@ -7,7 +7,7 @@
 countLines(files)
 }
 \arguments{
-\item{files}{}
+\item{files}{List of files}
 }
 \value{
 numeric
