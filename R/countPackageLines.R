@@ -20,8 +20,12 @@ countLines <- function(files) {
 #'
 #' @import dplyr
 #'
-#' @return Tibble
 #' @export
+#'
+#' @return Tibble
+#'
+#' @examples
+#' countPackageLines("./")
 countPackageLines <- function(path, fileEx = c("R", "cpp", "sql", "java")) {
   filesList <- lapply(fileEx, function(ex) {
     normalizePath(list.files(
