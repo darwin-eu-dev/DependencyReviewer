@@ -47,7 +47,7 @@ makeGraph <- function(funsPerDefFun, width, height, pkgName, expFuns) {
 #' @return returns data.frame of all functions per defined function of package.
 getFunsPerDefFun <- function(files, allFuns, verbose) {
   dplyr::bind_rows(lapply(files, function(file) {
-    defFuns <- DependencyReviewer::getDefinedFunctions(file, verbose = verbose)
+    defFuns <- DependencyReviewer::getDefinedFunctionsFile(file, verbose = verbose)
 
     dplyr::bind_rows(lapply(seq_len(nrow(defFuns)), function(i) {
       allFuns %>%
