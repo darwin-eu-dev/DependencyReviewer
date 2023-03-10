@@ -17,6 +17,7 @@ countLines <- function(files) {
 #'
 #' @param path Path to package
 #' @param fileEx File extensions to search for, is case sensitive.
+#' @param ignoreDirs Directories to ignore when searching for files.
 #'
 #' @import dplyr
 #'
@@ -26,13 +27,24 @@ countLines <- function(files) {
 #'
 #' @examples
 #' countPackageLines("./")
-countPackageLines <- function(path, fileEx = c("R", "cpp", "sql", "java")) {
+countPackageLines <- function(
+    path,
+    fileEx = c("R", "cpp", "sql", "java"),
+    ignoreDirs = c("tests", "extras")) {
+
   filesList <- lapply(fileEx, function(ex) {
-    normalizePath(list.files(
-      path = path,
+    pths <- list.files(
+      path,
       pattern = paste0("\\.", ex, "$"),
-      full.names = TRUE,
-      recursive = TRUE))
+      recursive = TRUE)
+
+    dirsToIgnore <- unlist(lapply(ignoreDirs, function(ig) {
+      pths[startsWith(pths, ig)]
+    }))
+
+    if (length(pths) > 0) {
+      normalizePath(paste0(path, pths[!pths %in% dirsToIgnore]))
+    }
   })
 
   names(filesList) <- fileEx

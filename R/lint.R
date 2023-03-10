@@ -1,6 +1,6 @@
-#' darwinLintPackage
+#' lintPackage
 #'
-#' Darwin lintr object, using default lintr object with camelCase
+#' Lintr object, using default lintr object with camelCase
 #'
 #' @param path Default: ".", Path to package
 #'
@@ -9,8 +9,8 @@
 #' @export
 #'
 #' @examples
-#' darwinLintPackage()
-darwinLintPackage <- function(path = ".") {
+#' lintPackage()
+lintPackage <- function(path = ".") {
   tryCatch({
     lintr::lint_package(
       path = path,
@@ -19,13 +19,13 @@ darwinLintPackage <- function(path = ".") {
   }, error = function(e) {
     cli::cli_alert_danger(e)
     stop(
-    "Error was caught during the linting of your package. The package
-    might be to large to lint all together. Use: darwinLintFile(fileName)")
+      "Error was caught during the linting of your package. The package
+    might be to large to lint all together. Use: lintFile(fileName)")
   })
 }
 
 
-#' darwinLintFile
+#' lintFile
 #'
 #' Lint a given file.
 #'
@@ -38,10 +38,10 @@ darwinLintPackage <- function(path = ".") {
 #' @export
 #'
 #' @examples
-#' darwinLintFile(
+#' lintFile(
 #'   fileName = system.file(package = "DependencyReviewer", "testScript.R")
 #' )
-darwinLintFile <- function(fileName) {
+lintFile <- function(fileName) {
   lintr::lint(
     filename = fileName,
     linters = lintr::linters_with_defaults(
@@ -51,7 +51,7 @@ darwinLintFile <- function(fileName) {
 }
 
 
-#' darwinLintScore
+#' lintScore
 #'
 #' Function that scores the lintr output as a percentage per message type
 #' (style, warning, error). Lintr messages / lines assessed * 100
@@ -64,18 +64,18 @@ darwinLintFile <- function(fileName) {
 #'     A tibble of percentage scores per type of Lint message.
 #' @export
 #' @examples
-#' # With darwin file lintr
-#' darwinLintScore(
-#'   lintFunction = darwinLintFile,
+#' # With file lintr
+#' lintScore(
+#'   lintFunction = lintFile,
 #'   system.file(package = "DependencyReviewer", "testScript.R")
 #' )
 #'
 #' # With standard package lintr
-#' darwinLintScore(
+#' lintScore(
 #'   lintFunction = lintr::lint_package,
 #'   system.file(package = "DependencyReviewer")
 #' )
-darwinLintScore <- function(lintFunction, ...) {
+lintScore <- function(lintFunction, ...) {
   lintTable <- data.frame(lintFunction(...))
 
   files <- unique(paste0(
