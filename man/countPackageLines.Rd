@@ -14,6 +14,8 @@ countPackageLines(
 \item{path}{Path to package}
 
 \item{fileEx}{File extensions to search for, is case sensitive.}
+
+\item{ignoreDirs}{Directories to ignore when searching for files.}
 }
 \value{
 Tibble
