@@ -25,7 +25,6 @@ Suggests:
     network,
     sna,
     intergraph,
-    cyclocomp,
     dupree
 Imports:
     rlang,
@@ -41,6 +40,7 @@ Imports:
     glue,
     tidygraph,
     magrittr,
+    cyclocomp,
     DiagrammeR,
     DiagrammeRsvg,
     rsvg
