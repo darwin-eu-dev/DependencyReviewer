@@ -72,7 +72,7 @@ getDefinedFunctionsFile <- function(filePath, verbose = FALSE) {
       df["fun"] <- funNames[i]
       df["size"] <- df["end"] - df["start"]
       df["file"] <- tail(unlist(stringr::str_split(filePath, "/")), 1)
-      df <- df %>% select(c("file", "start", "size", "fun", "nArgs"))
+      df <- df %>% select(c("file", "start", "size", "fun", "nArgs", "cycloComp"))
       return(df)
     }))
 }
@@ -84,6 +84,8 @@ getDefinedFunctionsFile <- function(filePath, verbose = FALSE) {
 #'
 #' @param line Line index of the function constructor.
 #' @param lines All lines of the R-file to be investigated.
+#'
+#' @importFrom cyclocomp cyclocomp
 #'
 #' @return Returns a data.frame with the start and end indices of lines.
 getBodyIndices <- function(line, lines) {
@@ -117,7 +119,6 @@ getBodyIndices <- function(line, lines) {
       cntOpen <- max(c(cntOpen, cntClosed))
       cntClosed <- max(c(cntOpen, cntClosed))
     } else {
-      # print(glue::glue("getBody: {checkOpen}"))
       if (checkOpen) {
         cntOpen <- cntOpen + 1
       }
@@ -134,7 +135,17 @@ getBodyIndices <- function(line, lines) {
       endFunLine <- endFunLine + 1
     }
   }
-  return(data.frame(start = startFunLine, end = endFunLine, nArgs = nArgs))
+
+  complexity <- cyclocomp::cyclocomp(eval(parse(
+    text = lines[line:endFunLine])))
+
+  outDf <- data.frame(
+    start = startFunLine,
+    end = endFunLine,
+    nArgs = nArgs,
+    cycloComp = complexity)
+
+  return(outDf)
 }
 
 #' goToBody
