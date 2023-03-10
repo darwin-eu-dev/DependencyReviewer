@@ -4,7 +4,11 @@
 \alias{countPackageLines}
 \title{countPackageLines}
 \usage{
-countPackageLines(path, fileEx = c("R", "cpp", "sql", "java"))
+countPackageLines(
+  path,
+  fileEx = c("R", "cpp", "sql", "java"),
+  ignoreDirs = c("tests", "extras")
+)
 }
 \arguments{
 \item{path}{Path to package}
