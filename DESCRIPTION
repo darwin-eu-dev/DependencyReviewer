@@ -43,7 +43,8 @@ Imports:
     cyclocomp,
     DiagrammeR,
     DiagrammeRsvg,
-    rsvg
+    rsvg,
+    rmarkdown
 RoxygenNote: 7.2.3
 Depends: 
     R (>= 4.0)
