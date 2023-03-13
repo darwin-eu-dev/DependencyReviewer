@@ -24,6 +24,9 @@
 #' @return tibble
 #' @export
 getDefinedFunctionsPkg <- function(path, verbose = FALSE) {
+  if (stringr::str_ends(path, "\\w")) {
+    path <- paste0(path, "/")
+  }
   dplyr::bind_rows(lapply(
     list.files(paste0(path, "R"), full.names = TRUE, recursive = TRUE),
     getDefinedFunctionsFile,
@@ -41,6 +44,7 @@ getDefinedFunctionsPkg <- function(path, verbose = FALSE) {
 #' Usefull if used in an apply funciton, investigating alot of different files.
 #'
 #' @import glue
+#' @import stringr
 #'
 #' @return Returns a tibble object.
 #' @export
@@ -72,7 +76,7 @@ getDefinedFunctionsFile <- function(filePath, verbose = FALSE) {
       df["fun"] <- funNames[i]
       df["size"] <- df["end"] - df["start"]
       df["file"] <- tail(unlist(stringr::str_split(filePath, "/")), 1)
-      df <- df %>% select(c("file", "start", "size", "fun", "nArgs", "cycloComp"))
+      df <- df %>% dplyr::select(.data$file, .data$start, .data$size, .data$fun, .data$nArgs, .data$cycloComp)
       return(df)
     }))
 }
@@ -136,8 +140,13 @@ getBodyIndices <- function(line, lines) {
     }
   }
 
-  complexity <- cyclocomp::cyclocomp(eval(parse(
-    text = lines[line:endFunLine])))
+  complexity <- NA
+
+  tryCatch({
+    complexity <- cyclocomp::cyclocomp(eval(parse(text = lines[line:endFunLine])))
+  }, error = function(cond) {
+    complexity <- NA
+  })
 
   outDf <- data.frame(
     start = startFunLine,

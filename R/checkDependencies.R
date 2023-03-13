@@ -176,5 +176,5 @@ checkDependencies <- function(packageName = NULL,
 
     cli::cli_alert(paste(knitr::kable(example), collapse = "\n"))
   }
-  invisible(NULL)
+  return(not_permitted)
 }

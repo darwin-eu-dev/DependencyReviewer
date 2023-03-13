@@ -2,17 +2,16 @@
 #'
 #' Makes the graph
 #'
-#' @param funsPerDefFun Functions per defined function data.frame
-#' @param width Width of diagram
-#' @param height Height of diagram
-#' @param pkgName Name of package
-#' @param expFuns Exported functinos data.frame
+#' @param funsPerDefFun Functions per defined function data.frame.
+#' @param pkgName Name of package.
+#' @param expFuns Exported functinos data.frame.
+#' @param ... Optional other parameters for `DiagrammeR::grViz`.
 #'
 #' @import glue
 #' @import DiagrammeR
 #'
 #' @return diagram of the package
-makeGraph <- function(funsPerDefFun, width, height, pkgName, expFuns) {
+makeGraph <- function(funsPerDefFun, pkgName, expFuns, ...) {
   pkgDef <- funsPerDefFun %>%
     dplyr::filter(.data$fun %in% .data$name)
 
@@ -30,8 +29,7 @@ makeGraph <- function(funsPerDefFun, width, height, pkgName, expFuns) {
       paste0(graphSyntx, collapse = "\n"), "}",
       "}",
       collapse = "\n"),
-    height = height,
-    width = width)
+    ...)
 }
 
 #' getFunsPerDefFun
@@ -47,7 +45,9 @@ makeGraph <- function(funsPerDefFun, width, height, pkgName, expFuns) {
 #' @return returns data.frame of all functions per defined function of package.
 getFunsPerDefFun <- function(files, allFuns, verbose) {
   dplyr::bind_rows(lapply(files, function(file) {
-    defFuns <- DependencyReviewer::getDefinedFunctionsFile(file, verbose = verbose)
+    defFuns <- DependencyReviewer::getDefinedFunctionsFile(
+      file,
+      verbose = verbose)
 
     dplyr::bind_rows(lapply(seq_len(nrow(defFuns)), function(i) {
       allFuns %>%
@@ -94,9 +94,8 @@ getExportedFunctions <- function(path) {
 #' Creates a diagram of all defined functions in a package.
 #'
 #' @param pkgPath Path to package
-#' @param width Width of diagram
-#' @param height Height of diagram
 #' @param verbose Verbose messages
+#' @param ... Optional other parameters for `DiagrammeR::grViz`.
 #'
 #' @import glue
 #' @import dplyr
@@ -107,11 +106,9 @@ getExportedFunctions <- function(path) {
 #' if (interactive()) {
 #'   pkgDiagram(
 #'     pkgPath = "./",
-#'     width = 1000,
-#'     height = 4000,
 #'     verbose = TRUE)
 #' }
-pkgDiagram <- function(pkgPath, width = 1000, height = 1000, verbose = FALSE) {
+pkgDiagram <- function(pkgPath, verbose = FALSE, ...) {
   path <- normalizePath(pkgPath)
 
   rPath <- glue::glue("{path}/R")
@@ -127,7 +124,7 @@ pkgDiagram <- function(pkgPath, width = 1000, height = 1000, verbose = FALSE) {
 
   funsPerDefFun <- getFunsPerDefFun(files, allFuns, verbose)
 
-  makeGraph(funsPerDefFun, width, height, basename(pkgPath), expFuns)
+  makeGraph(funsPerDefFun, basename(pkgPath), expFuns, ...)
 }
 
 
@@ -148,8 +145,6 @@ pkgDiagram <- function(pkgPath, width = 1000, height = 1000, verbose = FALSE) {
 #' if (interactive()) {
 #'   diagram <- pkgDiagram(
 #'     pkgPath = "./",
-#'     width = 1000,
-#'     height = 4000,
 #'     verbose = TRUE)
 #'
 #'   exportDiagram(

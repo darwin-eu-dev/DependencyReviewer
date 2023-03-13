@@ -15,7 +15,8 @@ lintPackage <- function(path = ".") {
     lintr::lint_package(
       path = path,
       linters = lintr::linters_with_defaults(
-        lintr::object_name_linter(styles = "camelCase")))
+        lintr::object_name_linter(styles = "camelCase")),
+      relative_path = FALSE)
   }, error = function(e) {
     cli::cli_alert_danger(e)
     stop(

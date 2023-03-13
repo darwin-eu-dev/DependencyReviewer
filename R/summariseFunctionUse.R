@@ -28,12 +28,18 @@ getMultiLineFun <- function(line, lines) {
   bracOpen <- 0
   bracClose <- 0
 
-  while (bracOpen != bracClose || bracOpen < 1 && bracClose < 1 && !is.na(lines[nLine])) {
-    bracOpen <- bracOpen + stringr::str_count(string = lines[nLine], pattern = "\\(")
-    bracClose <- bracClose + stringr::str_count(string = lines[nLine], pattern = "\\)")
+  while (bracOpen != bracClose || bracOpen < 1 && bracClose < 1) {
+    if (!is.na(lines[nLine])) {
+      bracOpen <- bracOpen + stringr::str_count(string = lines[nLine], pattern = "\\(")
+      bracClose <- bracClose + stringr::str_count(string = lines[nLine], pattern = "\\)")
 
-    doCallVec <- append(doCallVec, lines[nLine])
+      doCallVec <- append(doCallVec, lines[nLine])
+    }
     nLine <- nLine + 1
+
+    if (nLine > length(lines)) {
+      break
+    }
   }
   return(doCallVec)
 }
