@@ -15,11 +15,12 @@ knitr::opts_chunk$set(echo = TRUE)
 ## External Resources
 ### Style Guide
 The styling is based on the following style guide:
+
 - [Tidyverse styleguide](https://style.tidyverse.org/syntax.html)
 - [HADES styleguide](https://ohdsi.github.io/Hades/codeStyle.html)
 
-### Cyclometic Complexity
->[Cyclometic Complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity) is a software metric used to indicate the complexity of a program. It is a quantitative measure of the number of linearly independent paths through a program's source code. It was developed by Thomas J. McCabe, Sr. in 1976.
+### Cyclomatic Complexity
+>[Cyclomatic Complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity) is a software metric used to indicate the complexity of a program. It is a quantitative measure of the number of linearly independent paths through a program's source code. It was developed by Thomas J. McCabe, Sr. in 1976.
 
 And is calculated as follows: $M = E - N + 2P$
 
@@ -91,7 +92,7 @@ DT::datatable(defFuns)
 
 ### Lintr
 ```{r echo=params$showCode, message=FALSE, warning=FALSE}
-DependencyReviewer::lintScore(DependencyReviewer::lintPackage, params$pkgPath)
+DT::datatable(DependencyReviewer::lintScore(DependencyReviewer::lintPackage, params$pkgPath))
 ```
 
 ```{r echo=params$showCode, message=FALSE, warning=FALSE}
