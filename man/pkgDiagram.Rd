@@ -4,16 +4,14 @@
 \alias{pkgDiagram}
 \title{pkgDiagram}
 \usage{
-pkgDiagram(pkgPath, width = 1000, height = 1000, verbose = FALSE)
+pkgDiagram(pkgPath, verbose = FALSE, ...)
 }
 \arguments{
 \item{pkgPath}{Path to package}
 
-\item{width}{Width of diagram}
-
-\item{height}{Height of diagram}
-
 \item{verbose}{Verbose messages}
+
+\item{...}{Optional other parameters for `DiagrammeR::grViz`.}
 }
 \value{
 diagram image
@@ -25,8 +23,6 @@ Creates a diagram of all defined functions in a package.
 if (interactive()) {
   pkgDiagram(
     pkgPath = "./",
-    width = 1000,
-    height = 4000,
     verbose = TRUE)
 }
 }

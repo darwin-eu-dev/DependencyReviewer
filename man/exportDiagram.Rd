@@ -18,8 +18,6 @@ Exports the diagram from `pkgDiagram` to a PDF-file.
 if (interactive()) {
   diagram <- pkgDiagram(
     pkgPath = "./",
-    width = 1000,
-    height = 4000,
     verbose = TRUE)
 
   exportDiagram(

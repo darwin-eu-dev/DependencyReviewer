@@ -4,18 +4,16 @@
 \alias{makeGraph}
 \title{makeGraph}
 \usage{
-makeGraph(funsPerDefFun, width, height, pkgName, expFuns)
+makeGraph(funsPerDefFun, pkgName, expFuns, ...)
 }
 \arguments{
-\item{funsPerDefFun}{Functions per defined function data.frame}
+\item{funsPerDefFun}{Functions per defined function data.frame.}
 
-\item{width}{Width of diagram}
+\item{pkgName}{Name of package.}
 
-\item{height}{Height of diagram}
+\item{expFuns}{Exported functinos data.frame.}
 
-\item{pkgName}{Name of package}
-
-\item{expFuns}{Exported functinos data.frame}
+\item{...}{Optional other parameters for `DiagrammeR::grViz`.}
 }
 \value{
 diagram of the package
