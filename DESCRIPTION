@@ -32,7 +32,7 @@ Imports:
     dplyr,
     knitr,
     lintr,
-    pak,
+    pak (>= 0.2.0),
     pkgdepends,
     readr,
     stringr,
