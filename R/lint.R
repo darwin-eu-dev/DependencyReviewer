@@ -5,7 +5,7 @@
 #' @param path Default: ".", Path to package
 #'
 #' @return List of lint objects.
-#' @import lintr
+#'
 #' @export
 #'
 #' @examples
@@ -31,8 +31,6 @@ lintPackage <- function(path = ".") {
 #' Lint a given file.
 #'
 #' @return list of lint objects.
-#'
-#' @import lintr
 #'
 #' @param fileName Path to file to lint
 #'

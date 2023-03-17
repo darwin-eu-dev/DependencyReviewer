@@ -7,9 +7,6 @@
 #' @param expFuns Exported functinos data.frame.
 #' @param ... Optional other parameters for `DiagrammeR::grViz`.
 #'
-#' @import glue
-#' @import DiagrammeR
-#'
 #' @return diagram of the package
 makeGraph <- function(funsPerDefFun, pkgName, expFuns, ...) {
   pkgDef <- funsPerDefFun %>%
@@ -40,8 +37,6 @@ makeGraph <- function(funsPerDefFun, pkgName, expFuns, ...) {
 #' @param allFuns allFunctions data.frame
 #' @param verbose Verbose messages
 #'
-#' @import dplyr
-#'
 #' @return returns data.frame of all functions per defined function of package.
 getFunsPerDefFun <- function(files, allFuns, verbose) {
   dplyr::bind_rows(lapply(files, function(file) {
@@ -66,9 +61,6 @@ getFunsPerDefFun <- function(files, allFuns, verbose) {
 #' Gets all the exported functions of a package, from NAMESPACE.
 #'
 #' @param path path to package
-#'
-#' @import glue
-#' @import stringr
 #'
 #' @return vector of exported functions
 getExportedFunctions <- function(path) {
@@ -96,9 +88,6 @@ getExportedFunctions <- function(path) {
 #' @param pkgPath Path to package
 #' @param verbose Verbose messages
 #' @param ... Optional other parameters for `DiagrammeR::grViz`.
-#'
-#' @import glue
-#' @import dplyr
 #'
 #' @return diagram image
 #' @export
@@ -134,9 +123,6 @@ pkgDiagram <- function(pkgPath, verbose = FALSE, ...) {
 #'
 #' @param diagram Graph object from the `pkgDiagram` function.
 #' @param fileName Path to file, where to save the diagram to.
-#'
-#' @import DiagrammeRsvg
-#' @import rsvg
 #'
 #' @return NULL
 #' @export

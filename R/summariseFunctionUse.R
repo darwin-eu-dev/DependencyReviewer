@@ -1,19 +1,3 @@
-# Copyright 2023 DARWIN EU®
-#
-# This file is part of IncidencePrevalence
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 #' getMultiLineFun
 #'
 #' @param line Current line number
@@ -109,9 +93,6 @@ getDoCallFun <- function(line, lines) {
 #'
 #' Support function for funsUsedInFile.
 #'
-#' @import stringr
-#' @import dplyr
-#'
 #' @param file_txt file to use
 #' @param file_name name of file
 #' @param i line
@@ -193,8 +174,6 @@ funsUsedInLine <- function(file_txt, file_name, i, verbose = FALSE) {
 #'
 #' Support function
 #'
-#' @import dplyr
-#'
 #' @param files Files to get functions from
 #' @param verbose Verbosity
 #'
@@ -222,8 +201,6 @@ funsUsedInFile <- function(files, verbose = FALSE) {
 #' @param r_files Complete path(s) to files to be investigated
 #' @param verbose Default: FALSE; prints message to console which file is
 #' currently being worked on.
-#'
-#' @import dplyr
 #'
 #' @return tibble
 #'

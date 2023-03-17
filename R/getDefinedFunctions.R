@@ -1,19 +1,3 @@
-# Copyright 2022 DARWIN EU®
-#
-# This file is part of DependencyReviewer
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 #' getDefinedFunctionsPkg
 #'
 #' Gets defined functions of the package
@@ -42,9 +26,6 @@ getDefinedFunctionsPkg <- function(path, verbose = FALSE) {
 #' @param filePath File path to the R-file to be investigated
 #' @param verbose Prints message as to what file is currently being worked on.
 #' Usefull if used in an apply funciton, investigating alot of different files.
-#'
-#' @import glue
-#' @import stringr
 #'
 #' @return Returns a tibble object.
 #' @export
@@ -88,8 +69,6 @@ getDefinedFunctionsFile <- function(filePath, verbose = FALSE) {
 #'
 #' @param line Line index of the function constructor.
 #' @param lines All lines of the R-file to be investigated.
-#'
-#' @importFrom cyclocomp cyclocomp
 #'
 #' @return Returns a data.frame with the start and end indices of lines.
 getBodyIndices <- function(line, lines) {

@@ -19,8 +19,6 @@ countLines <- function(files) {
 #' @param fileEx File extensions to search for, is case sensitive.
 #' @param ignoreDirs Directories to ignore when searching for files.
 #'
-#' @import dplyr
-#'
 #' @export
 #'
 #' @return Tibble

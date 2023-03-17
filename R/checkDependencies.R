@@ -18,8 +18,6 @@
 #'
 #' Helper function
 #'
-#' @import dplyr
-#'
 #' @param dependencies Dependencies
 #' @param permittedPackages permittedPackages
 #'
@@ -38,8 +36,6 @@ getDiffVersions <- function(dependencies, permittedPackages) {
 #' getNotPermitted
 #'
 #' Helper function
-#'
-#' @import dplyr
 #'
 #' @param dependencies Dependencies
 #' @param permittedPackages Packages that are permitted as character vector
@@ -61,8 +57,6 @@ getNotPermitted <- function(dependencies, permittedPackages) {
 #' messagePermission
 #'
 #' Helper message function
-#'
-#' @import cli
 #'
 #' @param i iterator
 #' @param not_permitted Not permitted
@@ -88,12 +82,6 @@ messagePackageVersion <- function(i, diffVersions) {
 #'
 #' Check package dependencies
 #'
-#' @import dplyr
-#' @import cli
-#' @import knitr
-#' @import rlang
-#' @importFrom desc description
-#'
 #' @param packageName Name of package to profile. If NULL current package
 #' @param dependencyType Imports, depends, and/ or suggests
 #'
@@ -111,7 +99,7 @@ checkDependencies <- function(packageName = NULL,
                               dependencyType = c("Imports", "Depends")) {
   # find dependencies
   if (is.null(packageName)) {
-    description <- desc::description$new()
+    description <- desc::description$new(file = "./DESCRIPTION")
   } else {
     description <- desc::description$new(package = packageName)
   }

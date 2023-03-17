@@ -23,6 +23,11 @@
 #'   makeReport(pkgPath, outputFile)
 #' }
 makeReport <- function(pkgPath, outputFile, showCode = FALSE) {
+  # Normalize paths
+  pkgPath <- normalizePath(pkgPath)
+  outputFile <- normalizePath(outputFile)
+
+  # Render report.Rmd
   rmarkdown::render(
     input = system.file(package = "DependencyReviewer", "rmd", "report.Rmd"),
     output_file = outputFile,

@@ -9,9 +9,6 @@
 #'     Available types are: "imports", "depends", "suggests", "enhances", "linkingto"
 #'
 #' @return net_data graph data
-#' @import pak
-#' @import dplyr
-#' @import tidygraph
 #'
 #' @export
 #' @examples
@@ -20,11 +17,15 @@
 #'   graphData <- getGraphData()
 #' }
 getGraphData <- function(path = "./", excluded_packages = c(""), package_types = c("imports", "depends")) {
+  # Normalize path
+  path <- normalizePath(path)
+
   # Get all dependencies using pak
   data <- pak::local_deps(path)
 
   # Filter data
-  fData <- data %>% dplyr::filter(!.data$package %in% excluded_packages)
+  fData <- data %>%
+    dplyr::filter(!.data$package %in% excluded_packages)
 
   sapply(
     X = 1:nrow(fData),
