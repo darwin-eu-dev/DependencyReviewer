@@ -4,7 +4,10 @@
 \alias{getDefaultPermittedPackages}
 \title{getDefaultPermittedPackages}
 \usage{
-getDefaultPermittedPackages()
+getDefaultPermittedPackages(base = TRUE)
+}
+\arguments{
+\item{base}{Boolean if base package should be included}
 }
 \value{
 tibble of two columns (package, version) with all 'allowed'
