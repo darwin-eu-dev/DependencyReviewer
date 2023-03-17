@@ -38,7 +38,7 @@ The complexity score is interpreted as follows:
 ## Dependency review
 ### Check dependencies against whitelist
 ```{r echo=params$showCode, message=FALSE, warning=FALSE}
-DependencyReviewer::checkDependencies()
+DependencyReviewer::checkDependencies(packageName = "TreatmentPatterns")
 ```
 
 ### Function use per dependency
