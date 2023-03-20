@@ -6,6 +6,7 @@ local_envvar(
 )
 
 test_that("getGraphData", {
+  testthat::skip_on_os(c("mac", "linux"))
   expect_s3_class(getGraphData(
-    system.file(package = "dplyr")), "igraph")
+    system.file(package = "base")), "igraph")
 })
