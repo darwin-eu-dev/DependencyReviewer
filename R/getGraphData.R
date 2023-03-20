@@ -21,7 +21,19 @@
 #' }
 getGraphData <- function(path = "./", excluded_packages = c(""), package_types = c("imports", "depends")) {
   # Get all dependencies using pak
-  data <- pak::local_deps(path, dependencies = "Imports")
+  data <- tryCatch({
+    pak::local_deps(path)
+  }, error = function(e) {
+    return(NULL)
+  }, warning = function(w) {
+    return(NULL)
+  })
+
+  if (is.null(data)) {
+    message(
+      "Could not make a connection to online resources, please check your internet connection.")
+    return(NULL)
+  }
 
   # Filter data
   fData <- data %>% dplyr::filter(!.data$package %in% excluded_packages)

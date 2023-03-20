@@ -9,6 +9,7 @@ local_envvar(
 
 # Test with base
 test_that("base", {
+  skip_if_offline()
   expect_message(checkDependencies(packageName = "base"))
 })
 

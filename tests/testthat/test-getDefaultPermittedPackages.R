@@ -6,5 +6,6 @@ local_envvar(
 )
 
 test_that("Void", {
+  skip_if_offline()
   expect_s3_class(getDefaultPermittedPackages(), "data.frame")
 })

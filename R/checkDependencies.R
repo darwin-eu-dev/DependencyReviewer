@@ -53,8 +53,8 @@ getNotPermitted <- function(dependencies, permittedPackages) {
       permittedPackages,
       by = "package"
     ) %>%
-    dplyr::select(.data$package) %>%
-    dplyr::arrange(.data$package) %>%
+    dplyr::select("package") %>%
+    dplyr::arrange("package") %>%
     dplyr::pull()
 }
 
@@ -123,6 +123,10 @@ checkDependencies <- function(packageName = NULL,
   # dependencies that are permitted
   permittedPackages <- DependencyReviewer::getDefaultPermittedPackages()
 
+  if (is.null(permittedPackages)) {
+    return(NULL)
+  }
+
   not_permitted <- getNotPermitted(dependencies, permittedPackages)
 
   n_not_permitted <- length(not_permitted)
@@ -159,7 +163,7 @@ checkDependencies <- function(packageName = NULL,
             dplyr::tibble(pak::pkg_search(pkg)) %>%
               dplyr::filter(.data$package == pkg) %>%
               dplyr::select(
-                .data$package, version, date, .data$downloads_last_month,
+                "package", version, date, "downloads_last_month",
                 license, url
               )
           }

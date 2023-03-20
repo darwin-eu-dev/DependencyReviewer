@@ -51,39 +51,60 @@ getDefaultPermittedPackages <- function() {
       fileext = ".csv"
     )
 
-    permittedDependencies <- utils::read.table(
-      file = "https://raw.githubusercontent.com/mvankessel-EMC/DependencyReviewerWhitelists/main/dependencies.csv",
-      sep = ",",
-      header = TRUE) %>%
-      dplyr::tibble()
-
     # Get base packages
     basePackages <- data.frame(utils::installed.packages(
       lib.loc = .Library,
       priority = "high"
     )) %>%
-      dplyr::select(.data$Package, .data$Built) %>%
-      dplyr::rename(package = .data$Package, version = .data$Built) %>%
+      dplyr::select("Package", "Built") %>%
+      dplyr::rename(package = "Package", version = "Built") %>%
       dplyr::tibble()
 
-    # Get Tidyverse packages
-    tidyversePackages <- utils::read.table(
-      file = "https://raw.githubusercontent.com/mvankessel-EMC/DependencyReviewerWhitelists/main/TidyverseDependencies.csv",
-      sep = ",",
-      header = TRUE) %>%
-      dplyr::tibble()
+    # Get darwin whiteList
+    permittedDependencies <- tryCatch({
+       return(utils::read.table(
+        file = "https://raw.githubusercontent.com/mvankessel-EMC/DependencyReviewerWhitelists/main/darwin.csv",
+        sep = ",",
+        header = TRUE) %>%
+        dplyr::tibble())
+    }, error = function(e) {
+      return(NULL)
+    }, warning = function(w) {
+      return(NULL)
+    })
 
-    # Get HADES packages
-    hadesPackages <- utils::read.table(
-      file = "https://raw.githubusercontent.com/OHDSI/Hades/main/extras/packages.csv",
-      sep = ",",
-      header = TRUE) %>%
-      dplyr::select(.data$name) %>%
-      dplyr::mutate(version = rep("*", length(names))) %>%
-      dplyr::rename(package = .data$name) %>%
-      dplyr::tibble()
+    # Get Tidyverse whiteList
+    tidyversePackages <- tryCatch({
+       return(utils::read.table(
+        file = "https://raw.githubusercontent.com/mvankessel-EMC/DependencyReviewerWhitelists/main/tidyverse.csv",
+        sep = ",",
+        header = TRUE) %>%
+        dplyr::tibble())
+    }, error = function(e) {
+      return(NULL)
+    }, warning = function(w) {
+      return(NULL)
+    })
 
-    hadesPackages$package <- paste0("OHDSI/", hadesPackages$package)
+    # Get HADES whiteList
+    hadesPackages <- tryCatch({
+      # Get HADES packages
+      hadesPackages <- utils::read.table(
+        file = "https://raw.githubusercontent.com/OHDSI/Hades/main/extras/packages.csv",
+        sep = ",",
+        header = TRUE) %>%
+        dplyr::select("name") %>%
+        dplyr::mutate(version = rep("*", length(names))) %>%
+        dplyr::rename(package = "name") %>%
+        dplyr::tibble()
+
+      hadesPackages$package <- paste0("OHDSI/", hadesPackages$package)
+      return(hadesPackages)
+    }, error = function(e) {
+      return(NULL)
+    }, warning = function(w) {
+      return(NULL)
+    })
 
     sourcePackages <- dplyr::bind_rows(
       tidyversePackages,
@@ -91,18 +112,24 @@ getDefaultPermittedPackages <- function() {
       permittedDependencies
     )
 
-    depList <- pak::pkg_deps(sourcePackages$package)
+    if (nrow(sourcePackages) > 0) {
+      depList <- pak::pkg_deps(sourcePackages$package)
 
-    permittedPackages <- dplyr::bind_rows(
-      basePackages,
-      depList %>%
-        dplyr::select(.data$package, version))
+      permittedPackages <- dplyr::bind_rows(
+        basePackages,
+        depList %>%
+          dplyr::select("package", version))
 
-    message("Writing temp file")
-    utils::write.csv(
-      x = permittedPackages,
-      file = tmpFile
-    )
-    return(permittedPackages)
+      message("Writing temp file")
+      utils::write.csv(
+        x = permittedPackages,
+        file = tmpFile
+      )
+      return(permittedPackages)
+    } else {
+      message(
+        "Could not make a connection to online resources, please check your internet connection.")
+      return(NULL)
+    }
   }
 }
