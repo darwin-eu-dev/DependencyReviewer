@@ -47,4 +47,4 @@ devtools::check_win_devel()
 
 devtools::check_rhub()
 
-devtools::release()
+devtools::release(args = "--compact-vignettes=gs+qpdf")
