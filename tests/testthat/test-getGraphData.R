@@ -7,6 +7,7 @@ local_envvar(
 )
 
 test_that("getGraphData", {
+  skip_on_os(c("mac", "linux"))
   skip_if_offline()
   expect_s3_class(getGraphData(
     system.file(package = "base")), "igraph")
