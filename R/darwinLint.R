@@ -92,7 +92,7 @@ darwinLintScore <- function(lintFunction, ...) {
   pct <- lintTable %>%
     dplyr::group_by(.data$type) %>%
     dplyr::tally() %>%
-    dplyr::summarise(.data$type, pct = round(n / nLines * 100, 2))
+    dplyr::reframe(.data$type, pct = round(n / nLines * 100, 2))
 
   if (nrow(pct) == 0) {
     cli::cli_alert_info(cli::col_green(
