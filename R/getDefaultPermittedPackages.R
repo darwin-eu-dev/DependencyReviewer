@@ -24,7 +24,6 @@
 #' @import readr
 #' @import utils
 #' @import pak
-#' @importFrom pkgdepends new_pkg_deps
 #'
 #' @export
 #' @examples
